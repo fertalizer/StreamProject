@@ -1,4 +1,4 @@
-package com.mark.streamproject.hots;
+package com.mark.streamproject.categeory;
 
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
@@ -8,7 +8,7 @@ import com.mark.streamproject.base.BaseView;
  *
  * This specifies the contract between the view and the presenter.
  */
-public interface HotsContract {
+public interface CategoryContract {
 
     interface View extends BaseView<Presenter> {
         boolean isActive();

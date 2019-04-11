@@ -11,10 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+import com.mark.streamproject.base.BaseActivity;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     private BottomNavigationView mBottomNavigation;
     private Toolbar mToolbar;
+
+    private MainMvpController mMainMvpController;
 
     private MainContract.Presenter mPresenter;
 
@@ -27,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void init() {
         setContentView(R.layout.activity_main);
+
+        mMainMvpController = MainMvpController.create(this);
+        mPresenter.openHots();
+
         setToolbar();
         setBottomNavigation();
     }
@@ -34,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
-
+        mPresenter = checkNotNull(presenter);
     }
 
     private void setToolbar() {
@@ -64,15 +74,31 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
+                mPresenter.openHots();
                 return true;
-            case R.id.navigation_catalog:
+            case R.id.navigation_category:
+                mPresenter.openCategory();
                 return true;
-            case R.id.navigation_cart:
+            case R.id.navigation_follow:
+                mPresenter.openFollow();
                 return true;
             default:
                 return false;
         }
     };
 
+    @Override
+    public void openHotsUi() {
+        mMainMvpController.findOrCreateHotsView();
+    }
 
+    @Override
+    public void openCategoryUi() {
+        mMainMvpController.findOrCreateCategoryView();
+    }
+
+    @Override
+    public void openFollowUi() {
+        mMainMvpController.findOrCreateFollowView();
+    }
 }

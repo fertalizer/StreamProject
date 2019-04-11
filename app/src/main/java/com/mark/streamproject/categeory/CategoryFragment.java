@@ -1,4 +1,4 @@
-package com.mark.streamproject.hots;
+package com.mark.streamproject.categeory;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,15 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.hots.HotsContract;
 
 
-public class HotsFragment extends Fragment implements HotsContract.View {
-    HotsContract.Presenter mPresenter;
+public class CategoryFragment extends Fragment implements CategoryContract.View {
 
-    public HotsFragment() {}
+    CategoryContract.Presenter mPresenter;
 
-    public static HotsFragment newInstance() {
-        return new HotsFragment();
+    public CategoryFragment() {}
+
+    public static CategoryFragment newInstance() {
+        return new CategoryFragment();
     }
 
 
@@ -30,11 +32,11 @@ public class HotsFragment extends Fragment implements HotsContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hots, container, false);
+        return inflater.inflate(R.layout.fragment_category, container, false);
     }
 
     @Override
-    public void setPresenter(HotsContract.Presenter presenter) {
+    public void setPresenter(CategoryContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

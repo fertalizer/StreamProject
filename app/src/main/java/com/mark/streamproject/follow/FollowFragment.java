@@ -1,4 +1,4 @@
-package com.mark.streamproject.hots;
+package com.mark.streamproject.follow;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import com.mark.streamproject.R;
 
 
-public class HotsFragment extends Fragment implements HotsContract.View {
-    HotsContract.Presenter mPresenter;
+public class FollowFragment extends Fragment implements FollowContract.View {
 
-    public HotsFragment() {}
+    FollowContract.Presenter mPresenter;
 
-    public static HotsFragment newInstance() {
-        return new HotsFragment();
+    public FollowFragment() {}
+
+    public static FollowFragment newInstance() {
+        return new FollowFragment();
     }
 
 
@@ -30,11 +31,11 @@ public class HotsFragment extends Fragment implements HotsContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hots, container, false);
+        return inflater.inflate(R.layout.fragment_follow, container, false);
     }
 
     @Override
-    public void setPresenter(HotsContract.Presenter presenter) {
+    public void setPresenter(FollowContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
