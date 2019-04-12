@@ -17,6 +17,8 @@ public interface MainContract {
 
         void openFollowUi();
 
+
+
     }
 
     interface Presenter extends BasePresenter {
