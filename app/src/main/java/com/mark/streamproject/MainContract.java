@@ -17,7 +17,7 @@ public interface MainContract {
 
         void openFollowUi();
 
-
+        void openStreamUi();
 
     }
 

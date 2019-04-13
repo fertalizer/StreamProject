@@ -65,4 +65,9 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     public void openFollow() {
         mMainView.openFollowUi();
     }
+
+    @Override
+    public void showStreamDialog() {
+        mMainView.openStreamUi();
+    }
 }

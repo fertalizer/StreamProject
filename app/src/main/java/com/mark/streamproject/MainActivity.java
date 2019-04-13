@@ -1,17 +1,17 @@
 package com.mark.streamproject;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mark.streamproject.base.BaseActivity;
+import com.mark.streamproject.dialog.StreamDialog;
+import com.mark.streamproject.util.Constants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -19,6 +19,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private BottomNavigationView mBottomNavigation;
     private Toolbar mToolbar;
+    private StreamDialog mStreamDialog;
 
     private MainMvpController mMainMvpController;
 
@@ -29,7 +30,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         super.onCreate(savedInstanceState);
 
         init();
+        
     }
+
 
     private void init() {
         setContentView(R.layout.activity_main);
@@ -37,7 +40,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mMainMvpController = MainMvpController.create(this);
         mPresenter.openHots();
 
-        setToolbar();
+//        setToolbar();
         setBottomNavigation();
     }
 
@@ -51,6 +54,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         // Retrieve the AppCompact Toolbar
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("");
     }
 
     private void setBottomNavigation() {
@@ -100,5 +104,20 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void openFollowUi() {
         mMainMvpController.findOrCreateFollowView();
+    }
+
+    @Override
+    public void openStreamUi() {
+        if (mStreamDialog == null) {
+
+            mStreamDialog = new StreamDialog();
+            mStreamDialog.setMainPresenter(mPresenter);
+            mStreamDialog.setCancelable(false);
+            mStreamDialog.show(getSupportFragmentManager(), Constants.STREAM);
+
+        } else if (!mStreamDialog.isAdded()) {
+            mStreamDialog.setCancelable(false);
+            mStreamDialog.show(getSupportFragmentManager(), Constants.STREAM);
+        }
     }
 }

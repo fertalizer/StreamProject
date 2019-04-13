@@ -6,4 +6,7 @@
 
     <!-- White Series -->
     <color name="white">#ffffff</color>
+
+    <!-- Black Series -->
+    <color name="black">#000000</color>
 </resources>

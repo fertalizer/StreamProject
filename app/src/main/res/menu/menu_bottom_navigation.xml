@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_nav_home_selected"
-        android:title="" />
+        android:title="首頁" />
 
     <item
         android:id="@+id/navigation_category"
         android:icon="@drawable/ic_nav_cart_selected"
-        android:title="" />
+        android:title="探索" />
 
     <item
         android:id="@+id/navigation_follow"
         android:icon="@drawable/ic_starred"
-        android:title="" />
+        android:title="追隨" />
 
 </menu>

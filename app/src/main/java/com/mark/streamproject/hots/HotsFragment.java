@@ -30,6 +30,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStreamDialog = new StreamDialog();
+        mStreamDialog.setCancelable(false);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_stream:
-                mStreamDialog.show(getFragmentManager(), "Stream");
+                mPresenter.showStreamDialog();
                 break;
             case R.id.button_record:
                 break;

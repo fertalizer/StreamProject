@@ -17,4 +17,9 @@ public class HotsPresenter implements HotsContract.Presenter {
     public void start() {
 
     }
+
+    @Override
+    public void showStreamDialog() {
+
+    }
 }

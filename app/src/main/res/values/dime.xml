@@ -3,6 +3,9 @@
     <!-- Toolbar -->
     <dimen name="height_toolbar">80dp</dimen>
 
+    <!-- Profile -->
+    <dimen name="height_profile">100dp</dimen>
+
     <!-- Bottom Navigation -->
     <dimen name="height_bottom_navigation_main">56dp</dimen>
     <dimen name="size_bottom_nav_icon">36dp</dimen>

@@ -16,5 +16,7 @@ public interface HotsContract {
 
     interface Presenter extends BasePresenter {
 
+        void showStreamDialog();
+
     }
 }

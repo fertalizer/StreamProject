@@ -4,7 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_profile"
+        android:elevation="@dimen/elevation_all"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+            android:id="@+id/image_user"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="32dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shape_mode="circle"
+            app:stroke_color="#009688"
+            app:stroke_width="3dp" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="Mark Ho"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/image_user"
+            app:layout_constraintTop_toTopOf="@+id/image_user" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,6 +48,7 @@
         android:background="@color/white"
         android:elevation="@dimen/elevation_all"
         android:theme="@style/AppTheme.AppBarOverlay"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +62,10 @@
         android:layout_below="@id/toolbar"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_main"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:layout_editor_absoluteX="0dp">
+
+    </LinearLayout>
 
 
     <android.support.design.widget.BottomNavigationView
