@@ -9,4 +9,12 @@
 
     <!-- Black Series -->
     <color name="black">#000000</color>
+
+    <!-- Yellow Series -->
+    <color name="yellow">#ffff00</color>
+
+
+    <color name="top_stroke_color">#0000FF</color>
+    <color name="bottom_stroke_color">#FF0000</color>
+    <color name="main">#00FF00</color>
 </resources>

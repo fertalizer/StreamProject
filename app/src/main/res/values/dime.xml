@@ -8,10 +8,13 @@
 
     <!-- Bottom Navigation -->
     <dimen name="height_bottom_navigation_main">56dp</dimen>
-    <dimen name="size_bottom_nav_icon">36dp</dimen>
+    <dimen name="size_bottom_nav_icon">24dp</dimen>
 
     <!-- General -->
     <dimen name="elevation_all">4dp</dimen>
     <dimen name="height_all_bottom_layout">80dp</dimen>
 
+
+    <dimen name="top_stroke_width">10dp</dimen>
+    <dimen name="bottom_stroke_width">20dp</dimen>
 </resources>

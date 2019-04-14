@@ -14,6 +14,7 @@ import com.mark.streamproject.R;
 import com.mark.streamproject.dialog.StreamDialog;
 
 
+
 public class HotsFragment extends Fragment implements HotsContract.View, View.OnClickListener {
     HotsContract.Presenter mPresenter;
 

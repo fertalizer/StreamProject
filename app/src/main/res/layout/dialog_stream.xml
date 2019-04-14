@@ -2,14 +2,17 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/stroke_another">
 
     <Button
         android:id="@+id/button_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/stroke_another"
         android:text="停止直播"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_start"
@@ -20,7 +23,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/stroke_another"
         android:text="開始直播"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_cancel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +43,8 @@
         android:hint="標題名稱"
         android:inputType="textPersonName"
         android:text="我的直播"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@drawable/edit_cursor_color"
         app:layout_constraintStart_toStartOf="@+id/resolution_group"
         app:layout_constraintTop_toTopOf="@+id/text_title" />
 
@@ -52,14 +62,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="480P" />
+            android:text="480P"
+            android:buttonTint="@color/yellow"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/radiobutton_720"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="720P" />
+            android:text="720P"
+            android:buttonTint="@color/yellow"
+            android:textColor="@color/white" />
     </RadioGroup>
 
     <TextView
@@ -69,6 +83,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/Resolution"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
@@ -80,6 +95,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="@string/BroadcastTitle"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -97,8 +97,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { YouTubeScopes.YOUTUBE };
 
-    private boolean isStreaming = false;
-    private boolean isLoading = false;
+    private boolean isStreaming;
+    private boolean isLoading;
 
     private YouTube mYouTube;
     private LiveBroadcast mLiveBroadcast;
@@ -132,6 +132,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        isStreaming = false;
+        isLoading = false;
+
         mMainHandler = new Handler();
         mScreenStreamer = new KSYScreenStreamer(StreamProject.getAppContext());
 
@@ -183,6 +186,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 }
                 break;
             case R.id.image_dismiss:
+                if (isStreaming) {
+                    stopStream();
+                    new EndLiveBroadcast().execute();
+                }
                 dismiss();
                 break;
             default:
@@ -209,6 +216,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         }
         mScreenStreamer.setOnLogEventListener(null);
         mScreenStreamer.release();
+
+        if (isStreaming) {
+            new EndLiveBroadcast().execute();
+        }
     }
 
     @Override
