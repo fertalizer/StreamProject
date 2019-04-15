@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     compile project(':libscreenstreamer')
-    implementation 'com.google.android.gms:play-services-auth:10.2.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'pub.devrel:easypermissions:0.3.0'
     compile('com.google.api-client:google-api-client-android:1.25.0') {
         exclude group: 'org.apache.httpcomponents'
