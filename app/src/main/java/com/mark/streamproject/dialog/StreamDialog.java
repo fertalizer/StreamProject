@@ -163,6 +163,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         mCredential = GoogleAccountCredential.usingOAuth2(
                 StreamProject.getAppContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+
+        mCredential.setSelectedAccount(mMainPresenter.getGoogleSignInAccount().getAccount());
     }
 
     @Override

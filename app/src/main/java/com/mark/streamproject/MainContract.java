@@ -1,5 +1,8 @@
 package com.mark.streamproject;
 
+import android.accounts.Account;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
 
@@ -10,6 +13,8 @@ import com.mark.streamproject.base.BaseView;
  */
 public interface MainContract {
     interface View extends BaseView<Presenter> {
+
+        GoogleSignInAccount getGoogleSignInAccountIntent();
 
         void openHotsUi();
 
@@ -22,6 +27,8 @@ public interface MainContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        GoogleSignInAccount getGoogleSignInAccount();
 
         void openHots();
 

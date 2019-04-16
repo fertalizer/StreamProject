@@ -1,14 +1,17 @@
 package com.mark.streamproject;
 
+import android.accounts.Account;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
@@ -30,9 +33,22 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         super.onCreate(savedInstanceState);
 
         init();
-        
+
+        GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
+        Log.d(Constants.TAG, "personName = " + account.getDisplayName());
+        Log.d(Constants.TAG, "personGivenName = " + account.getGivenName());
+        Log.d(Constants.TAG, "personFamilyName = " + account.getFamilyName());
+        Log.d(Constants.TAG, "personId = " + account.getId());
+
+        TextView textView = findViewById(R.id.text_name);
+        textView.setText(account.getId());
+
     }
 
+    @Override
+    public GoogleSignInAccount getGoogleSignInAccountIntent() {
+        return this.getIntent().getParcelableExtra("ACCOUNT");
+    }
 
     private void init() {
         setContentView(R.layout.activity_main);

@@ -2,6 +2,7 @@ package com.mark.streamproject;
 
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mark.streamproject.categeory.CategoryContract;
 import com.mark.streamproject.categeory.CategoryPresenter;
 import com.mark.streamproject.follow.FollowContract;
@@ -19,6 +20,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     private HotsPresenter mHotsPresenter;
     private CategoryPresenter mCategoryPresenter;
     private FollowPresenter mFollowPresenter;
+
 
     public MainPresenter(@NonNull MainContract.View mainView) {
         mMainView = checkNotNull(mainView, "mainView cannot be null!");
@@ -40,6 +42,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public GoogleSignInAccount getGoogleSignInAccount() {
+        return mMainView.getGoogleSignInAccountIntent();
     }
 
     /**
