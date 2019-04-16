@@ -63,7 +63,6 @@
         android:layout_height="0dp"
         android:layout_above="@+id/bottom_navigation_main"
         android:layout_below="@id/toolbar"
-        android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/image_down"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"

@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         Log.d(Constants.TAG, "personId = " + account.getId());
 
         TextView textView = findViewById(R.id.text_name);
-        textView.setText(account.getId());
+        textView.setText(account.getDisplayName());
 
     }
 
