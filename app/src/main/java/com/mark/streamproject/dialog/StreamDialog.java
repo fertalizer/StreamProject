@@ -59,6 +59,7 @@ import com.ksyun.media.streamer.logstats.StatsLogReport;
 import com.mark.streamproject.MainContract;
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
+import com.mark.streamproject.util.Constants;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -146,10 +147,13 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         if (mRadioButton480.isChecked()) {
             int videoResolution = StreamerConstants.VIDEO_RESOLUTION_480P;
             mScreenStreamer.setTargetResolution(videoResolution);
+            Log.d(Constants.TAG, "480P");
         } else if (mRadioButton720.isChecked()) {
             int videoResolution = StreamerConstants.VIDEO_RESOLUTION_720P;
             mScreenStreamer.setTargetResolution(videoResolution);
+            Log.d(Constants.TAG, "720P");
         }
+
         mScreenStreamer.setVideoCodecId(AVConst.CODEC_ID_AVC);
         mScreenStreamer.setEncodeMethod(StreamerConstants.ENCODE_METHOD_SOFTWARE);
         mScreenStreamer.setVideoEncodeScene(VideoEncodeFormat.ENCODE_SCENE_SHOWSELF);

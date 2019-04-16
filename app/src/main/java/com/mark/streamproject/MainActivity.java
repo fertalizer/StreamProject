@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
