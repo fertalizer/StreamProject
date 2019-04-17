@@ -17,4 +17,6 @@
     <color name="top_stroke_color">#0000FF</color>
     <color name="bottom_stroke_color">#FF0000</color>
     <color name="main">#00FF00</color>
+
+    <color name="translucent_40">#66000000</color>
 </resources>

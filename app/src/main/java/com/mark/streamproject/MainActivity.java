@@ -1,7 +1,5 @@
 package com.mark.streamproject;
 
-import android.accounts.Account;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -9,13 +7,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.FirebaseApp;
 import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
+import com.squareup.picasso.Picasso;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -24,6 +24,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private BottomNavigationView mBottomNavigation;
     private Toolbar mToolbar;
     private StreamDialog mStreamDialog;
+    private ImageView mUserImage;
+    private TextView mUserName;
 
     private MainMvpController mMainMvpController;
 
@@ -33,21 +35,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        FirebaseApp.initializeApp(this);
         init();
-
-        GoogleSignInAccount account = getIntent().getParcelableExtra("ACCOUNT");
-        Log.d(Constants.TAG, "personName = " + account.getDisplayName());
-        Log.d(Constants.TAG, "personGivenName = " + account.getGivenName());
-        Log.d(Constants.TAG, "personFamilyName = " + account.getFamilyName());
-        Log.d(Constants.TAG, "personId = " + account.getId());
-
-        TextView textView = findViewById(R.id.text_name);
-        textView.setText(account.getDisplayName());
-
+        GoogleSignInAccount googleSignInAccount = getAccountIntent();
+        Log.d(Constants.TAG, googleSignInAccount.getPhotoUrl() + "");
+        Log.d(Constants.TAG, googleSignInAccount.getDisplayName() + "");
+        Log.d(Constants.TAG, googleSignInAccount.getEmail() + "");
     }
 
     @Override
-    public GoogleSignInAccount getGoogleSignInAccountIntent() {
+    public GoogleSignInAccount getAccountIntent() {
         return this.getIntent().getParcelableExtra("ACCOUNT");
     }
 
@@ -59,12 +56,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
 //        setToolbar();
         setBottomNavigation();
+        setUserLayout();
     }
 
 
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
+    }
+
+    private void setUserLayout() {
+        mUserImage = findViewById(R.id.image_user);
+        mUserName = findViewById(R.id.text_name);
+        mPresenter.setUserData();
     }
 
     private void setToolbar() {
@@ -107,6 +111,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 return false;
         }
     };
+
+
 
     @Override
     public void openHotsUi() {

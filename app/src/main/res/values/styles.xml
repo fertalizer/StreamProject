@@ -12,5 +12,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
+    <style name="StreamDialog">
+        <item name="android:windowBackground">@color/translucent_40</item>
+    </style>
+
 
 </resources>

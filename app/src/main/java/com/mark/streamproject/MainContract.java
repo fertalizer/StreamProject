@@ -14,7 +14,7 @@ import com.mark.streamproject.base.BaseView;
 public interface MainContract {
     interface View extends BaseView<Presenter> {
 
-        GoogleSignInAccount getGoogleSignInAccountIntent();
+        GoogleSignInAccount getAccountIntent();
 
         void openHotsUi();
 
@@ -24,17 +24,21 @@ public interface MainContract {
 
         void openStreamUi();
 
+
+
     }
 
     interface Presenter extends BasePresenter {
 
-        GoogleSignInAccount getGoogleSignInAccount();
+        GoogleSignInAccount getAccount();
 
         void openHots();
 
         void openCategory();
 
         void openFollow();
+
+        void setUserData();
 
     }
 }

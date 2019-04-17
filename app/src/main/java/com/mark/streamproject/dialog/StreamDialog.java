@@ -113,6 +113,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setStyle(STYLE_NORMAL, R.style.StreamDialog);
     }
 
     @Nullable
@@ -168,7 +169,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 StreamProject.getAppContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
 
-        mCredential.setSelectedAccount(mMainPresenter.getGoogleSignInAccount().getAccount());
+        mCredential.setSelectedAccount(mMainPresenter.getAccount().getAccount());
     }
 
     @Override

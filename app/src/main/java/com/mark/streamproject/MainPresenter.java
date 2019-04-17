@@ -1,14 +1,21 @@
 package com.mark.streamproject;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mark.streamproject.categeory.CategoryContract;
 import com.mark.streamproject.categeory.CategoryPresenter;
+import com.mark.streamproject.data.User;
 import com.mark.streamproject.follow.FollowContract;
 import com.mark.streamproject.follow.FollowPresenter;
 import com.mark.streamproject.hots.HotsContract;
 import com.mark.streamproject.hots.HotsPresenter;
+import com.mark.streamproject.util.Constants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -20,6 +27,8 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     private HotsPresenter mHotsPresenter;
     private CategoryPresenter mCategoryPresenter;
     private FollowPresenter mFollowPresenter;
+
+    private User mUser;
 
 
     public MainPresenter(@NonNull MainContract.View mainView) {
@@ -40,14 +49,41 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
+    public void setUserData() {
+        mUser = new User();
+        if (mMainView.getAccountIntent().getPhotoUrl() != null) {
+            mUser.setImage(mMainView.getAccountIntent().getPhotoUrl().toString());
+        }
+        mUser.setId(mMainView.getAccountIntent().getId());
+        mUser.setName(mMainView.getAccountIntent().getDisplayName());
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(mUser.getId())
+                .set(mUser)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    @Override
     public void start() {
 
     }
 
     @Override
-    public GoogleSignInAccount getGoogleSignInAccount() {
-        return mMainView.getGoogleSignInAccountIntent();
+    public GoogleSignInAccount getAccount() {
+        return mMainView.getAccountIntent();
     }
+
 
     /**
      * Open Hots
