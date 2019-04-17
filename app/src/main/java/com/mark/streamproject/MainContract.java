@@ -5,6 +5,7 @@ import android.accounts.Account;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
+import com.mark.streamproject.data.User;
 
 /**
  * Created by Mark Ho on April 2019.
@@ -24,7 +25,7 @@ public interface MainContract {
 
         void openStreamUi();
 
-
+        void showUserUi(User user);
 
     }
 
@@ -39,6 +40,8 @@ public interface MainContract {
         void openFollow();
 
         void setUserData();
+
+        User getUserData();
 
     }
 }

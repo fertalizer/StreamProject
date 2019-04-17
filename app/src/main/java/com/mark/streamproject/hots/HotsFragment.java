@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
 
+import java.util.ArrayList;
 
 
 public class HotsFragment extends Fragment implements HotsContract.View, View.OnClickListener {
@@ -54,6 +56,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPresenter.loadHotsData();
     }
 
     @Override
@@ -64,6 +67,11 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     @Override
     public boolean isActive() {
         return !isHidden();
+    }
+
+    @Override
+    public void showHotsUI(ArrayList<User> users) {
+        mHotsAdapter.updateData(users);
     }
 
     @Override

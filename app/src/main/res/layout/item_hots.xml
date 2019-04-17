@@ -7,7 +7,7 @@
     android:background="@drawable/stroke_another">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/image_screen_shot"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
@@ -19,52 +19,52 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-        android:id="@+id/shapedImageView"
+        android:id="@+id/image_hots_user"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/users"
         android:backgroundTint="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/image_screen_shot"
+        app:layout_constraintStart_toStartOf="@+id/image_screen_shot"
+        app:layout_constraintTop_toBottomOf="@+id/image_screen_shot"
         app:shape_mode="circle"
         app:stroke_color="#ffff00"
         app:stroke_width="3dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text_hots_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Mark Ho"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/shapedImageView"
-        app:layout_constraintStart_toEndOf="@+id/shapedImageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/image_hots_user"
+        app:layout_constraintStart_toEndOf="@+id/image_hots_user" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/text_hots_audience_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="996"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/shapedImageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/image_hots_user"
+        app:layout_constraintEnd_toEndOf="@+id/image_screen_shot" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/image_hots_watch"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/view"
         android:backgroundTint="@color/yellow"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toStartOf="@+id/text_hots_audience_number"
+        app:layout_constraintTop_toBottomOf="@+id/image_screen_shot" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/text_hots_room_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -74,7 +74,7 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/shapedImageView"
-        app:layout_constraintTop_toBottomOf="@+id/shapedImageView" />
+        app:layout_constraintStart_toStartOf="@+id/image_hots_user"
+        app:layout_constraintTop_toBottomOf="@+id/image_hots_user" />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.FirebaseApp;
 import com.mark.streamproject.base.BaseActivity;
+import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
 import com.squareup.picasso.Picasso;
@@ -35,7 +36,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        FirebaseApp.initializeApp(this);
         init();
         GoogleSignInAccount googleSignInAccount = getAccountIntent();
         Log.d(Constants.TAG, googleSignInAccount.getPhotoUrl() + "");
@@ -112,7 +112,18 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         }
     };
 
+    @Override
+    public void showUserUi(User user) {
+        mUserName.setText(user.getName());
+        if (!user.getImage().equals("")) {
+            Picasso.get()
+                    .load(user.getImage())
+                    .resize(70, 70)
+                    .centerCrop()
+                    .into(mUserImage);
+        }
 
+    }
 
     @Override
     public void openHotsUi() {
