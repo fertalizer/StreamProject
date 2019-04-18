@@ -1,4 +1,4 @@
-package com.mark.streamproject.Room;
+package com.mark.streamproject.room;
 
 import android.support.annotation.NonNull;
 

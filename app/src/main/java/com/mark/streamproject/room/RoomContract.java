@@ -1,4 +1,4 @@
-package com.mark.streamproject.Room;
+package com.mark.streamproject.room;
 
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
