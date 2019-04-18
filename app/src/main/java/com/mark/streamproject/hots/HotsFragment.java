@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 
 public class HotsFragment extends Fragment implements HotsContract.View, View.OnClickListener {
-    HotsContract.Presenter mPresenter;
+    private HotsContract.Presenter mPresenter;
     private HotsAdapter mHotsAdapter;
 
     StreamDialog mStreamDialog;

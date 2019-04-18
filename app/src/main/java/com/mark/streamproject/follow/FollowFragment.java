@@ -16,7 +16,7 @@ import com.mark.streamproject.StreamProject;
 
 public class FollowFragment extends Fragment implements FollowContract.View {
 
-    FollowContract.Presenter mPresenter;
+    private FollowContract.Presenter mPresenter;
 
     public FollowFragment() {}
 

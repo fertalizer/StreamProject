@@ -27,5 +27,7 @@ public interface HotsContract {
 
         void setHotsData(ArrayList<User> users);
 
+        void openRoom();
+
     }
 }

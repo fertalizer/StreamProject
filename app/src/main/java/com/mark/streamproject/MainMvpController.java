@@ -5,6 +5,8 @@ import android.support.annotation.StringDef;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import com.mark.streamproject.Room.RoomFragment;
+import com.mark.streamproject.Room.RoomPresenter;
 import com.mark.streamproject.categeory.CategoryFragment;
 import com.mark.streamproject.categeory.CategoryPresenter;
 import com.mark.streamproject.follow.FollowFragment;
@@ -31,14 +33,17 @@ public class MainMvpController {
     private CategoryPresenter mCategoryPresenter;
     private FollowPresenter mFollowPresenter;
 
+    private RoomPresenter mRoomPresenter;
+
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
-            HOTS, CATEGORY, FOLLOW
+            HOTS, CATEGORY, FOLLOW, ROOM
     })
     public @interface FragmentType {}
     static final String HOTS    = "HOTS";
     static final String CATEGORY = "CATEGORY";
     static final String FOLLOW    = "FOLLOW";
+    static final String ROOM  = "ROOM";
 
 
     private MainMvpController(@NonNull FragmentActivity activity) {
@@ -97,6 +102,18 @@ public class MainMvpController {
             mMainPresenter.setFollowPresenter(mFollowPresenter);
             followFragment.setPresenter(mMainPresenter);
         }
+    }
+
+    /**
+     * Detail View
+     */
+    void findOrCreateRoomView() {
+
+        RoomFragment roomFragment = createRoomFragment();
+
+        mRoomPresenter = new RoomPresenter(roomFragment);
+        mMainPresenter.setRoomPresenter(mRoomPresenter);
+        roomFragment.setPresenter(mMainPresenter);
     }
 
 
@@ -161,6 +178,20 @@ public class MainMvpController {
         return followFragment;
     }
 
+    /**
+     * Detail Fragment
+     * @return DetailFragment
+     */
+    @NonNull
+    private RoomFragment createRoomFragment() {
+
+        RoomFragment roomFragment = RoomFragment.newInstance();
+
+        ActivityUtils.addFragmentByTag(
+                getFragmentManager(), roomFragment, ROOM);
+
+        return roomFragment;
+    }
 
 
 

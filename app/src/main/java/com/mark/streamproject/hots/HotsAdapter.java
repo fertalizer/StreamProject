@@ -52,6 +52,13 @@ public class HotsAdapter extends RecyclerView.Adapter {
         public HotsViewHolder(View itemView) {
             super(itemView);
             mTextName = itemView.findViewById(R.id.text_hots_name);
+
+            itemView.findViewById(R.id.layout_hots).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPresenter.openRoom();
+                }
+            });
         }
 
         public TextView getTextName() {

@@ -62,4 +62,9 @@ public class HotsPresenter implements HotsContract.Presenter {
     public void setHotsData(ArrayList<User> users) {
         mHotsView.showHotsUI(users);
     }
+
+    @Override
+    public void openRoom() {
+
+    }
 }

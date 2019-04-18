@@ -12,6 +12,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mark.streamproject.Room.RoomContract;
+import com.mark.streamproject.Room.RoomPresenter;
 import com.mark.streamproject.categeory.CategoryContract;
 import com.mark.streamproject.categeory.CategoryPresenter;
 import com.mark.streamproject.data.User;
@@ -26,13 +28,15 @@ import java.util.ArrayList;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MainPresenter implements MainContract.Presenter, HotsContract.Presenter,
-        CategoryContract.Presenter, FollowContract.Presenter {
+        CategoryContract.Presenter, FollowContract.Presenter, RoomContract.Presenter {
 
     private MainContract.View mMainView;
 
     private HotsPresenter mHotsPresenter;
     private CategoryPresenter mCategoryPresenter;
     private FollowPresenter mFollowPresenter;
+
+    private RoomPresenter mRoomPresenter;
 
     private User mUser;
 
@@ -52,6 +56,10 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     void setFollowPresenter(FollowPresenter followPresenter) {
         mFollowPresenter = checkNotNull(followPresenter);
+    }
+
+    void setRoomPresenter(RoomPresenter roomPresenter) {
+        mRoomPresenter = checkNotNull(roomPresenter);
     }
 
     @Override
@@ -155,5 +163,10 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void showStreamDialog() {
         mMainView.openStreamUi();
+    }
+
+    @Override
+    public void openRoom() {
+        mMainView.openRoomUi();
     }
 }

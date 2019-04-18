@@ -17,7 +17,7 @@ import com.mark.streamproject.hots.HotsContract;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
 
-    CategoryContract.Presenter mPresenter;
+    private CategoryContract.Presenter mPresenter;
 
     public CategoryFragment() {}
 

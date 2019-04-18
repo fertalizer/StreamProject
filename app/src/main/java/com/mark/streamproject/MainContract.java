@@ -27,6 +27,8 @@ public interface MainContract {
 
         void showUserUi(User user);
 
+        void openRoomUi();
+
     }
 
     interface Presenter extends BasePresenter {

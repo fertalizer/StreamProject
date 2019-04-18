@@ -154,4 +154,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mStreamDialog.show(getSupportFragmentManager(), Constants.STREAM);
         }
     }
+
+    @Override
+    public void openRoomUi() {
+        mMainMvpController.findOrCreateRoomView();
+    }
 }
