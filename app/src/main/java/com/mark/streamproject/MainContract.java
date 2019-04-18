@@ -29,6 +29,14 @@ public interface MainContract {
 
         void openRoomUi();
 
+        void showBottomNavigationUi();
+
+        void hideBottomNavigationUi();
+
+        void showProfileUi();
+
+        void hideProfileUi();
+
     }
 
     interface Presenter extends BasePresenter {

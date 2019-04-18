@@ -126,6 +126,26 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
+    public void showBottomNavigationUi() {
+        mBottomNavigation.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBottomNavigationUi() {
+        mBottomNavigation.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProfileUi() {
+        findViewById(R.id.layout_profile).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProfileUi() {
+        findViewById(R.id.layout_profile).setVisibility(View.GONE);
+    }
+
+    @Override
     public void openHotsUi() {
         mMainMvpController.findOrCreateHotsView();
     }

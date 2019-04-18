@@ -16,6 +16,15 @@ public class RoomPresenter implements RoomContract.Presenter{
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public void hideProfileAndBottomNavigation() {
+
+    }
+
+    @Override
+    public void showProfileAndBottomNavigation() {
 
     }
 }

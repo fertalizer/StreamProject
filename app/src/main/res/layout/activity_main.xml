@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/layout_profile"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_profile"
         android:elevation="@dimen/elevation_all"
@@ -65,7 +65,7 @@
         android:layout_below="@id/toolbar"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/image_down"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/layout_profile"
         tools:layout_editor_absoluteX="0dp">
 
     </LinearLayout>

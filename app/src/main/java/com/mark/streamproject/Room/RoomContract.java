@@ -10,5 +10,9 @@ public interface RoomContract {
 
     interface Presenter extends BasePresenter {
 
+        void hideProfileAndBottomNavigation();
+
+        void showProfileAndBottomNavigation();
+
     }
 }

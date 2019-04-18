@@ -1,6 +1,7 @@
 package com.mark.streamproject.Room;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +10,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.StreamProject;
 
 public class RoomFragment extends Fragment implements RoomContract.View {
 
@@ -41,12 +44,26 @@ public class RoomFragment extends Fragment implements RoomContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_room, container, false);
+        TextView textView = root.findViewById(R.id.text_room);
+        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPresenter.hideProfileAndBottomNavigation();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.showProfileAndBottomNavigation();
     }
 
     @Override

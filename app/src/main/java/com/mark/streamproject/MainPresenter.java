@@ -124,6 +124,18 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
 
+    @Override
+    public void hideProfileAndBottomNavigation() {
+        mMainView.hideBottomNavigationUi();
+        mMainView.hideProfileUi();
+    }
+
+    @Override
+    public void showProfileAndBottomNavigation() {
+        mMainView.showBottomNavigationUi();
+        mMainView.showProfileUi();
+    }
+
     /**
      * Open Hots
      */

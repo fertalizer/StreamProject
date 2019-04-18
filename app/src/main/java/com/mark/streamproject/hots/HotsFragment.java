@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.StreamProject;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
 
@@ -81,6 +83,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
                 mPresenter.showStreamDialog();
                 break;
             case R.id.button_record:
+                Toast.makeText(StreamProject.getAppContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             default:
         }
