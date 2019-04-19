@@ -1,6 +1,6 @@
 package com.mark.streamproject.follow;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

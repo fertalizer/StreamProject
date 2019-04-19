@@ -1,21 +1,26 @@
 package com.mark.streamproject.room;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.mark.streamproject.R;
-import com.mark.streamproject.StreamProject;
+import com.mark.streamproject.util.Constants;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class RoomFragment extends Fragment implements RoomContract.View {
 
     private RoomContract.Presenter mPresenter;
+
+    private YouTubePlayerView mYouTubePlayerView;
 
     public RoomFragment() {
 
@@ -42,8 +47,19 @@ public class RoomFragment extends Fragment implements RoomContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_room, container, false);
-        TextView textView = root.findViewById(R.id.text_room);
-        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+
+
+        mYouTubePlayerView = root.findViewById(R.id.player);
+
+        getLifecycle().addObserver(mYouTubePlayerView);
+        mYouTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = "QgjEF1EF8gw";
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+
         return root;
     }
 
@@ -62,6 +78,8 @@ public class RoomFragment extends Fragment implements RoomContract.View {
     public void onDestroy() {
         super.onDestroy();
         mPresenter.showProfileAndBottomNavigation();
+        mYouTubePlayerView.release();
+        Log.d(Constants.TAG, "Destroyed");
     }
 
     @Override

@@ -5,14 +5,12 @@ public class User {
     private String mImage;
     private String mId;
     private boolean mStreaming;
-    private String mWatchId;
 
     public User() {
         mName = "";
         mImage = "";
         mId = "";
         mStreaming = false;
-        mWatchId = "";
     }
 
     public String getName() {
@@ -37,14 +35,6 @@ public class User {
 
     public void setStreaming(boolean streaming) {
         mStreaming = streaming;
-    }
-
-    public String getWatchId() {
-        return mWatchId;
-    }
-
-    public void setWatchId(String watchId) {
-        mWatchId = watchId;
     }
 
     public String getId() {

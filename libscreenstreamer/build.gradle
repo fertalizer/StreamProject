@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -38,7 +38,7 @@ android {
 
 dependencies {
     //compile fileTree(dir: 'libs', include: '*.jar')
-    api 'com.android.support:support-v4:24.1.1'
+    api 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     api 'com.ksyun.media:libksylive-java:2.4.2'
     api 'com.ksyun.media:libksylive-arm64:2.4.2'
     api 'com.ksyun.media:libksylive-armv7a:2.4.2'

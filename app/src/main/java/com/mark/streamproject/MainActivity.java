@@ -1,9 +1,10 @@
 package com.mark.streamproject;
 
+import android.app.ActivityManager;
 import android.os.Bundle;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.FirebaseApp;
 import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         Log.d(Constants.TAG, googleSignInAccount.getPhotoUrl() + "");
         Log.d(Constants.TAG, googleSignInAccount.getDisplayName() + "");
         Log.d(Constants.TAG, googleSignInAccount.getEmail() + "");
+
     }
 
     @Override
@@ -87,7 +88,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 (BottomNavigationMenuView) mBottomNavigation.getChildAt(0);
 
         for (int i = 0; i < menuView.getChildCount(); i++) {
-            final View iconView = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
             final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
             layoutParams.height = (int) getResources().getDimension(R.dimen.size_bottom_nav_icon);
             layoutParams.width = (int) getResources().getDimension(R.dimen.size_bottom_nav_icon);

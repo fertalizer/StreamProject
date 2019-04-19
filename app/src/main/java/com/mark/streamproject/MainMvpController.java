@@ -1,9 +1,9 @@
 package com.mark.streamproject;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringDef;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.mark.streamproject.room.RoomFragment;
 import com.mark.streamproject.room.RoomPresenter;

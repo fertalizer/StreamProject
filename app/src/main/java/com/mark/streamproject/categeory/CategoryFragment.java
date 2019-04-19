@@ -1,10 +1,8 @@
 package com.mark.streamproject.categeory;
 
-import android.content.Context;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
-import com.mark.streamproject.hots.HotsContract;
 
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {

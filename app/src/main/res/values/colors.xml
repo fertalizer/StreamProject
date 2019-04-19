@@ -13,6 +13,9 @@
     <!-- Yellow Series -->
     <color name="yellow">#FFFF00</color>
 
+    <!-- Gray Series -->
+    <color name="gray">#686868</color>
+
 
     <color name="top_stroke_color">#0000FF</color>
     <color name="bottom_stroke_color">#FF0000</color>

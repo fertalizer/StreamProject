@@ -2,7 +2,7 @@ package com.mark.streamproject;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.mark.streamproject.util.Constants;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,6 +37,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         findViewById(R.id.button_login).setOnClickListener(this);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("ACCOUNT",account);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
