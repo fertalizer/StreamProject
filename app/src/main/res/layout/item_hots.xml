@@ -5,7 +5,8 @@
     android:id="@+id/layout_hots"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/stroke_another">
+    android:background="@drawable/stroke_another"
+    android:layout_margin="3dp">
 
     <ImageView
         android:id="@+id/image_screen_shot"
@@ -36,7 +37,7 @@
         android:id="@+id/text_hots_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:text="Mark Ho"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -50,8 +51,9 @@
         android:text="996"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/image_hots_user"
-        app:layout_constraintEnd_toEndOf="@+id/image_screen_shot" />
+        app:layout_constraintBottom_toBottomOf="@+id/image_hots_watch"
+        app:layout_constraintEnd_toEndOf="@+id/image_screen_shot"
+        app:layout_constraintTop_toTopOf="@+id/image_hots_watch" />
 
     <ImageView
         android:id="@+id/image_hots_watch"
@@ -69,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Title"
         android:textColor="@color/white"

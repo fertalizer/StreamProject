@@ -137,8 +137,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         Window window = getDialog().getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        mAlertDialog = new AlertDialog.Builder(getActivity())
+        mAlertDialog = new AlertDialog.Builder(getActivity(), R.style.CustomDialog)
                 .setView(R.layout.dialog_loading)
+                .setCancelable(false)
                 .create();
 
 
