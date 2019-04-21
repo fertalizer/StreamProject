@@ -203,6 +203,7 @@
             android:inputType="textMultiLine"
             android:text=""
             android:textColor="@color/white"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button3"
             app:layout_constraintStart_toStartOf="parent"

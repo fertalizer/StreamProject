@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -23,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -104,7 +107,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private YouTube mYouTube;
     private LiveBroadcast mLiveBroadcast;
 
-    public StreamDialog() {}
+    public StreamDialog() {
+    }
 
     public void setMainPresenter(MainContract.Presenter mainPresenter) {
         mMainPresenter = mainPresenter;
@@ -127,6 +131,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         view.findViewById(R.id.button_start).setOnClickListener(this);
         view.findViewById(R.id.button_cancel).setOnClickListener(this);
         view.findViewById(R.id.image_dismiss).setOnClickListener(this);
+
+        Window window = getDialog().getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         return view;
     }
@@ -742,8 +749,12 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                         .getIngestionInfo().getStreamName();
 
 
-                Log.d("Mark", "share_addr = " + share_addr);
+                Log.d("Mark", "image_url_1 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/0.jpg");
+                Log.d("Mark", "image_url_2 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/1.jpg");
+                Log.d("Mark", "image_url_3 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/2.jpg");
+                Log.d("Mark", "image_url_4 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/3.jpg");
                 Log.d("Mark", "push_addr = " + push_addr);
+                Log.d("Mark", "share_addr = " + share_addr);
 
 
             } catch (

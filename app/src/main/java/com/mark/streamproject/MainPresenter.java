@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.room.RoomContract;
 import com.mark.streamproject.room.RoomPresenter;
 import com.mark.streamproject.categeory.CategoryContract;
@@ -38,6 +39,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     private RoomPresenter mRoomPresenter;
 
     private User mUser;
+    private Room mRoom;
 
 
     public MainPresenter(@NonNull MainContract.View mainView) {
