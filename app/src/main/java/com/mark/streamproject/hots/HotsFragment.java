@@ -1,5 +1,6 @@
 package com.mark.streamproject.hots;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +48,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
         RecyclerView recyclerView = root.findViewById(R.id.recycler_hots);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mHotsAdapter);
+
 
         root.findViewById(R.id.button_stream).setOnClickListener(this);
         root.findViewById(R.id.button_record).setOnClickListener(this);

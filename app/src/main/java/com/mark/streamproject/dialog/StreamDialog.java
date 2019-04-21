@@ -3,6 +3,7 @@ package com.mark.streamproject.dialog;
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -81,6 +82,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private RadioButton mRadioButton480;
     private RadioButton mRadioButton720;
     private EditText mEditTextTitle;
+    private AlertDialog mAlertDialog;
 
     private final static int PERMISSION_REQUEST_RECORD_AUDIO = 2;
     private final static int OVERLAY_PERMISSION_RESULT_CODE = 10;
@@ -134,6 +136,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
 
         Window window = getDialog().getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        mAlertDialog = new AlertDialog.Builder(getActivity())
+                .setView(R.layout.dialog_loading)
+                .create();
+
 
         return view;
     }
@@ -772,11 +779,17 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             return null;
         }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mAlertDialog.show();
+        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.d("Mark", "OK");
+            mAlertDialog.dismiss();
             mScreenStreamer.setUrl(push_addr);
             startStream();
             isLoading = false;

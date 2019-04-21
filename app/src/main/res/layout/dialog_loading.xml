@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_progress_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/stroke_another"
+    android:orientation="vertical">
+
+    <com.agrawalsuneet.loaderspack.loaders.CircularSticksLoader
+        android:id="@+id/circularSticksLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:circularsticks_animDuration="100"
+        app:circularsticks_firstShadowColor="#aa000000"
+        app:circularsticks_innerCircleRadius="20dp"
+        app:circularsticks_noOfSticks="20"
+        app:circularsticks_outerCircleRadius="30dp"
+        app:circularsticks_secondShadowColor="#77000000"
+        app:circularsticks_selectedStickColor="@color/black"
+        app:circularsticks_showRunningShadow="true"
+        app:circularsticks_stickColor="@color/yellow"
+        app:circularsticks_viewBackgroundColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="@string/please_wait"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circularSticksLoader"
+        app:layout_constraintStart_toEndOf="@+id/circularSticksLoader"
+        app:layout_constraintTop_toTopOf="@+id/circularSticksLoader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
