@@ -53,7 +53,7 @@ public interface MainContract {
 
         User getUserData();
 
-
+        void createRoom(String title, String tag, String image, String watchId, long publishTime);
 
     }
 }

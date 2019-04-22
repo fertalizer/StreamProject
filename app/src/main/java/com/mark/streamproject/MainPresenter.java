@@ -39,7 +39,6 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     private RoomPresenter mRoomPresenter;
 
     private User mUser;
-    private Room mRoom;
 
 
     public MainPresenter(@NonNull MainContract.View mainView) {
@@ -112,6 +111,16 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         });
 
         return mUser;
+    }
+
+    @Override
+    public void createRoom(String title, String tag, String image, String watchId, long publishTime) {
+        Room room = new Room();
+        room.setTitle(title);
+        room.setTag(tag);
+        room.setImage(image);
+        room.setWatchId(watchId);
+
     }
 
     @Override
