@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.client.util.DateTime;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,7 +39,6 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     private RoomPresenter mRoomPresenter;
 
-    private User mUser;
 
 
     public MainPresenter(@NonNull MainContract.View mainView) {
@@ -64,21 +64,21 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     @Override
     public void setUserData() {
-        mUser = new User();
+        User user = new User();
         if (mMainView.getAccountIntent().getPhotoUrl() != null) {
-            mUser.setImage(mMainView.getAccountIntent().getPhotoUrl().toString());
+            user.setImage(mMainView.getAccountIntent().getPhotoUrl().toString());
         }
-        mUser.setId(mMainView.getAccountIntent().getId());
-        mUser.setName(mMainView.getAccountIntent().getDisplayName());
+        user.setId(mMainView.getAccountIntent().getId());
+        user.setName(mMainView.getAccountIntent().getDisplayName());
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("User").document(mUser.getId())
-                .set(mUser)
+        db.collection("User").document(user.getId())
+                .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
-                        mMainView.showUserUi(getUserData());
+                        getUserData();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -90,7 +90,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public User getUserData() {
+    public void getUserData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("User").document(mMainView.getAccountIntent().getId());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -100,7 +100,8 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
-                        mUser = document.toObject(User.class);
+                        User user = document.toObject(User.class);
+                        mMainView.showUserUi(user);
                     } else {
                         Log.d(Constants.TAG, "No such document");
                     }
@@ -109,8 +110,6 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                 }
             }
         });
-
-        return mUser;
     }
 
     @Override
@@ -120,6 +119,22 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         room.setTag(tag);
         room.setImage(image);
         room.setWatchId(watchId);
+        room.setPublishTime(publishTime);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Room").document()
+                .set(room)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
 
     }
 
@@ -162,8 +177,8 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public void setHotsData(ArrayList<User> users) {
-        mHotsPresenter.setHotsData(users);
+    public void setHotsData(ArrayList<Room> rooms) {
+        mHotsPresenter.setHotsData(rooms);
     }
 
     /**

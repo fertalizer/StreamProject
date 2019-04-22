@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class HotsAdapter extends RecyclerView.Adapter {
     private HotsContract.Presenter mPresenter;
 
-    private ArrayList<User> mHotsDataList = new ArrayList<>();
+    private ArrayList<Room> mHotsDataList = new ArrayList<>();
 
     public HotsAdapter(HotsContract.Presenter presenter) {
         mPresenter = presenter;
@@ -35,8 +36,8 @@ public class HotsAdapter extends RecyclerView.Adapter {
 
     }
 
-    private void bindHotsViewHolder(HotsViewHolder holder, User user) {
-        holder.getTextName().setText(user.getName());
+    private void bindHotsViewHolder(HotsViewHolder holder, Room room) {
+        holder.getTextTitle().setText(room.getTitle());
     }
 
 
@@ -47,10 +48,12 @@ public class HotsAdapter extends RecyclerView.Adapter {
 
     private class HotsViewHolder extends RecyclerView.ViewHolder {
         private TextView mTextName;
+        private TextView mTextTitle;
 
         public HotsViewHolder(View itemView) {
             super(itemView);
             mTextName = itemView.findViewById(R.id.text_hots_name);
+            mTextTitle = itemView.findViewById(R.id.text_hots_room_title);
 
             itemView.findViewById(R.id.layout_hots).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,9 +66,13 @@ public class HotsAdapter extends RecyclerView.Adapter {
         public TextView getTextName() {
             return mTextName;
         }
+
+        public TextView getTextTitle() {
+            return mTextTitle;
+        }
     }
 
-    public void updateData(ArrayList<User> hotsDataList) {
+    public void updateData(ArrayList<Room> hotsDataList) {
         mHotsDataList = hotsDataList;
         notifyDataSetChanged();
     }

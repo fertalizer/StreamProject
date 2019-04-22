@@ -5,9 +5,12 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 
 import java.util.ArrayList;
@@ -36,19 +39,19 @@ public class HotsPresenter implements HotsContract.Presenter {
     @Override
     public void loadHotsData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("User")
-                .whereEqualTo("streaming", true)
+        db.collection("Room")
+                .orderBy("publishTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<User> users = new ArrayList<>();
+                            ArrayList<Room> rooms = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.i("Firebase", document.getId() + " => " + document.getData());
-                                users.add(document.toObject(User.class));
+                                rooms.add(document.toObject(Room.class));
                             }
-                            setHotsData(users);
+                            setHotsData(rooms);
                         } else {
                             Log.d("Firebase", "Error getting documents: ", task.getException());
                         }
@@ -58,8 +61,8 @@ public class HotsPresenter implements HotsContract.Presenter {
     }
 
     @Override
-    public void setHotsData(ArrayList<User> users) {
-        mHotsView.showHotsUI(users);
+    public void setHotsData(ArrayList<Room> rooms) {
+        mHotsView.showHotsUI(rooms);
     }
 
     @Override

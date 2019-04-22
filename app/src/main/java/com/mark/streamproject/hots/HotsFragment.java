@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
 
@@ -72,8 +73,8 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     }
 
     @Override
-    public void showHotsUI(ArrayList<User> users) {
-        mHotsAdapter.updateData(users);
+    public void showHotsUI(ArrayList<Room> rooms) {
+        mHotsAdapter.updateData(rooms);
     }
 
     @Override

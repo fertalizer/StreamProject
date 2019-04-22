@@ -764,6 +764,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 Log.d("Mark", "push_addr = " + push_addr);
                 Log.d("Mark", "share_addr = " + share_addr);
 
+                String tag = "Entertainment";
+                String image = "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/0.jpg";
+                mMainPresenter.createRoom(title, tag, image, returnedBroadcast.getId(), time);
+
 
             } catch (
                     GoogleJsonResponseException e) {

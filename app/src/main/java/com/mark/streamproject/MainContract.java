@@ -3,6 +3,7 @@ package com.mark.streamproject;
 import android.accounts.Account;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.client.util.DateTime;
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
 import com.mark.streamproject.data.User;
@@ -51,7 +52,7 @@ public interface MainContract {
 
         void setUserData();
 
-        User getUserData();
+        void getUserData();
 
         void createRoom(String title, String tag, String image, String watchId, long publishTime);
 

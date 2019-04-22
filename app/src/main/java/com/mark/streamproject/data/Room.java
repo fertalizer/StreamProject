@@ -1,5 +1,7 @@
 package com.mark.streamproject.data;
 
+import com.google.api.client.util.DateTime;
+
 public class Room {
 //    private User mStreamer;
     private String mWatchId;
@@ -7,7 +9,7 @@ public class Room {
     private String mTag;
     private String mImage;
     private long mPublishTime;
-    private int mlike;
+    private int mLike;
     private int mDislike;
 
     public Room() {
@@ -16,7 +18,7 @@ public class Room {
         mTag = "";
         mImage = "";
         mPublishTime = -1;
-        mlike = 0;
+        mLike = 0;
         mDislike = 0;
     }
 
@@ -52,20 +54,12 @@ public class Room {
         mImage = image;
     }
 
-    public long getPublishTime() {
-        return mPublishTime;
+    public int getLike() {
+        return mLike;
     }
 
-    public void setPublishTime(long publishTime) {
-        mPublishTime = publishTime;
-    }
-
-    public int getMlike() {
-        return mlike;
-    }
-
-    public void setMlike(int mlike) {
-        this.mlike = mlike;
+    public void setLike(int like) {
+        this.mLike = like;
     }
 
     public int getDislike() {
@@ -74,5 +68,13 @@ public class Room {
 
     public void setDislike(int dislike) {
         mDislike = dislike;
+    }
+
+    public long getPublishTime() {
+        return mPublishTime;
+    }
+
+    public void setPublishTime(long publishTime) {
+        mPublishTime = publishTime;
     }
 }

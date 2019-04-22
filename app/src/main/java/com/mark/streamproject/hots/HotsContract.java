@@ -2,6 +2,7 @@ package com.mark.streamproject.hots;
 
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public interface HotsContract {
     interface View extends BaseView<Presenter> {
         boolean isActive();
 
-        void showHotsUI(ArrayList<User> users);
+        void showHotsUI(ArrayList<Room> rooms);
     }
 
     interface Presenter extends BasePresenter {
@@ -25,7 +26,7 @@ public interface HotsContract {
 
         void loadHotsData();
 
-        void setHotsData(ArrayList<User> users);
+        void setHotsData(ArrayList<Room> rooms);
 
         void openRoom();
 
