@@ -66,7 +66,7 @@ public class HotsPresenter implements HotsContract.Presenter {
     }
 
     @Override
-    public void openRoom() {
+    public void openRoom(Room room) {
 
     }
 }

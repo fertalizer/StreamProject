@@ -15,7 +15,9 @@
         android:layout_marginBottom="100dp"
         android:background="@drawable/stroke_another"
         android:text="Log-in"
+        android:textAlignment="center"
         android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

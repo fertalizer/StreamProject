@@ -5,6 +5,7 @@ import androidx.annotation.StringDef;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.room.RoomFragment;
 import com.mark.streamproject.room.RoomPresenter;
 import com.mark.streamproject.categeory.CategoryFragment;
@@ -107,11 +108,12 @@ public class MainMvpController {
     /**
      * Detail View
      */
-    void findOrCreateRoomView() {
+    void findOrCreateRoomView(Room room) {
 
         RoomFragment roomFragment = createRoomFragment();
 
         mRoomPresenter = new RoomPresenter(roomFragment);
+        mRoomPresenter.setRoomData(room);
         mMainPresenter.setRoomPresenter(mRoomPresenter);
         roomFragment.setPresenter(mMainPresenter);
     }

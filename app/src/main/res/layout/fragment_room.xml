@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_room_profile"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:background="@drawable/stroke_another"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +21,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_room_tag"
             app:layout_constraintTop_toBottomOf="@+id/text_room_tag"
             app:shape_mode="circle"
@@ -29,8 +31,8 @@
 
         <ImageView
             android:id="@+id/image_view"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/view"
             android:backgroundTint="@color/yellow"
@@ -85,9 +87,9 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/dislike"
             android:backgroundTint="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@+id/text_dislike"
-            app:layout_constraintEnd_toStartOf="@+id/text_dislike"
-            app:layout_constraintTop_toTopOf="@+id/text_dislike" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+            app:layout_constraintEnd_toStartOf="@+id/text_hots_dislike"
+            app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
         <ImageView
             android:id="@+id/image_like"
@@ -96,12 +98,12 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/like"
             android:backgroundTint="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="@+id/text_dislike"
-            app:layout_constraintEnd_toStartOf="@+id/text_like"
-            app:layout_constraintTop_toTopOf="@+id/text_dislike" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+            app:layout_constraintEnd_toStartOf="@+id/text_hots_like"
+            app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
         <TextView
-            android:id="@+id/text_dislike"
+            android:id="@+id/text_hots_dislike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -113,16 +115,16 @@
             app:layout_constraintTop_toTopOf="@+id/text_room_tag" />
 
         <TextView
-            android:id="@+id/text_like"
+            android:id="@+id/text_hots_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
             android:text="6"
             android:textAlignment="textEnd"
             android:textColor="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="@+id/text_dislike"
+            app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
             app:layout_constraintEnd_toStartOf="@+id/image_dislike"
-            app:layout_constraintTop_toTopOf="@+id/text_dislike" />
+            app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
         <TextView
             android:id="@+id/textView8"
@@ -171,15 +173,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="20dp"
+        <TextView
+            android:id="@+id/text_room_send"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/send"
-            android:backgroundTint="@color/yellow"
-            android:text="Button"
+            android:text="@string/send"
+            android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/edit_room_message" />
 
@@ -196,7 +197,7 @@
             android:textColor="@color/white"
             android:textCursorDrawable="@drawable/edit_cursor_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/text_room_send"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

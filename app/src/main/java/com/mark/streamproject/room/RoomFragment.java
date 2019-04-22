@@ -1,5 +1,6 @@
 package com.mark.streamproject.room;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.StreamProject;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.util.Constants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -21,6 +25,8 @@ public class RoomFragment extends Fragment implements RoomContract.View {
     private RoomContract.Presenter mPresenter;
 
     private YouTubePlayerView mYouTubePlayerView;
+
+    private Room mRoom;
 
     public RoomFragment() {
 
@@ -47,7 +53,8 @@ public class RoomFragment extends Fragment implements RoomContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_room, container, false);
-
+        TextView textView = root.findViewById(R.id.text_room_send);
+        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
 
         mYouTubePlayerView = root.findViewById(R.id.player);
 
@@ -67,6 +74,11 @@ public class RoomFragment extends Fragment implements RoomContract.View {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.hideProfileAndBottomNavigation();
+    }
+
+    @Override
+    public void showRoomUi(Room room) {
+        mRoom = room;
     }
 
     @Override

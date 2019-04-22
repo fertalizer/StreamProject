@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.api.client.util.DateTime;
 import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 
 /**
@@ -28,7 +29,7 @@ public interface MainContract {
 
         void showUserUi(User user);
 
-        void openRoomUi();
+        void openRoomUi(Room room);
 
         void showBottomNavigationUi();
 

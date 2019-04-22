@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mark.streamproject.base.BaseActivity;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
@@ -177,7 +178,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    public void openRoomUi() {
-        mMainMvpController.findOrCreateRoomView();
+    public void openRoomUi(Room room) {
+        mMainMvpController.findOrCreateRoomView(room);
     }
 }

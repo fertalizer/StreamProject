@@ -7,5 +7,6 @@
 
     <string name="Resolution">畫質設定</string>
     <string name="BroadcastTitle">直播標題</string>
-    <string name="please_wait">請稍候 ...</string>
+    <string name="please_wait">創建直播頻道中 ...</string>
+    <string name="send">Send</string>
 </resources>

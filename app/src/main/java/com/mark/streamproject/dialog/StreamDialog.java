@@ -109,6 +109,12 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private YouTube mYouTube;
     private LiveBroadcast mLiveBroadcast;
 
+    private String mTitle;
+    private String mTag;
+    private String mImage;
+    private String mWatchId;
+    private long mPublishTime;
+
     public StreamDialog() {
     }
 
@@ -638,7 +644,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private class CreateEventTask extends AsyncTask<Void, Void, Void> {
         private YouTube youTube = null;
         private Exception mLastError = null;
-        private String title;
         private String push_addr;
         private String share_addr;
         private LiveBroadcast returnedBroadcast;
@@ -651,7 +656,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     transport, jsonFactory, credential)
                     .setApplicationName("YouTube Data API Android Quickstart")
                     .build();
-            title = mEditTextTitle.getText().toString().trim();
+            mTitle = mEditTextTitle.getText().toString().trim();
         }
 
         /**
@@ -661,10 +666,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         protected Void doInBackground(Void... voids) {
             try {
 
-                System.out.println("You chose " + title + " for broadcast title.");
+                System.out.println("You chose " + mTitle + " for broadcast title.");
 
                 LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
-                broadcastSnippet.setTitle(title);
+                broadcastSnippet.setTitle(mTitle);
                 long time = System.currentTimeMillis();
                 broadcastSnippet.setPublishedAt(new DateTime(time));
                 broadcastSnippet.setScheduledStartTime(new DateTime(time));
@@ -703,11 +708,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                         "  - Scheduled End Time: " + returnedBroadcast.getSnippet().getScheduledEndTime());
 
 
-                System.out.println("You chose " + title + " for stream title.");
+                System.out.println("You chose " + mTitle + " for stream title.");
 
 
                 LiveStreamSnippet streamSnippet = new LiveStreamSnippet();
-                streamSnippet.setTitle(title);
+                streamSnippet.setTitle(mTitle);
 
                 IngestionInfo ingestionInfo = new IngestionInfo();
                 ingestionInfo.setStreamName("Education");
@@ -764,10 +769,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 Log.d("Mark", "push_addr = " + push_addr);
                 Log.d("Mark", "share_addr = " + share_addr);
 
-                String tag = "Entertainment";
-                String image = "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/0.jpg";
-                mMainPresenter.createRoom(title, tag, image, returnedBroadcast.getId(), time);
-
+                mTag = "Entertainment";
+                mImage = "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/0.jpg";
+                mWatchId = returnedBroadcast.getId();
+                mPublishTime = time;
+                mMainPresenter.createRoom(mTitle, mTag, mImage, mWatchId, mPublishTime);
 
             } catch (
                     GoogleJsonResponseException e) {

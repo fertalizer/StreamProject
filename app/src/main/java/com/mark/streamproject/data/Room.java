@@ -8,6 +8,9 @@ public class Room {
     private String mTitle;
     private String mTag;
     private String mImage;
+    private String mStreamerName;
+    private String mStreamerId;
+    private String mStreamerImage;
     private long mPublishTime;
     private int mLike;
     private int mDislike;
@@ -17,6 +20,9 @@ public class Room {
         mTitle = "";
         mTag = "";
         mImage = "";
+        mStreamerName = "";
+        mStreamerId = "";
+        mStreamerImage = "";
         mPublishTime = -1;
         mLike = 0;
         mDislike = 0;
@@ -76,5 +82,29 @@ public class Room {
 
     public void setPublishTime(long publishTime) {
         mPublishTime = publishTime;
+    }
+
+    public String getStreamerName() {
+        return mStreamerName;
+    }
+
+    public void setStreamerName(String streamerName) {
+        mStreamerName = streamerName;
+    }
+
+    public String getStreamerId() {
+        return mStreamerId;
+    }
+
+    public void setStreamerId(String streamerId) {
+        mStreamerId = streamerId;
+    }
+
+    public String getStreamerImage() {
+        return mStreamerImage;
+    }
+
+    public void setStreamerImage(String streamerImage) {
+        mStreamerImage = streamerImage;
     }
 }
