@@ -3,7 +3,6 @@ package com.mark.streamproject.hots;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.data.Room;
-import com.mark.streamproject.data.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,11 +45,21 @@ public class HotsAdapter extends RecyclerView.Adapter {
         holder.getTextLike().setText(like);
         String dislike = Integer.toString(room.getDislike());
         holder.getTextDislike().setText(dislike);
+
+        if (!room.getStreamerImage().equals("")) {
+            Picasso.get()
+                    .load(room.getStreamerImage())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(holder.getImage());
+        }
+
         Picasso.get()
-                .load(room.getStreamerImage())
-                .resize(70, 70)
+                .load(room.getImage())
+                .resize(200, 200)
                 .centerCrop()
-                .into(holder.getImage());
+                .into(holder.getImageScreen());
+
     }
 
 
@@ -64,6 +72,7 @@ public class HotsAdapter extends RecyclerView.Adapter {
         private TextView mTextName;
         private TextView mTextTitle;
         private ImageView mImage;
+        private ImageView mImageScreen;
         private TextView mTextLike;
         private TextView mTextDislike;
         private TextView mTextAudience;
@@ -73,14 +82,16 @@ public class HotsAdapter extends RecyclerView.Adapter {
             mTextName = itemView.findViewById(R.id.text_hots_name);
             mTextTitle = itemView.findViewById(R.id.text_hots_room_title);
             mImage = itemView.findViewById(R.id.image_hots_user);
-            mTextLike = itemView.findViewById(R.id.text_hots_like);
-            mTextDislike = itemView.findViewById(R.id.text_hots_dislike);
+            mTextLike = itemView.findViewById(R.id.text_room_like);
+            mTextDislike = itemView.findViewById(R.id.text_rooms_dislike);
             mTextAudience = itemView.findViewById(R.id.text_hots_audience_number);
+            mImageScreen = itemView.findViewById(R.id.image_screen_shot);
 
             itemView.findViewById(R.id.layout_hots).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mPresenter.openRoom((Room) mHotsDataList.get(getAdapterPosition()));
+                    mPresenter.enterRoom((Room) mHotsDataList.get(getAdapterPosition()));
                 }
             });
         }
@@ -107,6 +118,10 @@ public class HotsAdapter extends RecyclerView.Adapter {
 
         public TextView getTextAudience() {
             return mTextAudience;
+        }
+
+        public ImageView getImageScreen() {
+            return mImageScreen;
         }
     }
 

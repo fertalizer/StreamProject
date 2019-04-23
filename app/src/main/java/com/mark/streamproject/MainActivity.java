@@ -1,6 +1,5 @@
 package com.mark.streamproject;
 
-import android.app.ActivityManager;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -68,7 +67,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void setUserLayout() {
-        mUserImage = findViewById(R.id.image_user);
+        mUserImage = findViewById(R.id.image_room_user);
         mUserName = findViewById(R.id.text_name);
         mPresenter.setUserData();
     }

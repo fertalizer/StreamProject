@@ -151,6 +151,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                                 });
 
 
+
                     } else {
                         Log.d(Constants.TAG, "No such document");
                     }
@@ -231,6 +232,45 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void openRoom(@NonNull Room room) {
         mMainView.openRoomUi(room);
+    }
+
+    @Override
+    public void enterRoom(Room room) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("User").document(mMainView.getAccountIntent().getId());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
+                        User user = document.toObject(User.class);
+
+                        db.collection("Room").document(room.getStreamerId())
+                                .collection("Audience").document(user.getId())
+                                .set(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(Constants.TAG, "Error writing document", e);
+                                    }
+                                });
+
+                    } else {
+                        Log.d(Constants.TAG, "No such document");
+                    }
+                } else {
+                    Log.d(Constants.TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     @Override
