@@ -9,4 +9,6 @@
     <string name="BroadcastTitle">直播標題</string>
     <string name="please_wait">創建直播頻道中 ...</string>
     <string name="send">Send</string>
+    <string name="welcome">歡迎加入聊天室 ! :D</string>
+    <string name="respect">發言請尊重直播主和觀眾們</string>
 </resources>

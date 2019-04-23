@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class HotsAdapter extends RecyclerView.Adapter {
     private HotsContract.Presenter mPresenter;
 
-    private ArrayList<Room> mHotsDataList = new ArrayList<>();
+    private ArrayList<Room> mRoomList = new ArrayList<>();
 
     public HotsAdapter(HotsContract.Presenter presenter) {
         mPresenter = presenter;
@@ -33,7 +33,7 @@ public class HotsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         if (holder instanceof HotsViewHolder) {
-            bindHotsViewHolder((HotsViewHolder) holder, mHotsDataList.get(i));
+            bindHotsViewHolder((HotsViewHolder) holder, mRoomList.get(i));
         }
 
     }
@@ -65,7 +65,7 @@ public class HotsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mHotsDataList.size();
+        return mRoomList.size();
     }
 
     private class HotsViewHolder extends RecyclerView.ViewHolder {
@@ -90,7 +90,7 @@ public class HotsAdapter extends RecyclerView.Adapter {
             itemView.findViewById(R.id.layout_hots).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPresenter.openRoom((Room) mHotsDataList.get(getAdapterPosition()));
+                    mPresenter.openRoom((Room) mRoomList.get(getAdapterPosition()));
                 }
             });
         }
@@ -124,8 +124,8 @@ public class HotsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void updateData(ArrayList<Room> hotsDataList) {
-        mHotsDataList = hotsDataList;
+    public void updateData(ArrayList<Room> roomList) {
+        mRoomList = roomList;
         notifyDataSetChanged();
     }
 }

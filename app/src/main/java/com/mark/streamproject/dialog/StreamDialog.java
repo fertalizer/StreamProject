@@ -148,6 +148,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 .setCancelable(false)
                 .create();
 
+        setCancelable(false);
 
         return view;
     }
@@ -223,6 +224,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             default:
         }
     }
+
+
 
     @Override
     public void onResume() {

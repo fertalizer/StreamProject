@@ -4,7 +4,7 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private void setUserLayout() {
         mUserImage = findViewById(R.id.image_room_user);
-        mUserName = findViewById(R.id.text_name);
+        mUserName = findViewById(R.id.text_message_name);
         mPresenter.setUserData();
     }
 

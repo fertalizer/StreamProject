@@ -7,6 +7,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.room.RoomContract;
 import com.mark.streamproject.room.RoomPresenter;
@@ -227,5 +228,15 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void sendMessage(String text) {
         mRoomPresenter.sendMessage(text);
+    }
+
+    @Override
+    public void loadMessageData() {
+        mRoomPresenter.loadMessageData();
+    }
+
+    @Override
+    public void setMessageData(ArrayList<Message> messages) {
+        mRoomPresenter.setMessageData(messages);
     }
 }

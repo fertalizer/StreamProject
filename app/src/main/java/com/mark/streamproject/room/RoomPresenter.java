@@ -9,11 +9,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 
@@ -99,5 +104,33 @@ public class RoomPresenter implements RoomContract.Presenter{
                         Log.d(Constants.TAG, "Error writing document", e);
                     }
                 });
+    }
+
+    @Override
+    public void loadMessageData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Room").document(mRoom.getStreamerId()).collection("Message")
+                .orderBy("publishTime", Query.Direction.ASCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<Message> messages = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.i("Firebase", document.getId() + " => " + document.getData());
+                                messages.add(document.toObject(Message.class));
+                            }
+                            setMessageData(messages);
+                        } else {
+                            Log.d("Firebase", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void setMessageData(ArrayList<Message> messages) {
+        mRoomView.showMessageUi(messages);
     }
 }

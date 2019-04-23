@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,13 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
+import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.util.Constants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -26,9 +29,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class RoomFragment extends Fragment implements RoomContract.View, View.OnClickListener {
 
     private RoomContract.Presenter mPresenter;
+
+    private RoomAdapter mRoomAdapter;
 
     private YouTubePlayerView mYouTubePlayerView;
     private TextView mTextTitle;
@@ -39,8 +46,6 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     private ImageView mImageStreamer;
     private EditText mMessage;
     private TextView mButtonSend;
-
-
 
     private Room mRoom;
 
@@ -61,7 +66,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mRoomAdapter = new RoomAdapter(mPresenter);
     }
 
     @Override
@@ -74,6 +79,12 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
         init(root);
 
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_room);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mRoomAdapter);
+
         return root;
     }
 
@@ -82,30 +93,9 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         super.onViewCreated(view, savedInstanceState);
         mPresenter.hideProfileAndBottomNavigation();
         mPresenter.loadRoomData();
+        mPresenter.loadMessageData();
 
-        getLifecycle().addObserver(mYouTubePlayerView);
-        mYouTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = mRoom.getWatchId();
-                youTubePlayer.loadVideo(videoId, 0);
-            }
-        });
 
-        mTextTitle.setText(mRoom.getTitle());
-        mTextStreamerName.setText(mRoom.getStreamerName());
-        String like = Integer.toString(mRoom.getLike());
-        mTextLike.setText(like);
-        String dislike = Integer.toString(mRoom.getDislike());
-        mTextDislike.setText(dislike);
-
-        if (!mRoom.getStreamerImage().equals("")) {
-            Picasso.get()
-                    .load(mRoom.getStreamerImage())
-                    .resize(30, 30)
-                    .centerCrop()
-                    .into(mImageStreamer);
-        }
 
         mButtonSend.setOnClickListener(this);
     }
@@ -141,6 +131,30 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     public void showRoomUi(Room room) {
         mRoom = room;
 
+        getLifecycle().addObserver(mYouTubePlayerView);
+        mYouTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = mRoom.getWatchId();
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+
+        mTextTitle.setText(mRoom.getTitle());
+        mTextStreamerName.setText(mRoom.getStreamerName());
+        String like = Integer.toString(mRoom.getLike());
+        mTextLike.setText(like);
+        String dislike = Integer.toString(mRoom.getDislike());
+        mTextDislike.setText(dislike);
+
+        if (!mRoom.getStreamerImage().equals("")) {
+            Picasso.get()
+                    .load(mRoom.getStreamerImage())
+                    .resize(30, 30)
+                    .centerCrop()
+                    .into(mImageStreamer);
+        }
+
         mMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -163,6 +177,11 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
                 }
             }
         });
+    }
+
+    @Override
+    public void showMessageUi(ArrayList<Message> messages) {
+        mRoomAdapter.updateData(messages);
     }
 
     @Override

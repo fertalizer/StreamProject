@@ -25,8 +25,6 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     private HotsContract.Presenter mPresenter;
     private HotsAdapter mHotsAdapter;
 
-    StreamDialog mStreamDialog;
-
     public HotsFragment() {}
 
     public static HotsFragment newInstance() {
@@ -38,8 +36,6 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHotsAdapter = new HotsAdapter(mPresenter);
-        mStreamDialog = new StreamDialog();
-        mStreamDialog.setCancelable(false);
     }
 
     @Override
