@@ -127,6 +127,7 @@ public class RoomFragment extends Fragment implements RoomContract.View {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mPresenter.exitRoom();
         mPresenter.showProfileAndBottomNavigation();
         mYouTubePlayerView.release();
         Log.d(Constants.TAG, "Destroyed");

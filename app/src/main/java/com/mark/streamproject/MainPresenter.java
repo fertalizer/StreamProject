@@ -23,6 +23,7 @@ import com.mark.streamproject.follow.FollowPresenter;
 import com.mark.streamproject.hots.HotsContract;
 import com.mark.streamproject.hots.HotsPresenter;
 import com.mark.streamproject.util.Constants;
+import com.mark.streamproject.util.UserManager;
 
 import java.util.ArrayList;
 
@@ -71,9 +72,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         user.setId(mMainView.getAccountIntent().getId());
         user.setName(mMainView.getAccountIntent().getDisplayName());
 
+        UserManager.getInstance().setUser(user);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("User").document(user.getId())
-                .set(user)
+        db.collection("User").document(UserManager.getInstance().getUser().getId())
+                .set(UserManager.getInstance().getUser())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -91,25 +94,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     @Override
     public void getUserData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("User").document(mMainView.getAccountIntent().getId());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
-                        User user = document.toObject(User.class);
-                        mMainView.showUserUi(user);
-                    } else {
-                        Log.d(Constants.TAG, "No such document");
-                    }
-                } else {
-                    Log.d(Constants.TAG, "get failed with ", task.getException());
-                }
-            }
-        });
+        mMainView.showUserUi(UserManager.getInstance().getUser());
     }
 
     @Override
@@ -120,49 +105,26 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         room.setImage(image);
         room.setWatchId(watchId);
         room.setPublishTime(publishTime);
+        room.setStreamerId(UserManager.getInstance().getUser().getId());
+        room.setStreamerName(UserManager.getInstance().getUser().getName());
+        room.setStreamerImage(UserManager.getInstance().getUser().getImage());
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("User").document(mMainView.getAccountIntent().getId());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
-                        User user = document.toObject(User.class);
-                        room.setStreamerId(user.getId());
-                        room.setStreamerName(user.getName());
-                        room.setStreamerImage(user.getImage());
 
-                        db.collection("Room").document(user.getId())
-                                .set(room)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d(Constants.TAG, "Error writing document", e);
-                                    }
-                                });
-
-
-
-                    } else {
-                        Log.d(Constants.TAG, "No such document");
+        db.collection("Room").document(room.getStreamerId())
+                .set(room)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
                     }
-                } else {
-                    Log.d(Constants.TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-
-
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
     }
 
     @Override
@@ -237,40 +199,22 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void enterRoom(Room room) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("User").document(mMainView.getAccountIntent().getId());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
-                        User user = document.toObject(User.class);
 
-                        db.collection("Room").document(room.getStreamerId())
-                                .collection("Audience").document(user.getId())
-                                .set(user)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d(Constants.TAG, "Error writing document", e);
-                                    }
-                                });
-
-                    } else {
-                        Log.d(Constants.TAG, "No such document");
+        db.collection("Room").document(room.getStreamerId())
+                .collection("Audience").document(UserManager.getInstance().getUser().getId())
+                .set(UserManager.getInstance().getUser())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
                     }
-                } else {
-                    Log.d(Constants.TAG, "get failed with ", task.getException());
-                }
-            }
-        });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
     }
 
     @Override
@@ -286,6 +230,6 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     @Override
     public void exitRoom() {
-        
+        mRoomPresenter.exitRoom();
     }
 }

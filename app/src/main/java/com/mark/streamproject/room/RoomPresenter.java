@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
+import com.mark.streamproject.util.UserManager;
 
 import androidx.annotation.NonNull;
 
@@ -56,7 +57,8 @@ public class RoomPresenter implements RoomContract.Presenter{
     @Override
     public void exitRoom() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room").document(mRoom.getStreamerId()).collection("Audience").document()
+        db.collection("Room").document(mRoom.getStreamerId())
+                .collection("Audience").document(UserManager.getInstance().getUser().getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
