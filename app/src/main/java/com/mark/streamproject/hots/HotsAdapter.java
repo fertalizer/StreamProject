@@ -91,7 +91,6 @@ public class HotsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     mPresenter.openRoom((Room) mHotsDataList.get(getAdapterPosition()));
-                    mPresenter.enterRoom((Room) mHotsDataList.get(getAdapterPosition()));
                 }
             });
         }

@@ -4,13 +4,8 @@ import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.api.client.util.DateTime;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.room.RoomContract;
@@ -194,10 +189,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void openRoom(@NonNull Room room) {
         mMainView.openRoomUi(room);
-    }
 
-    @Override
-    public void enterRoom(Room room) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("Room").document(room.getStreamerId())
@@ -227,9 +219,13 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         mRoomPresenter.loadRoomData();
     }
 
-
     @Override
     public void exitRoom() {
         mRoomPresenter.exitRoom();
+    }
+
+    @Override
+    public void sendMessage(String text) {
+        mRoomPresenter.sendMessage(text);
     }
 }

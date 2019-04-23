@@ -6,10 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +26,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
-public class RoomFragment extends Fragment implements RoomContract.View {
+public class RoomFragment extends Fragment implements RoomContract.View, View.OnClickListener {
 
     private RoomContract.Presenter mPresenter;
 
@@ -33,6 +37,8 @@ public class RoomFragment extends Fragment implements RoomContract.View {
     private TextView mTextLike;
     private TextView mTextDislike;
     private ImageView mImageStreamer;
+    private EditText mMessage;
+    private TextView mButtonSend;
 
 
 
@@ -101,6 +107,7 @@ public class RoomFragment extends Fragment implements RoomContract.View {
                     .into(mImageStreamer);
         }
 
+        mButtonSend.setOnClickListener(this);
     }
 
     private void init(View view) {
@@ -111,12 +118,51 @@ public class RoomFragment extends Fragment implements RoomContract.View {
         mTextLike = view.findViewById(R.id.text_room_like);
         mTextDislike = view.findViewById(R.id.text_rooms_dislike);
         mImageStreamer = view.findViewById(R.id.image_room_user);
+        mMessage = view.findViewById(R.id.edit_room_message);
+        mButtonSend = view.findViewById(R.id.text_room_send);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.text_room_send:
+                String text = mMessage.getText().toString().trim();
+                if (!text.equals("")) {
+                    mPresenter.sendMessage(text);
+                    mMessage.setText("");
+                    Log.d(Constants.TAG,"click");
+                    break;
+                }
+        }
+
+    }
 
     @Override
     public void showRoomUi(Room room) {
         mRoom = room;
+
+        mMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().equals("")) {
+                    mButtonSend.setClickable(false);
+                    mButtonSend.setTextColor(getResources().getColor(R.color.gray));
+                } else {
+                    mButtonSend.setTextColor(getResources().getColor(R.color.yellow));
+                    mButtonSend.setClickable(true);
+                }
+            }
+        });
     }
 
     @Override

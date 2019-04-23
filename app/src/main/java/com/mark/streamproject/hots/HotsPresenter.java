@@ -70,8 +70,4 @@ public class HotsPresenter implements HotsContract.Presenter {
 
     }
 
-    @Override
-    public void enterRoom(Room room) {
-
-    }
 }

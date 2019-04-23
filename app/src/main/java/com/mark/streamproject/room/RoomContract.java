@@ -23,5 +23,6 @@ public interface RoomContract {
 
         void exitRoom();
 
+        void sendMessage(String text);
     }
 }

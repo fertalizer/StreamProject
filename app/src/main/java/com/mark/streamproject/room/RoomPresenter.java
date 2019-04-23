@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
@@ -73,5 +74,30 @@ public class RoomPresenter implements RoomContract.Presenter{
                     }
                 });
 
+    }
+
+    @Override
+    public void sendMessage(String text) {
+        Message message = new Message();
+        message.setName(UserManager.getInstance().getUser().getName());
+        message.setPublishTime(System.currentTimeMillis());
+        message.setContent(text);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Room").document(mRoom.getStreamerId())
+                .collection("Message").document()
+                .set(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
     }
 }

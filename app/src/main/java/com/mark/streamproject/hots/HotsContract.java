@@ -30,7 +30,5 @@ public interface HotsContract {
 
         void openRoom(Room room);
 
-        void enterRoom(Room room);
-
     }
 }
