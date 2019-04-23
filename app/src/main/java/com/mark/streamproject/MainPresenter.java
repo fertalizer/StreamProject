@@ -282,4 +282,10 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     public void loadRoomData() {
         mRoomPresenter.loadRoomData();
     }
+
+
+    @Override
+    public void exitRoom() {
+        
+    }
 }

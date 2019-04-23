@@ -37,10 +37,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         super.onCreate(savedInstanceState);
 
         init();
-        GoogleSignInAccount googleSignInAccount = getAccountIntent();
-        Log.d(Constants.TAG, googleSignInAccount.getPhotoUrl() + "");
-        Log.d(Constants.TAG, googleSignInAccount.getDisplayName() + "");
-        Log.d(Constants.TAG, googleSignInAccount.getEmail() + "");
+//        GoogleSignInAccount googleSignInAccount = getAccountIntent();
+//        Log.d(Constants.TAG, googleSignInAccount.getPhotoUrl() + "");
+//        Log.d(Constants.TAG, googleSignInAccount.getDisplayName() + "");
+//        Log.d(Constants.TAG, googleSignInAccount.getEmail() + "");
 
     }
 

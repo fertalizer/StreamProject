@@ -21,5 +21,7 @@ public interface RoomContract {
 
         void setRoomData(Room room);
 
+        void exitRoom();
+
     }
 }
