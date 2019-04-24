@@ -6,9 +6,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -21,6 +24,7 @@ import com.mark.streamproject.util.UserManager;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -111,22 +115,23 @@ public class RoomPresenter implements RoomContract.Presenter{
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Room").document(mRoom.getStreamerId()).collection("Message")
                 .orderBy("publishTime", Query.Direction.ASCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            ArrayList<Message> messages = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("Firebase", document.getId() + " => " + document.getData());
-                                messages.add(document.toObject(Message.class));
-                            }
-                            setMessageData(messages);
-                        } else {
-                            Log.d("Firebase", "Error getting documents: ", task.getException());
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(Constants.TAG, "Listen failed.", e);
+                            return;
                         }
-                    }
-                });
+
+                        ArrayList<Message> messages = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : value) {
+                            messages.add(doc.toObject(Message.class));
+                        }
+                        Log.d(Constants.TAG, "Message size = " + messages.size());
+                        setMessageData(messages);
+                     }
+                 });
     }
 
     @Override

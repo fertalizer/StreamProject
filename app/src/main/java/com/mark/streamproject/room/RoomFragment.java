@@ -46,6 +46,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     private ImageView mImageStreamer;
     private EditText mMessage;
     private TextView mButtonSend;
+    private RecyclerView mRecyclerView;
 
     private Room mRoom;
 
@@ -79,11 +80,10 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
         init(root);
 
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_room);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-//        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(mRoomAdapter);
+        mRecyclerView = root.findViewById(R.id.recycler_room);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mRoomAdapter);
+
 
         return root;
     }
@@ -182,6 +182,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     @Override
     public void showMessageUi(ArrayList<Message> messages) {
         mRoomAdapter.updateData(messages);
+        mRecyclerView.scrollToPosition(mRoomAdapter.getItemCount() - 1);
     }
 
     @Override
