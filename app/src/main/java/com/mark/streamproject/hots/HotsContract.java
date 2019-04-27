@@ -17,7 +17,12 @@ public interface HotsContract {
     interface View extends BaseView<Presenter> {
         boolean isActive();
 
-        void showHotsUI(ArrayList<Room> rooms);
+        void showHotsUI(ArrayList<Room> rooms, ArrayList<Integer> numbers);
+
+        boolean isRefreshing();
+
+
+
     }
 
     interface Presenter extends BasePresenter {
@@ -26,9 +31,13 @@ public interface HotsContract {
 
         void loadHotsData();
 
-        void setHotsData(ArrayList<Room> rooms);
+        void setHotsData(ArrayList<Room> rooms, ArrayList<Integer> numbers);
 
         void openRoom(Room room);
+
+        boolean isDataRefreshing();
+
+
 
     }
 }

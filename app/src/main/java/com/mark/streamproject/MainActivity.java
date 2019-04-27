@@ -114,6 +114,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     };
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.updateUserData();
+    }
+
+    @Override
     public void showUserUi(User user) {
         mUserName.setText(user.getName());
         if (!user.getImage().equals("")) {

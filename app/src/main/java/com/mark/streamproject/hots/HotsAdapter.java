@@ -18,7 +18,8 @@ import java.util.ArrayList;
 public class HotsAdapter extends RecyclerView.Adapter {
     private HotsContract.Presenter mPresenter;
 
-    private ArrayList<Room> mRoomList = new ArrayList<>();
+    private ArrayList<Room> mRoomList;
+    private ArrayList<Integer> mNumberList;
 
     public HotsAdapter(HotsContract.Presenter presenter) {
         mPresenter = presenter;
@@ -31,9 +32,9 @@ public class HotsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HotsViewHolder) {
-            bindHotsViewHolder((HotsViewHolder) holder, mRoomList.get(i));
+            bindHotsViewHolder((HotsViewHolder) holder, mRoomList.get(position));
         }
 
     }
@@ -45,6 +46,8 @@ public class HotsAdapter extends RecyclerView.Adapter {
         holder.getTextLike().setText(like);
         String dislike = Integer.toString(room.getDislike());
         holder.getTextDislike().setText(dislike);
+//        String audience = Integer.toString(audienceNumber);
+//        holder.getTextAudience().setText(audience);
 
         if (!room.getStreamerImage().equals("")) {
             Picasso.get()
@@ -65,7 +68,11 @@ public class HotsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mRoomList.size();
+        if (mRoomList == null) {
+            return 0;
+        } else {
+            return mRoomList.size();
+        }
     }
 
     private class HotsViewHolder extends RecyclerView.ViewHolder {
@@ -82,15 +89,17 @@ public class HotsAdapter extends RecyclerView.Adapter {
             mTextName = itemView.findViewById(R.id.text_hots_name);
             mTextTitle = itemView.findViewById(R.id.text_hots_room_title);
             mImage = itemView.findViewById(R.id.image_hots_user);
-            mTextLike = itemView.findViewById(R.id.text_room_like);
-            mTextDislike = itemView.findViewById(R.id.text_rooms_dislike);
+            mTextLike = itemView.findViewById(R.id.text_hots_like);
+            mTextDislike = itemView.findViewById(R.id.text_hots_dislike);
             mTextAudience = itemView.findViewById(R.id.text_hots_audience_number);
             mImageScreen = itemView.findViewById(R.id.image_screen_shot);
 
             itemView.findViewById(R.id.layout_hots).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPresenter.openRoom((Room) mRoomList.get(getAdapterPosition()));
+                    if (!mPresenter.isDataRefreshing()) {
+                        mPresenter.openRoom((Room) mRoomList.get(getAdapterPosition()));
+                    }
                 }
             });
         }
@@ -124,8 +133,10 @@ public class HotsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void updateData(ArrayList<Room> roomList) {
+    public void updateData(ArrayList<Room> roomList, ArrayList<Integer> numberList) {
         mRoomList = roomList;
+        mNumberList = numberList;
         notifyDataSetChanged();
     }
+
 }

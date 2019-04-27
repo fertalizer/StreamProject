@@ -1,5 +1,6 @@
 package com.mark.streamproject.room;
 
+import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -16,14 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
 import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
+import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
+import com.mark.streamproject.util.UserManager;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -43,12 +45,18 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     private TextView mTextStreamerName;
     private TextView mTextLike;
     private TextView mTextDislike;
+    private TextView mAudienceNumber;
     private ImageView mImageStreamer;
     private EditText mMessage;
     private TextView mButtonSend;
     private RecyclerView mRecyclerView;
+    private ImageView mImageLike;
+    private ImageView mImageDislike;
 
     private Room mRoom;
+
+    private boolean isAdded;
+    private boolean isFollowed;
 
     public RoomFragment() {
 
@@ -68,6 +76,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRoomAdapter = new RoomAdapter(mPresenter);
+
     }
 
     @Override
@@ -94,10 +103,14 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mPresenter.hideProfileAndBottomNavigation();
         mPresenter.loadRoomData();
         mPresenter.loadMessageData();
-
-
+        mPresenter.getRoomAudienceNumber();
 
         mButtonSend.setOnClickListener(this);
+        mImageLike.setOnClickListener(this);
+        mImageDislike.setOnClickListener(this);
+
+        mPresenter.inLikeList();
+        mPresenter.inDislikeList();
     }
 
     private void init(View view) {
@@ -105,11 +118,14 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mTextTitle = view.findViewById(R.id.text_room_title);
         mTextTag = view.findViewById(R.id.text_room_tag);
         mTextStreamerName = view.findViewById(R.id.text_room_name);
-        mTextLike = view.findViewById(R.id.text_room_like);
-        mTextDislike = view.findViewById(R.id.text_rooms_dislike);
+        mTextLike = view.findViewById(R.id.text_hots_like);
+        mTextDislike = view.findViewById(R.id.text_hots_dislike);
+        mAudienceNumber = view.findViewById(R.id.text_room_audience_number);
         mImageStreamer = view.findViewById(R.id.image_room_user);
         mMessage = view.findViewById(R.id.edit_room_message);
         mButtonSend = view.findViewById(R.id.text_room_send);
+        mImageLike = view.findViewById(R.id.image_room_like);
+        mImageDislike = view.findViewById(R.id.image_room_dislike);
     }
 
     @Override
@@ -117,12 +133,30 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         switch (v.getId()) {
             case R.id.text_room_send:
                 String text = mMessage.getText().toString().trim();
-                if (!text.equals("")) {
-                    mPresenter.sendMessage(text);
-                    mMessage.setText("");
-                    Log.d(Constants.TAG,"click");
-                    break;
+                long time = System.currentTimeMillis();
+                mPresenter.sendMessage(text, time);
+                mMessage.setText("");
+                break;
+            case R.id.image_room_like:
+                if (!isAdded) {
+                    isAdded = true;
+                    add2LikeList();
+                } else {
+                    isAdded = false;
+                    removeFromLikeList();
                 }
+                break;
+            case R.id.image_room_dislike:
+                if (!isAdded) {
+                    isAdded = true;
+                    add2DislikeList();
+                } else {
+                    isAdded = false;
+                    removeFromDislikeList();
+                }
+                break;
+            case R.id.image_room_follow:
+                break;
         }
 
     }
@@ -168,7 +202,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
+                if ("".equals(s.toString())) {
                     mButtonSend.setClickable(false);
                     mButtonSend.setTextColor(getResources().getColor(R.color.gray));
                 } else {
@@ -186,21 +220,88 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void showAudienceUi(ArrayList<User> users) {
+        String audienceNumber = Integer.toString(users.size());
+        mAudienceNumber.setText(audienceNumber);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.enterRoom();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.exitRoom();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        mPresenter.exitRoom();
+        mPresenter.refreshHotsData();
+
         mPresenter.showProfileAndBottomNavigation();
         mYouTubePlayerView.release();
-        Log.d(Constants.TAG, "Destroyed");
+        Log.d(Constants.TAG, "Room Destroyed");
+        super.onDestroy();
     }
 
     @Override
     public boolean isActive() {
         return !isHidden();
     }
+
+    private void add2LikeList() {
+        mImageLike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+        String like = Integer.toString(mRoom.getLike() + 1);
+        mTextLike.setTextColor(getResources().getColor(R.color.yellow));
+        mTextLike.setText(like);
+        mImageDislike.setClickable(false);
+        mPresenter.add2LikeList();
+    }
+
+    private void removeFromLikeList() {
+        mImageLike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+        String like = Integer.toString(mRoom.getLike());
+        mTextLike.setTextColor(getResources().getColor(R.color.gray));
+        mTextLike.setText(like);
+        mImageDislike.setClickable(true);
+        mPresenter.removeFromLikeList();
+    }
+
+    private void add2DislikeList() {
+        mImageDislike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+        String disLike = Integer.toString(mRoom.getDislike() + 1);
+        mTextDislike.setTextColor(getResources().getColor(R.color.yellow));
+        mTextDislike.setText(disLike);
+        mImageLike.setClickable(false);
+        mPresenter.add2DislikeList();
+    }
+
+    private void removeFromDislikeList() {
+        mImageDislike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+        String disLike = Integer.toString(mRoom.getDislike());
+        mTextDislike.setTextColor(getResources().getColor(R.color.gray));
+        mTextDislike.setText(disLike);
+        mImageLike.setClickable(true);
+        mPresenter.removeFromDisLikeList();
+    }
+
+    @Override
+    public void inLikeListUi() {
+        isAdded = true;
+        mTextLike.setTextColor(getResources().getColor(R.color.yellow));
+        mImageLike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+        mImageDislike.setClickable(false);
+    }
+
+    @Override
+    public void inDislikeListUi() {
+        isAdded = true;
+        mTextDislike.setTextColor(getResources().getColor(R.color.yellow));
+        mImageDislike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+        mImageLike.setClickable(false);
+    }
+
 }

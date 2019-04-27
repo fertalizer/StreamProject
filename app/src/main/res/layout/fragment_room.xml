@@ -32,7 +32,7 @@
             app:stroke_width="2dp" />
 
         <ImageView
-            android:id="@+id/image_view"
+            android:id="@+id/image_room_view"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="8dp"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="996"
+            android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/text_room_title"
@@ -82,30 +82,30 @@
             app:layout_constraintTop_toBottomOf="@+id/text_room_title" />
 
         <ImageView
-            android:id="@+id/image_dislike"
+            android:id="@+id/image_room_dislike"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/dislike"
             android:backgroundTint="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@+id/text_rooms_dislike"
-            app:layout_constraintEnd_toStartOf="@+id/text_rooms_dislike"
-            app:layout_constraintTop_toTopOf="@+id/text_rooms_dislike" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+            app:layout_constraintEnd_toStartOf="@+id/text_hots_dislike"
+            app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
         <ImageView
-            android:id="@+id/image_like"
+            android:id="@+id/image_room_like"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/like"
-            android:backgroundTint="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="@+id/text_rooms_dislike"
-            app:layout_constraintEnd_toStartOf="@+id/text_room_like"
-            app:layout_constraintTop_toTopOf="@+id/text_rooms_dislike" />
+            android:backgroundTint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+            app:layout_constraintEnd_toStartOf="@+id/text_hots_like"
+            app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
         <TextView
-            android:id="@+id/text_rooms_dislike"
+            android:id="@+id/text_hots_dislike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -117,16 +117,16 @@
             app:layout_constraintTop_toTopOf="@+id/text_room_tag" />
 
         <TextView
-            android:id="@+id/text_room_like"
+            android:id="@+id/text_hots_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
             android:text="6"
             android:textAlignment="textEnd"
-            android:textColor="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="@+id/text_rooms_dislike"
-            app:layout_constraintEnd_toStartOf="@+id/image_dislike"
-            app:layout_constraintTop_toTopOf="@+id/text_rooms_dislike" />
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+            app:layout_constraintEnd_toStartOf="@+id/image_room_dislike"
+            app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
         <TextView
             android:id="@+id/text_room_name"
@@ -159,7 +159,8 @@
         android:layout_height="0dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/stroke_another"
+        android:background="@drawable/stroke_type2"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

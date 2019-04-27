@@ -4,6 +4,7 @@ import com.mark.streamproject.base.BasePresenter;
 import com.mark.streamproject.base.BaseView;
 import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
+import com.mark.streamproject.data.User;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,12 @@ public interface RoomContract {
         void showRoomUi(Room room);
 
         void showMessageUi(ArrayList<Message> messages);
+
+        void showAudienceUi(ArrayList<User> users);
+
+        void inLikeListUi();
+
+        void inDislikeListUi();
     }
 
     interface Presenter extends BasePresenter {
@@ -26,12 +33,30 @@ public interface RoomContract {
 
         void setRoomData(Room room);
 
+        void enterRoom();
+
         void exitRoom();
 
-        void sendMessage(String text);
+        void sendMessage(String text, long time);
 
         void loadMessageData();
 
         void setMessageData(ArrayList<Message> messages);
+
+        void refreshHotsData();
+
+        void getRoomAudienceNumber();
+
+        void add2LikeList();
+
+        void removeFromLikeList();
+
+        void add2DislikeList();
+
+        void removeFromDisLikeList();
+
+        void inLikeList();
+
+        void inDislikeList();
     }
 }

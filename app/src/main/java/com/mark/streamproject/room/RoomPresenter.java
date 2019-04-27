@@ -22,6 +22,7 @@ import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,6 +66,27 @@ public class RoomPresenter implements RoomContract.Presenter{
     }
 
     @Override
+    public void enterRoom() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Room").document(mRoom.getStreamerId())
+                .collection("Audience").document(UserManager.getInstance().getUser().getId())
+                .set(UserManager.getInstance().getUser())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    @Override
     public void exitRoom() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Room").document(mRoom.getStreamerId())
@@ -86,28 +108,31 @@ public class RoomPresenter implements RoomContract.Presenter{
     }
 
     @Override
-    public void sendMessage(String text) {
-        Message message = new Message();
-        message.setName(UserManager.getInstance().getUser().getName());
-        message.setPublishTime(System.currentTimeMillis());
-        message.setContent(text);
+    public void sendMessage(String text, long time) {
+        if (!"".equals(text)) {
+            Message message = new Message();
+            message.setName(UserManager.getInstance().getUser().getName());
+            message.setPublishTime(time);
+            message.setContent(text);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room").document(mRoom.getStreamerId())
-                .collection("Message").document()
-                .set(message)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(Constants.TAG, "Error writing document", e);
-                    }
-                });
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Room").document(mRoom.getStreamerId())
+                    .collection("Message").document()
+                    .set(message)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(Constants.TAG, "Error writing document", e);
+                        }
+                    });
+        }
+
     }
 
     @Override
@@ -137,5 +162,83 @@ public class RoomPresenter implements RoomContract.Presenter{
     @Override
     public void setMessageData(ArrayList<Message> messages) {
         mRoomView.showMessageUi(messages);
+    }
+
+    @Override
+    public void refreshHotsData() {
+
+    }
+
+    @Override
+    public void getRoomAudienceNumber() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Room").document(mRoom.getStreamerId()).collection("Audience")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(Constants.TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        ArrayList<User> users = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : value) {
+                            users.add(doc.toObject(User.class));
+                        }
+                        Log.d(Constants.TAG, "User size = " + users.size());
+                        mRoomView.showAudienceUi(users);
+                    }
+                });
+    }
+
+    @Override
+    public void add2LikeList() {
+        UserManager.getInstance().getUser().getLikeList().add(mRoom.getWatchId());
+    }
+
+    @Override
+    public void removeFromLikeList() {
+        Iterator<String> iterator = UserManager.getInstance().getUser().getLikeList().iterator();
+        while (iterator.hasNext()) {
+            String watchId = (String) iterator.next();
+            if (watchId.equals(mRoom.getWatchId())) {
+                iterator.remove();
+            }
+        }
+    }
+
+    @Override
+    public void add2DislikeList() {
+        UserManager.getInstance().getUser().getDislikeList().add(mRoom.getWatchId());
+    }
+
+    @Override
+    public void removeFromDisLikeList() {
+        Iterator<String> iterator = UserManager.getInstance().getUser().getDislikeList().iterator();
+        while (iterator.hasNext()) {
+            String watchId = (String) iterator.next();
+            if (watchId.equals(mRoom.getWatchId())) {
+                iterator.remove();
+            }
+        }
+    }
+
+    @Override
+    public void inLikeList() {
+        for (int i = 0; i < UserManager.getInstance().getUser().getLikeList().size(); i++) {
+            if (UserManager.getInstance().getUser().getLikeList().get(i).equals(mRoom.getWatchId())) {
+                mRoomView.inLikeListUi();
+            }
+        }
+    }
+
+    @Override
+    public void inDislikeList() {
+        for (int i = 0; i < UserManager.getInstance().getUser().getDislikeList().size(); i++) {
+            if (UserManager.getInstance().getUser().getDislikeList().get(i).equals(mRoom.getWatchId())) {
+                mRoomView.inDislikeListUi();
+            }
+        }
     }
 }

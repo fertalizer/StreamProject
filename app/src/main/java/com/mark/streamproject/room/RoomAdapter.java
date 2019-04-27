@@ -21,7 +21,7 @@ public class RoomAdapter extends RecyclerView.Adapter {
 
     private RoomContract.Presenter mPresenter;
 
-    private ArrayList<Message> mMessageList = new ArrayList<>();
+    private ArrayList<Message> mMessageList;
 
 
     public RoomAdapter(RoomContract.Presenter presenter) {
@@ -64,7 +64,11 @@ public class RoomAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mMessageList.size() + 1;
+        if (mMessageList == null) {
+            return 0;
+        } else {
+            return mMessageList.size() + 1;
+        }
     }
 
 

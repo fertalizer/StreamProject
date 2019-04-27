@@ -94,6 +94,25 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
+    public void updateUserData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(UserManager.getInstance().getUser().getId())
+                .set(UserManager.getInstance().getUser())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    @Override
     public void createRoom(String title, String tag, String image, String watchId, long publishTime) {
         Room room = new Room();
         room.setTitle(title);
@@ -162,9 +181,21 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public void setHotsData(ArrayList<Room> rooms) {
-        mHotsPresenter.setHotsData(rooms);
+    public void setHotsData(ArrayList<Room> rooms, ArrayList<Integer> numbers) {
+        mHotsPresenter.setHotsData(rooms, numbers);
     }
+
+    @Override
+    public boolean isDataRefreshing() {
+        return mHotsPresenter.isDataRefreshing();
+    }
+
+    @Override
+    public void showStreamDialog() {
+        mMainView.openStreamUi();
+    }
+
+
 
     /**
      * Open Category
@@ -183,31 +214,8 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public void showStreamDialog() {
-        mMainView.openStreamUi();
-    }
-
-    @Override
     public void openRoom(@NonNull Room room) {
         mMainView.openRoomUi(room);
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Room").document(room.getStreamerId())
-                .collection("Audience").document(UserManager.getInstance().getUser().getId())
-                .set(UserManager.getInstance().getUser())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(Constants.TAG, "Error writing document", e);
-                    }
-                });
     }
 
     @Override
@@ -221,13 +229,18 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
+    public void enterRoom() {
+        mRoomPresenter.enterRoom();
+    }
+
+    @Override
     public void exitRoom() {
         mRoomPresenter.exitRoom();
     }
 
     @Override
-    public void sendMessage(String text) {
-        mRoomPresenter.sendMessage(text);
+    public void sendMessage(String text, long time) {
+        mRoomPresenter.sendMessage(text, time);
     }
 
     @Override
@@ -238,5 +251,45 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void setMessageData(ArrayList<Message> messages) {
         mRoomPresenter.setMessageData(messages);
+    }
+
+    @Override
+    public void refreshHotsData() {
+        mHotsPresenter.loadHotsData();
+    }
+
+    @Override
+    public void getRoomAudienceNumber() {
+        mRoomPresenter.getRoomAudienceNumber();
+    }
+
+    @Override
+    public void add2LikeList() {
+        mRoomPresenter.add2LikeList();
+    }
+
+    @Override
+    public void removeFromLikeList() {
+        mRoomPresenter.removeFromLikeList();
+    }
+
+    @Override
+    public void add2DislikeList() {
+        mRoomPresenter.add2DislikeList();
+    }
+
+    @Override
+    public void removeFromDisLikeList() {
+        mRoomPresenter.removeFromDisLikeList();
+    }
+
+    @Override
+    public void inLikeList() {
+        mRoomPresenter.inLikeList();
+    }
+
+    @Override
+    public void inDislikeList() {
+        mRoomPresenter.inDislikeList();
     }
 }

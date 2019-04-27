@@ -55,6 +55,8 @@ public interface MainContract {
 
         void getUserData();
 
+        void updateUserData();
+
         void createRoom(String title, String tag, String image, String watchId, long publishTime);
 
     }

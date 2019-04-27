@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 public class HotsFragment extends Fragment implements HotsContract.View, View.OnClickListener {
     private HotsContract.Presenter mPresenter;
     private HotsAdapter mHotsAdapter;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public HotsFragment() {}
 
@@ -46,6 +50,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mHotsAdapter);
 
+        mSwipeRefreshLayout = root.findViewById(R.id.refresh_hots);
 
         root.findViewById(R.id.button_stream).setOnClickListener(this);
         root.findViewById(R.id.button_record).setOnClickListener(this);
@@ -56,6 +61,12 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.loadHotsData();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadHotsData();
+            }
+        });
     }
 
     @Override
@@ -69,9 +80,16 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
     }
 
     @Override
-    public void showHotsUI(ArrayList<Room> rooms) {
-        mHotsAdapter.updateData(rooms);
+    public boolean isRefreshing() {
+        return mSwipeRefreshLayout.isRefreshing();
     }
+
+    @Override
+    public void showHotsUI(ArrayList<Room> rooms, ArrayList<Integer> numbers) {
+        mHotsAdapter.updateData(rooms, numbers);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -85,4 +103,5 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
             default:
         }
     }
+
 }

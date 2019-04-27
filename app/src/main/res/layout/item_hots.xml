@@ -50,7 +50,7 @@
         android:id="@+id/text_hots_audience_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="996"
+        android:text="0"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/image_hots_watch"
@@ -82,16 +82,16 @@
         app:layout_constraintTop_toBottomOf="@+id/text_hots_name" />
 
     <ImageView
-        android:id="@+id/image_dislike"
+        android:id="@+id/image_room_dislike"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/dislike"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@+id/text_rooms_dislike"
-        app:layout_constraintEnd_toStartOf="@+id/text_rooms_dislike"
-        app:layout_constraintTop_toTopOf="@+id/text_rooms_dislike" />
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+        app:layout_constraintEnd_toStartOf="@+id/text_hots_dislike"
+        app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
     <ImageView
         android:id="@+id/image_like"
@@ -100,31 +100,31 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/like"
         android:backgroundTint="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="@+id/text_rooms_dislike"
-        app:layout_constraintEnd_toStartOf="@+id/text_room_like"
-        app:layout_constraintTop_toTopOf="@+id/text_rooms_dislike" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+        app:layout_constraintEnd_toStartOf="@+id/text_hots_like"
+        app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
     <TextView
-        android:id="@+id/text_rooms_dislike"
+        android:id="@+id/text_hots_dislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4"
         android:textAlignment="textEnd"
-        android:textColor="@color/gray"
+        android:textColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="@+id/text_hots_room_title"
         app:layout_constraintEnd_toEndOf="@+id/image_screen_shot"
         app:layout_constraintTop_toTopOf="@+id/text_hots_room_title" />
 
     <TextView
-        android:id="@+id/text_room_like"
+        android:id="@+id/text_hots_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
         android:text="6"
         android:textAlignment="textEnd"
         android:textColor="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="@+id/text_rooms_dislike"
-        app:layout_constraintEnd_toStartOf="@+id/image_dislike"
-        app:layout_constraintTop_toTopOf="@+id/text_rooms_dislike" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
+        app:layout_constraintEnd_toStartOf="@+id/image_room_dislike"
+        app:layout_constraintTop_toTopOf="@+id/text_hots_dislike" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
