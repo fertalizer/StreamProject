@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
@@ -59,6 +62,32 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         mRoomPresenter = checkNotNull(roomPresenter);
     }
 
+
+    @Override
+    public void getUserData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(mMainView.getAccountIntent().getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
+                                UserManager.getInstance().setUser(document.toObject(User.class));
+                                mMainView.showUserUi(UserManager.getInstance().getUser());
+                            } else {
+                                Log.d(Constants.TAG, "No such document");
+                                setUserData();
+                            }
+                        } else {
+                            Log.d(Constants.TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+    }
+
     @Override
     public void setUserData() {
         User user = new User();
@@ -77,7 +106,6 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
-                        getUserData();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -86,12 +114,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                         Log.d(Constants.TAG, "Error writing document", e);
                     }
                 });
+
+
     }
 
-    @Override
-    public void getUserData() {
-        mMainView.showUserUi(UserManager.getInstance().getUser());
-    }
+
 
     @Override
     public void updateUserData() {
@@ -284,6 +311,16 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
+    public void add2FollowList() {
+        mRoomPresenter.add2FollowList();
+    }
+
+    @Override
+    public void removeFromFollowList() {
+        mRoomPresenter.removeFromFollowList();
+    }
+
+    @Override
     public void inLikeList() {
         mRoomPresenter.inLikeList();
     }
@@ -291,5 +328,20 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void inDislikeList() {
         mRoomPresenter.inDislikeList();
+    }
+
+    @Override
+    public void inFollowList() {
+        mRoomPresenter.inFollowList();
+    }
+
+    @Override
+    public void updateLikeData(boolean hasChanged, boolean isAdded) {
+        mRoomPresenter.updateLikeData(hasChanged, isAdded);
+    }
+
+    @Override
+    public void updateDislikeData() {
+        mRoomPresenter.updateDislikeData();
     }
 }

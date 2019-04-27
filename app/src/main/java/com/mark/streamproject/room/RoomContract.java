@@ -21,6 +21,8 @@ public interface RoomContract {
         void inLikeListUi();
 
         void inDislikeListUi();
+
+        void inFollowListUi();
     }
 
     interface Presenter extends BasePresenter {
@@ -55,8 +57,20 @@ public interface RoomContract {
 
         void removeFromDisLikeList();
 
+        void add2FollowList();
+
+        void removeFromFollowList();
+
         void inLikeList();
 
         void inDislikeList();
+
+        void inFollowList();
+
+        void updateUserData();
+
+        void updateLikeData(boolean hasChanged, boolean isAdded);
+
+        void updateDislikeData();
     }
 }

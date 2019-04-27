@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void setUserLayout() {
         mUserImage = findViewById(R.id.image_room_user);
         mUserName = findViewById(R.id.text_message_name);
-        mPresenter.setUserData();
+        mPresenter.getUserData();
     }
 
     private void setToolbar() {

@@ -170,6 +170,11 @@ public class RoomPresenter implements RoomContract.Presenter{
     }
 
     @Override
+    public void updateUserData() {
+
+    }
+
+    @Override
     public void getRoomAudienceNumber() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Room").document(mRoom.getStreamerId()).collection("Audience")
@@ -225,6 +230,22 @@ public class RoomPresenter implements RoomContract.Presenter{
     }
 
     @Override
+    public void add2FollowList() {
+        UserManager.getInstance().getUser().getFollowList().add(mRoom.getStreamerId());
+    }
+
+    @Override
+    public void removeFromFollowList() {
+        Iterator<String> iterator = UserManager.getInstance().getUser().getFollowList().iterator();
+        while (iterator.hasNext()) {
+            String streamerId = (String) iterator.next();
+            if (streamerId.equals(mRoom.getStreamerId())) {
+                iterator.remove();
+            }
+        }
+    }
+
+    @Override
     public void inLikeList() {
         for (int i = 0; i < UserManager.getInstance().getUser().getLikeList().size(); i++) {
             if (UserManager.getInstance().getUser().getLikeList().get(i).equals(mRoom.getWatchId())) {
@@ -240,5 +261,70 @@ public class RoomPresenter implements RoomContract.Presenter{
                 mRoomView.inDislikeListUi();
             }
         }
+    }
+
+    @Override
+    public void inFollowList() {
+        for (int i = 0; i < UserManager.getInstance().getUser().getFollowList().size(); i++) {
+            if (UserManager.getInstance().getUser().getFollowList().get(i).equals(mRoom.getStreamerId())) {
+                mRoomView.inFollowListUi();
+            }
+        }
+    }
+
+    @Override
+    public void updateLikeData(boolean hasChanged, boolean isAdded) {
+        if (hasChanged) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Room").document(mRoom.getStreamerId())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
+                                    Room room = document.toObject(Room.class);
+                                    int likeNumber = 0;
+                                    if (isAdded) {
+                                        likeNumber = room.getLike() + 1;
+                                    } else {
+                                        likeNumber = room.getLike() - 1;
+                                    }
+                                    room.setLike(likeNumber);
+                                    updateLikeNumber(db, room);
+                                } else {
+                                    Log.d(Constants.TAG, "No such document");
+                                }
+                            } else {
+                                Log.d(Constants.TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    private void updateLikeNumber(FirebaseFirestore db, Room room) {
+        db.collection("Room").document(mRoom.getStreamerId())
+                .set(room)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    @Override
+    public void updateDislikeData() {
+
     }
 }

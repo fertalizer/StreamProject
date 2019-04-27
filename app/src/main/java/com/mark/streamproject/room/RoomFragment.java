@@ -25,7 +25,6 @@ import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
-import com.mark.streamproject.util.UserManager;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -52,11 +51,15 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     private RecyclerView mRecyclerView;
     private ImageView mImageLike;
     private ImageView mImageDislike;
+    private ImageView mImageFollow;
 
     private Room mRoom;
+//    private int mLikeNumber;
+//    private int mDislikeNumber;
 
     private boolean isAdded;
-    private boolean isFollowed;
+    private boolean hasFollowed;
+    private boolean hasChanged;
 
     public RoomFragment() {
 
@@ -108,9 +111,13 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mButtonSend.setOnClickListener(this);
         mImageLike.setOnClickListener(this);
         mImageDislike.setOnClickListener(this);
+        mImageFollow.setOnClickListener(this);
 
         mPresenter.inLikeList();
         mPresenter.inDislikeList();
+        mPresenter.inFollowList();
+
+        Log.d(Constants.TAG, "hasChanged: " + hasChanged);
     }
 
     private void init(View view) {
@@ -126,6 +133,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mButtonSend = view.findViewById(R.id.text_room_send);
         mImageLike = view.findViewById(R.id.image_room_like);
         mImageDislike = view.findViewById(R.id.image_room_dislike);
+        mImageFollow = view.findViewById(R.id.image_room_follow);
     }
 
     @Override
@@ -141,21 +149,32 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
                 if (!isAdded) {
                     isAdded = true;
                     add2LikeList();
+                    statusChange();
                 } else {
                     isAdded = false;
                     removeFromLikeList();
+                    statusChange();
                 }
                 break;
             case R.id.image_room_dislike:
                 if (!isAdded) {
                     isAdded = true;
                     add2DislikeList();
+                    statusChange();
                 } else {
                     isAdded = false;
                     removeFromDislikeList();
+                    statusChange();
                 }
                 break;
             case R.id.image_room_follow:
+                if (!hasFollowed) {
+                    hasFollowed = true;
+                    add2FollowList();
+                } else {
+                    hasFollowed = false;
+                    removeFromFollowList();
+                }
                 break;
         }
 
@@ -235,6 +254,9 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     public void onStop() {
         super.onStop();
         mPresenter.exitRoom();
+        mPresenter.updateUserData();
+        mPresenter.updateLikeData(hasChanged, isAdded);
+
     }
 
     @Override
@@ -254,7 +276,9 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
     private void add2LikeList() {
         mImageLike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
-        String like = Integer.toString(mRoom.getLike() + 1);
+        int likeNumber = mRoom.getLike() + 1;
+        mRoom.setLike(likeNumber);
+        String like = Integer.toString(mRoom.getLike());
         mTextLike.setTextColor(getResources().getColor(R.color.yellow));
         mTextLike.setText(like);
         mImageDislike.setClickable(false);
@@ -263,6 +287,8 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
     private void removeFromLikeList() {
         mImageLike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+        int likeNumber = mRoom.getLike() - 1;
+        mRoom.setLike(likeNumber);
         String like = Integer.toString(mRoom.getLike());
         mTextLike.setTextColor(getResources().getColor(R.color.gray));
         mTextLike.setText(like);
@@ -288,6 +314,18 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mPresenter.removeFromDisLikeList();
     }
 
+    private void add2FollowList() {
+        mImageFollow.setBackground(getResources().getDrawable(R.drawable.star_select));
+        mImageFollow.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+        mPresenter.add2FollowList();
+    }
+
+    private void removeFromFollowList() {
+        mImageFollow.setBackground(getResources().getDrawable(R.drawable.star));
+        mImageFollow.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+        mPresenter.removeFromFollowList();
+    }
+
     @Override
     public void inLikeListUi() {
         isAdded = true;
@@ -304,4 +342,19 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mImageLike.setClickable(false);
     }
 
+    @Override
+    public void inFollowListUi() {
+        hasFollowed = true;
+        mImageFollow.setBackground(getResources().getDrawable(R.drawable.star_select));
+        mImageFollow.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+    }
+
+    private void statusChange() {
+        if (!hasChanged) {
+            hasChanged = true;
+        } else {
+            hasChanged = false;
+        }
+        Log.d(Constants.TAG, "hasChanged: " + hasChanged);
+    }
 }
