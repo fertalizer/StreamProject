@@ -286,7 +286,8 @@ public class RoomPresenter implements RoomContract.Presenter{
                                 if (document.exists()) {
                                     Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
                                     Room room = document.toObject(Room.class);
-                                    int likeNumber = 0;
+                                    int likeNumber;
+                                    int dislikeNumber = room.getDislike();
                                     if (isAdded) {
                                         likeNumber = room.getLike() + 1;
                                     } else {
@@ -308,7 +309,7 @@ public class RoomPresenter implements RoomContract.Presenter{
 
     private void updateLikeNumber(FirebaseFirestore db, Room room) {
         db.collection("Room").document(mRoom.getStreamerId())
-                .set(room)
+                .update("like", room.getLike())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -324,7 +325,52 @@ public class RoomPresenter implements RoomContract.Presenter{
     }
 
     @Override
-    public void updateDislikeData() {
+    public void updateDislikeData(boolean hasChanged, boolean isAdded) {
+        if (hasChanged) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Room").document(mRoom.getStreamerId())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Log.d(Constants.TAG, "DocumentSnapshot data: " + document.getData());
+                                    Room room = document.toObject(Room.class);
+                                    int dislikeNumber;
+                                    if (isAdded) {
+                                        dislikeNumber = room.getDislike() + 1;
+                                    } else {
+                                        dislikeNumber = room.getDislike() - 1;
+                                    }
+                                    room.setDislike(dislikeNumber);
+                                    updateDislikeNumber(db, room);
+                                } else {
+                                    Log.d(Constants.TAG, "No such document");
+                                }
+                            } else {
+                                Log.d(Constants.TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
+        }
+    }
 
+    private void updateDislikeNumber(FirebaseFirestore db, Room room) {
+        db.collection("Room").document(mRoom.getStreamerId())
+                .update("dislike", room.getDislike())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
     }
 }

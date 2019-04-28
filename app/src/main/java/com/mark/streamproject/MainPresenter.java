@@ -341,7 +341,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public void updateDislikeData() {
-        mRoomPresenter.updateDislikeData();
+    public void updateDislikeData(boolean hasChanged, boolean isAdded) {
+        mRoomPresenter.updateDislikeData(hasChanged, isAdded);
     }
 }

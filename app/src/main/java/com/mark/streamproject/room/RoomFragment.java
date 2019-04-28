@@ -57,9 +57,11 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 //    private int mLikeNumber;
 //    private int mDislikeNumber;
 
-    private boolean isAdded;
+    private boolean isAddedLike;
+    private boolean isAddedDisLike;
     private boolean hasFollowed;
-    private boolean hasChanged;
+    private boolean hasChangedLike;
+    private boolean hasChangedDislike;
 
     public RoomFragment() {
 
@@ -117,7 +119,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mPresenter.inDislikeList();
         mPresenter.inFollowList();
 
-        Log.d(Constants.TAG, "hasChanged: " + hasChanged);
+        Log.d(Constants.TAG, "hasChangedLike: " + hasChangedLike);
     }
 
     private void init(View view) {
@@ -146,34 +148,36 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
                 mMessage.setText("");
                 break;
             case R.id.image_room_like:
-                if (!isAdded) {
-                    isAdded = true;
+                if (!isAddedLike) {
+                    isAddedLike = true;
                     add2LikeList();
-                    statusChange();
+                    likeStatusChange();
                 } else {
-                    isAdded = false;
+                    isAddedLike = false;
                     removeFromLikeList();
-                    statusChange();
+                    likeStatusChange();
                 }
                 break;
             case R.id.image_room_dislike:
-                if (!isAdded) {
-                    isAdded = true;
+                if (!isAddedDisLike) {
+                    isAddedDisLike = true;
                     add2DislikeList();
-                    statusChange();
+                    dislikeStatusChange();
                 } else {
-                    isAdded = false;
+                    isAddedDisLike = false;
                     removeFromDislikeList();
-                    statusChange();
+                    dislikeStatusChange();
                 }
                 break;
             case R.id.image_room_follow:
                 if (!hasFollowed) {
                     hasFollowed = true;
                     add2FollowList();
+                    likeStatusChange();
                 } else {
                     hasFollowed = false;
                     removeFromFollowList();
+                    likeStatusChange();
                 }
                 break;
         }
@@ -255,18 +259,20 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         super.onStop();
         mPresenter.exitRoom();
         mPresenter.updateUserData();
-        mPresenter.updateLikeData(hasChanged, isAdded);
+        mPresenter.updateLikeData(hasChangedLike, isAddedLike);
+        mPresenter.updateDislikeData(hasChangedDislike, isAddedDisLike);
 
     }
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         mPresenter.refreshHotsData();
 
         mPresenter.showProfileAndBottomNavigation();
         mYouTubePlayerView.release();
         Log.d(Constants.TAG, "Room Destroyed");
-        super.onDestroy();
+
     }
 
     @Override
@@ -298,7 +304,9 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
     private void add2DislikeList() {
         mImageDislike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
-        String disLike = Integer.toString(mRoom.getDislike() + 1);
+        int dislikeNumber = mRoom.getDislike() + 1;
+        mRoom.setDislike(dislikeNumber);
+        String disLike = Integer.toString(mRoom.getDislike());
         mTextDislike.setTextColor(getResources().getColor(R.color.yellow));
         mTextDislike.setText(disLike);
         mImageLike.setClickable(false);
@@ -307,6 +315,8 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
     private void removeFromDislikeList() {
         mImageDislike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+        int dislikeNumber = mRoom.getDislike() - 1;
+        mRoom.setDislike(dislikeNumber);
         String disLike = Integer.toString(mRoom.getDislike());
         mTextDislike.setTextColor(getResources().getColor(R.color.gray));
         mTextDislike.setText(disLike);
@@ -328,7 +338,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
     @Override
     public void inLikeListUi() {
-        isAdded = true;
+        isAddedLike = true;
         mTextLike.setTextColor(getResources().getColor(R.color.yellow));
         mImageLike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
         mImageDislike.setClickable(false);
@@ -336,7 +346,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
 
     @Override
     public void inDislikeListUi() {
-        isAdded = true;
+        isAddedDisLike = true;
         mTextDislike.setTextColor(getResources().getColor(R.color.yellow));
         mImageDislike.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
         mImageLike.setClickable(false);
@@ -349,12 +359,21 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mImageFollow.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
     }
 
-    private void statusChange() {
-        if (!hasChanged) {
-            hasChanged = true;
+    private void likeStatusChange() {
+        if (!hasChangedLike) {
+            hasChangedLike = true;
         } else {
-            hasChanged = false;
+            hasChangedLike = false;
         }
-        Log.d(Constants.TAG, "hasChanged: " + hasChanged);
+        Log.d(Constants.TAG, "hasChangedLike: " + hasChangedLike);
+    }
+
+    private void dislikeStatusChange() {
+        if (!hasChangedDislike) {
+            hasChangedDislike = true;
+        } else {
+            hasChangedDislike = false;
+        }
+        Log.d(Constants.TAG, "hasChangedDislike: " + hasChangedDislike);
     }
 }

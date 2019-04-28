@@ -53,6 +53,7 @@
         android:text="0"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/image_hots_watch"
         app:layout_constraintEnd_toEndOf="@+id/image_screen_shot"
         app:layout_constraintTop_toTopOf="@+id/image_hots_watch" />
@@ -64,6 +65,7 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/view"
         android:backgroundTint="@color/yellow"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/text_hots_name"
         app:layout_constraintEnd_toStartOf="@+id/text_hots_audience_number"
         app:layout_constraintTop_toTopOf="@+id/text_hots_name" />
