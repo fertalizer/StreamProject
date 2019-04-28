@@ -11,4 +11,7 @@
     <string name="send">Send</string>
     <string name="welcome">歡迎加入聊天室 ! :D</string>
     <string name="respect">發言請尊重直播主和觀眾們</string>
+    <string name="search_hint">請輸入實況主名字</string>
+    <string name="title_top">Kubi</string>
+    <string name="title_bottom">Live</string>
 </resources>
