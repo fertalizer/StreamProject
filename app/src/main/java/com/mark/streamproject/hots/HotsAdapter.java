@@ -52,14 +52,14 @@ public class HotsAdapter extends RecyclerView.Adapter {
         if (!room.getStreamerImage().equals("")) {
             Picasso.get()
                     .load(room.getStreamerImage())
-                    .resize(50, 50)
+                    .fit()
                     .centerCrop()
                     .into(holder.getImage());
         }
 
         Picasso.get()
                 .load(room.getImage())
-                .resize(200, 200)
+                .fit()
                 .centerCrop()
                 .into(holder.getImageScreen());
 
