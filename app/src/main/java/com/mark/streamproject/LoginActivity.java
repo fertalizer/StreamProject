@@ -3,11 +3,14 @@ package com.mark.streamproject;
 import android.content.Intent;
 import android.graphics.Typeface;
 import androidx.appcompat.app.AppCompatActivity;
+import io.fabric.sdk.android.Fabric;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_login);
 
         TextView topTitle = findViewById(R.id.text_login_title_top);

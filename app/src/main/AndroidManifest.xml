@@ -42,6 +42,11 @@
         <activity
             android:name="com.ksyun.media.diversity.screenstreamer.capture.ScreenCapture$ScreenCaptureAssistantActivity"
             android:theme="@android:style/Theme.Translucent"></activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5d7e87f00497573736645b2d3cca4340f4aa01b0"
+            />
     </application>
 
 </manifest>

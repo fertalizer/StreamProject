@@ -1,9 +1,12 @@
 package com.mark.streamproject;
 
 import android.os.Bundle;
+
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.widget.Toolbar;
+import io.fabric.sdk.android.Fabric;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 
         init();
 //        GoogleSignInAccount googleSignInAccount = getAccountIntent();
