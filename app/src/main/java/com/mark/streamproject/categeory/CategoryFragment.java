@@ -9,6 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +22,17 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.data.Room;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
+    private CategoryAdapter mCategoryAdapter;
 
     private SearchView mSearchView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private CategoryContract.Presenter mPresenter;
 
@@ -37,6 +46,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCategoryAdapter = new CategoryAdapter(mPresenter);
     }
 
     @Override
@@ -45,6 +55,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_category, container, false);
         initSearchView(root);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_category);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setAdapter(mCategoryAdapter);
+
+        mSwipeRefreshLayout = root.findViewById(R.id.refresh_category);
+
+
 
         return root;
     }
@@ -52,6 +69,14 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPresenter.loadCategoryData();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadCategoryData();
+            }
+        });
+
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -60,20 +85,44 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                mPresenter.searchRoomData(newText);
                 return false;
             }
         });
     }
 
+
+
+    @Override
+    public void setPresenter(CategoryContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public boolean isActive() {
+        return !isHidden();
+    }
+
+    @Override
+    public void showCategoryUi(ArrayList<Room> rooms) {
+        mCategoryAdapter.updateData(rooms);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        return mSwipeRefreshLayout.isRefreshing();
+    }
+
     private void initSearchView(View view) {
         mSearchView = view.findViewById(R.id.search_category);
+
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
 
         EditText textSearch = (EditText) mSearchView.findViewById(id);
         textSearch.setTextColor(getResources().getColor(R.color.white));
         textSearch.setHintTextColor(getResources().getColor(R.color.gray));
         textSearch.setHint(getResources().getString(R.string.search_hint));
-
 
         try {
             Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
@@ -104,15 +153,5 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             fCursorDrawable.set(editor, drawables);
         } catch (Throwable ignored) {
         }
-    }
-
-    @Override
-    public void setPresenter(CategoryContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public boolean isActive() {
-        return !isHidden();
     }
 }

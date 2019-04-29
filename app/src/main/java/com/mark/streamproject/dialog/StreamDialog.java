@@ -765,24 +765,26 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                         .getIngestionInfo().getStreamName();
 
 
-                Log.d("Mark", "image_url_1 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/0.jpg");
-                Log.d("Mark", "image_url_2 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/1.jpg");
-                Log.d("Mark", "image_url_3 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/2.jpg");
-                Log.d("Mark", "image_url_4 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/3.jpg");
+                Log.d("Mark", "image_url_1 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/0.jpg");
+                Log.d("Mark", "image_url_2 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/1.jpg");
+                Log.d("Mark", "image_url_3 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/2.jpg");
+                Log.d("Mark", "image_url_4 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/3.jpg");
                 Log.d("Mark", "push_addr = " + push_addr);
                 Log.d("Mark", "share_addr = " + share_addr);
 
                 mTag = "Entertainment";
-                mImage = "http://img.youtube.com/vi/" + returnedBroadcast.getId() +"/0.jpg";
+                mImage = "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/0.jpg";
                 mWatchId = returnedBroadcast.getId();
                 mPublishTime = time;
                 mMainPresenter.createRoom(mTitle, mTag, mImage, mWatchId, mPublishTime);
 
-            } catch (
-                    GoogleJsonResponseException e) {
-                System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-                        + e.getDetails().getMessage());
-                e.printStackTrace();
+//            } catch (GoogleJsonResponseException e) {
+//                System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
+//                        + e.getDetails().getMessage());
+//                e.printStackTrace();
+
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
             } catch (IOException e) {
                 System.err.println("IOException: " + e.getMessage());
                 e.printStackTrace();
@@ -804,10 +806,16 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             super.onPostExecute(aVoid);
             Log.d("Mark", "OK");
             mAlertDialog.dismiss();
-            mScreenStreamer.setUrl(push_addr);
-            startStream();
-            isLoading = false;
-            new GetStreamStatusTask(youTube, returnedBroadcast).execute();
+            if (push_addr != null) {
+                mScreenStreamer.setUrl(push_addr);
+                startStream();
+                isLoading = false;
+                new GetStreamStatusTask(youTube, returnedBroadcast).execute();
+            } else {
+                isStreaming = false;
+                isLoading = false;
+                Toast.makeText(getContext(), "請先到 Youtube 帳號開啟直播相關功能", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -1093,6 +1101,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.d("Mark", "End broadcast");
+            mMainPresenter.closeRoom();
         }
     }
 

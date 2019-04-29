@@ -15,13 +15,12 @@ import java.util.ArrayList;
 public interface HotsContract {
 
     interface View extends BaseView<Presenter> {
+
         boolean isActive();
 
         void showHotsUI(ArrayList<Room> rooms, ArrayList<Integer> numbers);
 
         boolean isRefreshing();
-
-
 
     }
 
@@ -35,9 +34,7 @@ public interface HotsContract {
 
         void openRoom(Room room);
 
-        boolean isDataRefreshing();
-
-
+        boolean isHotsRefreshing();
 
     }
 }

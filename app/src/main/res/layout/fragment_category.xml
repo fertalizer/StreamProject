@@ -13,10 +13,11 @@
         android:id="@+id/search_category"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginTop="3dp"
         android:background="@drawable/stroke_another"
         android:closeIcon="@drawable/close"
-        android:iconifiedByDefault="false"
 
+        android:iconifiedByDefault="false"
         android:paddingStart="2dp"
         android:searchIcon="@drawable/search_yellow"
         app:layout_constraintEnd_toEndOf="parent"

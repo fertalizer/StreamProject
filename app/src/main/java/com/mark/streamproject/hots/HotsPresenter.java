@@ -64,7 +64,7 @@ public class HotsPresenter implements HotsContract.Presenter {
     }
 
     @Override
-    public boolean isDataRefreshing() {
+    public boolean isHotsRefreshing() {
         return mHotsView.isRefreshing();
     }
 

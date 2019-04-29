@@ -92,12 +92,12 @@ public class HotsAdapter extends RecyclerView.Adapter {
             mTextLike = itemView.findViewById(R.id.text_hots_like);
             mTextDislike = itemView.findViewById(R.id.text_hots_dislike);
             mTextAudience = itemView.findViewById(R.id.text_hots_audience_number);
-            mImageScreen = itemView.findViewById(R.id.image_screen_shot);
+            mImageScreen = itemView.findViewById(R.id.image_hots_screen);
 
             itemView.findViewById(R.id.layout_hots).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!mPresenter.isDataRefreshing()) {
+                    if (!mPresenter.isHotsRefreshing()) {
                         mPresenter.openRoom((Room) mRoomList.get(getAdapterPosition()));
                     }
                 }

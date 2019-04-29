@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_category"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/stroke_another"
+    android:layout_margin="3dp"
+    android:orientation="vertical">
 
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_category_screen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/corner"
+        android:visibility="visible"
+        app:layout_constraintDimensionRatio="h,2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+        android:id="@+id/image_category_user"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/users"
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintBottom_toTopOf="@+id/text_category_name"
+        app:layout_constraintStart_toStartOf="@+id/text_category_name"
+        app:shape_mode="circle"
+        app:stroke_color="#ffff00"
+        app:stroke_width="1dp" />
+
+    <TextView
+        android:id="@+id/text_category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_category_screen" />
+
+    <TextView
+        android:id="@+id/text_category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:text="Title"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/text_category_name"
+        app:layout_constraintTop_toBottomOf="@+id/text_category_name"
+        tools:text="Title" />
+
+    <ImageView
+        android:id="@+id/image_category_dislike"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/dislike"
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/image_category_like"
+        app:layout_constraintStart_toEndOf="@+id/text_category_like"
+        app:layout_constraintTop_toTopOf="@+id/image_category_like" />
+
+    <ImageView
+        android:id="@+id/image_category_like"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/like"
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_category_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_category_title" />
+
+    <TextView
+        android:id="@+id/text_category_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textColor="@color/yellow"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_category_dislike"
+        app:layout_constraintStart_toEndOf="@+id/image_category_dislike"
+        app:layout_constraintTop_toTopOf="@+id/image_category_dislike" />
+
+    <TextView
+        android:id="@+id/text_category_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textColor="@color/yellow"
+        android:textSize="11dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/image_category_like"
+        app:layout_constraintStart_toEndOf="@+id/image_category_like"
+        app:layout_constraintTop_toTopOf="@+id/image_category_like" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

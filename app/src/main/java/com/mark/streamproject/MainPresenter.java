@@ -170,6 +170,31 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
+    public void closeRoom() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Room").document(UserManager.getInstance().getUser().getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(Constants.TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
+    @Override
+    public void cleanMessage() {
+
+    }
+
+    @Override
     public void start() {
 
     }
@@ -213,8 +238,8 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public boolean isDataRefreshing() {
-        return mHotsPresenter.isDataRefreshing();
+    public boolean isHotsRefreshing() {
+        return mHotsPresenter.isHotsRefreshing();
     }
 
     @Override
@@ -232,6 +257,28 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         mMainView.openCategoryUi();
     }
 
+    @Override
+    public void loadCategoryData() {
+        if (mCategoryPresenter != null) {
+            mCategoryPresenter.loadCategoryData();
+        }
+    }
+
+    @Override
+    public void setCategoryData(ArrayList<Room> rooms) {
+        mCategoryPresenter.setCategoryData(rooms);
+    }
+
+    @Override
+    public boolean isCategoryRefreshing() {
+        return mCategoryPresenter.isCategoryRefreshing();
+    }
+
+    @Override
+    public void searchRoomData(String string) {
+        mCategoryPresenter.searchRoomData(string);
+    }
+
     /**
      * Open Follow
      */
@@ -239,6 +286,8 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     public void openFollow() {
         mMainView.openFollowUi();
     }
+
+
 
     @Override
     public void openRoom(@NonNull Room room) {
