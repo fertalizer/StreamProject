@@ -110,6 +110,7 @@
         android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_black_24dp" />
+        app:srcCompat="@drawable/ic_close_black_24dp"
+        android:tint="@color/yellow"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

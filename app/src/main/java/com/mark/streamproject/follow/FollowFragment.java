@@ -2,7 +2,14 @@ package com.mark.streamproject.follow;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +17,14 @@ import android.widget.TextView;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
+import com.mark.streamproject.data.User;
+
+import java.util.ArrayList;
 
 
 public class FollowFragment extends Fragment implements FollowContract.View {
+
+    private FollowAdapter mFollowAdapter;
 
     private FollowContract.Presenter mPresenter;
 
@@ -26,6 +38,7 @@ public class FollowFragment extends Fragment implements FollowContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFollowAdapter = new FollowAdapter(mPresenter);
     }
 
     @Override
@@ -33,9 +46,18 @@ public class FollowFragment extends Fragment implements FollowContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_follow, container, false);
-        TextView textView = root.findViewById(R.id.text_follow);
-        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+//        TextView textView = root.findViewById(R.id.text_follow);
+//        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_follow);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mFollowAdapter);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.loadFollowData();
     }
 
     @Override
@@ -46,5 +68,10 @@ public class FollowFragment extends Fragment implements FollowContract.View {
     @Override
     public boolean isActive() {
         return !isHidden();
+    }
+
+    @Override
+    public void showFollowUi(ArrayList<User> users) {
+        mFollowAdapter.updateData(users);
     }
 }

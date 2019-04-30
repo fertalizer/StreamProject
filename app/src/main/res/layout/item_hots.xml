@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="@+id/image_hots_screen"
         app:shape_mode="circle"
         app:stroke_color="#ffff00"
-        app:stroke_width="3dp" />
+        app:stroke_width="1.5dp" />
 
     <TextView
         android:id="@+id/text_hots_name"

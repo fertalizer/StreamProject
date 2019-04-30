@@ -72,5 +72,6 @@ public interface RoomContract {
         void updateLikeData(boolean hasChanged, boolean isAdded);
 
         void updateDislikeData(boolean hasChanged, boolean isAdded);
+
     }
 }

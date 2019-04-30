@@ -1,12 +1,14 @@
 package com.mark.streamproject.data;
 
+import com.mark.streamproject.util.Constants;
+
 import java.util.ArrayList;
 
 public class User {
     private String mName;
     private String mImage;
     private String mId;
-    private boolean mStreaming;
+    private int mStatus;
     private ArrayList<String> mLikeList;
     private ArrayList<String> mDislikeList;
     private ArrayList<String> mFollowList;
@@ -15,7 +17,7 @@ public class User {
         mName = "";
         mImage = "";
         mId = "";
-        mStreaming = false;
+        mStatus = 0;
         mLikeList = new ArrayList<>();
         mDislikeList = new ArrayList<>();
         mFollowList = new ArrayList<>();
@@ -37,12 +39,12 @@ public class User {
         mImage = image;
     }
 
-    public boolean isStreaming() {
-        return mStreaming;
+    public int getStatus() {
+        return mStatus;
     }
 
-    public void setStreaming(boolean streaming) {
-        mStreaming = streaming;
+    public void setStatus(int status) {
+        mStatus = status;
     }
 
     public String getId() {

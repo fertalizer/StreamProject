@@ -1,5 +1,28 @@
 package com.mark.streamproject.follow;
 
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.mark.streamproject.data.Message;
+import com.mark.streamproject.data.User;
+import com.mark.streamproject.util.Constants;
+import com.mark.streamproject.util.UserManager;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.annotation.Nullable;
+
 import androidx.annotation.NonNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -15,5 +38,71 @@ public class FollowPresenter implements FollowContract.Presenter {
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public void loadFollowData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User")
+                .orderBy("status", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            System.err.println("Listen failed:" + e);
+                            return;
+                        }
+                        ArrayList<User> users = new ArrayList<>();
+                        Log.d(Constants.TAG, "UserManager = " + UserManager.getInstance().getUser().getFollowList().size());
+                        for (DocumentSnapshot doc : value) {
+                            for (int i = 0; i < UserManager.getInstance().getUser().getFollowList().size(); i ++) {
+                                if (doc.toObject(User.class).getId().equals(UserManager.getInstance().getUser().getFollowList().get(i))) {
+                                    users.add(doc.toObject(User.class));
+                                }
+                            }
+                        }
+                        Log.d(Constants.TAG, "User size = " + users.size());
+                        setFollowData(users);
+                    }
+                });
+
+    }
+
+    @Override
+    public void setFollowData(ArrayList<User> users) {
+        mFollowView.showFollowUi(users);
+    }
+
+    @Override
+    public void openRoomByUserId(User user) {
+
+    }
+
+    @Override
+    public void removeStreamer(User user) {
+        Iterator<String> iterator = UserManager.getInstance().getUser().getFollowList().iterator();
+        while (iterator.hasNext()) {
+            String streamerId = (String) iterator.next();
+            if (streamerId.equals(user.getId())) {
+                iterator.remove();
+            }
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(UserManager.getInstance().getUser().getId())
+                .update("followList", UserManager.getInstance().getUser().getFollowList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Constants.TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Constants.TAG, "Error writing document", e);
+                    }
+                });
     }
 }

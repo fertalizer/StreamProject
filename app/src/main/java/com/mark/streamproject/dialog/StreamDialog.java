@@ -1063,6 +1063,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             Log.d("Mark", "Change broadcast status to live");
             setYoutube(youTube);
             setLiveBroadcast(returnedBroadcast);
+            mMainPresenter.changeStatus(Constants.STREAMING);
         }
     }
 
@@ -1101,7 +1102,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.d("Mark", "End broadcast");
+            mMainPresenter.changeStatus(Constants.ONLINE);
             mMainPresenter.closeRoom();
+
         }
     }
 

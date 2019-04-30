@@ -173,11 +173,9 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
                 if (!hasFollowed) {
                     hasFollowed = true;
                     add2FollowList();
-                    likeStatusChange();
                 } else {
                     hasFollowed = false;
                     removeFromFollowList();
-                    likeStatusChange();
                 }
                 break;
         }

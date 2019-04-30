@@ -63,5 +63,7 @@ public interface MainContract {
 
         void cleanMessage();
 
+        void changeStatus(int status);
+
     }
 }

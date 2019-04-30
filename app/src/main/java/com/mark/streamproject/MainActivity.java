@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import io.fabric.sdk.android.Fabric;
 
@@ -19,6 +21,7 @@ import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
+import com.mark.streamproject.util.UserManager;
 import com.squareup.picasso.Picasso;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -118,8 +121,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     };
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (UserManager.getInstance().getUser() != null && UserManager.getInstance().getUser().getStatus() != Constants.STREAMING) {
+            mPresenter.changeStatus(Constants.ONLINE);
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+        if (UserManager.getInstance().getUser().getStatus() != Constants.STREAMING) {
+            mPresenter.changeStatus(Constants.OFFLINE);
+        }
         mPresenter.updateUserData();
     }
 
