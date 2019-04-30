@@ -8,6 +8,7 @@ import io.fabric.sdk.android.Fabric;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -32,8 +33,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         TextView topTitle = findViewById(R.id.text_login_title_top);
         TextView bottomTitle = findViewById(R.id.text_login_title_bottom);
+        TextView startButton = findViewById(R.id.button_login);
+
         topTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
         bottomTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+        startButton.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -42,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        findViewById(R.id.button_login).setOnClickListener(this);
+        startButton.setOnClickListener(this);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {

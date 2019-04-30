@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.component.RoundTransformation;
 import com.mark.streamproject.data.Room;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
 
         Picasso.get()
                 .load(room.getImage())
+                .transform(new RoundTransformation(37))
                 .fit()
                 .centerCrop()
                 .into(holder.getImageScreen());

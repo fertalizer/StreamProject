@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mark.streamproject.R;
+import com.mark.streamproject.component.RoundAndStrokeTransformation;
+import com.mark.streamproject.component.RoundTransformation;
+import com.mark.streamproject.component.SizeTransformation;
 import com.mark.streamproject.data.Room;
 import com.squareup.picasso.Picasso;
 
@@ -59,6 +62,7 @@ public class HotsAdapter extends RecyclerView.Adapter {
 
         Picasso.get()
                 .load(room.getImage())
+                .transform(new RoundAndStrokeTransformation(35))
                 .fit()
                 .centerCrop()
                 .into(holder.getImageScreen());

@@ -85,7 +85,12 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mPresenter.searchRoomData(newText);
+                if (!"".equals(newText)) {
+                    mPresenter.searchRoomData(newText);
+                } else {
+                    mPresenter.loadCategoryData();
+                }
+
                 return false;
             }
         });
