@@ -27,8 +27,12 @@ import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -190,8 +194,11 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mYouTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                YouTubePlayerTracker tracker = new YouTubePlayerTracker();
+                youTubePlayer.addListener(tracker);
                 String videoId = mRoom.getWatchId();
-                youTubePlayer.loadVideo(videoId, 0);
+                youTubePlayer.loadVideo(videoId, tracker.getCurrentSecond());
+                youTubePlayer.seekTo(tracker.getCurrentSecond());
             }
         });
 
@@ -209,6 +216,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
                     .centerCrop()
                     .into(mImageStreamer);
         }
+
 
         mMessage.addTextChangedListener(new TextWatcher() {
             @Override

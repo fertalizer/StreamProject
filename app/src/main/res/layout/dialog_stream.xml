@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
         android:background="@drawable/stroke_another"
-        android:text="停止直播"
+        android:text="取消"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -64,7 +64,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/yellow"
-            android:checked="true"
             android:text="480P"
             android:textColor="@color/white" />
 
@@ -73,8 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/yellow"
-            android:checked="false"
             android:text="720P"
+            android:checked="true"
             android:textColor="@color/white" />
     </RadioGroup>
 

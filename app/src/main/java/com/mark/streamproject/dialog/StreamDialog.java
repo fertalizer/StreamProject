@@ -27,8 +27,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -73,16 +77,21 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class StreamDialog extends AppCompatDialogFragment implements View.OnClickListener,
-        EasyPermissions.PermissionCallbacks, ActivityCompat.OnRequestPermissionsResultCallback {
+        EasyPermissions.PermissionCallbacks, ActivityCompat.OnRequestPermissionsResultCallback,
+        RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "StreamDialog";
 
     MainContract.Presenter mMainPresenter;
 
+    private RadioGroup mRadioGroup;
     private RadioButton mRadioButton480;
     private RadioButton mRadioButton720;
     private EditText mEditTextTitle;
     private AlertDialog mAlertDialog;
+    private Button mButtonStart;
+    private Button mButtonCancel;
+    private ImageView mButtonDismiss;
 
     private final static int PERMISSION_REQUEST_RECORD_AUDIO = 2;
     private final static int OVERLAY_PERMISSION_RESULT_CODE = 10;
@@ -135,13 +144,19 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         View view = inflater.inflate(R.layout.dialog_stream, container, false);
         mRadioButton480 = view.findViewById(R.id.radiobutton_480);
         mRadioButton720 = view.findViewById(R.id.radiobutton_720);
+        mRadioGroup = view.findViewById(R.id.resolution_group);
         mEditTextTitle = view.findViewById(R.id.edit_broadcast_title);
-        view.findViewById(R.id.button_start).setOnClickListener(this);
-        view.findViewById(R.id.button_cancel).setOnClickListener(this);
-        view.findViewById(R.id.image_dismiss).setOnClickListener(this);
+        mButtonStart = view.findViewById(R.id.button_start);
+        mButtonCancel = view.findViewById(R.id.button_cancel);
+        mButtonDismiss = view.findViewById(R.id.image_dismiss);
+        mButtonStart.setOnClickListener(this);
+        mButtonCancel.setOnClickListener(this);
+        mButtonDismiss.setOnClickListener(this);
 
         Window window = getDialog().getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
 
         mAlertDialog = new AlertDialog.Builder(getActivity(), R.style.CustomDialog)
                 .setView(R.layout.dialog_loading)
@@ -162,21 +177,29 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         mMainHandler = new Handler();
         mScreenStreamer = new KSYScreenStreamer(StreamProject.getAppContext());
 
+        mRadioGroup.check(R.id.radiobutton_720);
+        setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_720P);
+        mRadioGroup.setOnCheckedChangeListener(this);
+
+
+        mCredential = GoogleAccountCredential.usingOAuth2(
+                StreamProject.getAppContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+
+        mCredential.setSelectedAccount(mMainPresenter.getAccount().getAccount());
+    }
+
+    private void setUpStreamer(int resolution) {
+//        mMainHandler = new Handler();
+//        mScreenStreamer = new KSYScreenStreamer(StreamProject.getAppContext());
+
+        Log.d(Constants.TAG, "" + resolution);
+
         mScreenStreamer.setTargetFps(15);
         int videoBitrate = 800;
         mScreenStreamer.setVideoKBitrate(videoBitrate * 3 / 4, videoBitrate, videoBitrate / 4);
         mScreenStreamer.setAudioKBitrate(48);
-
-        if (mRadioButton480.isChecked()) {
-            int videoResolution = StreamerConstants.VIDEO_RESOLUTION_480P;
-            mScreenStreamer.setTargetResolution(videoResolution);
-            Log.d(Constants.TAG, "480P");
-        } else if (mRadioButton720.isChecked()) {
-            int videoResolution = StreamerConstants.VIDEO_RESOLUTION_720P;
-            mScreenStreamer.setTargetResolution(videoResolution);
-            Log.d(Constants.TAG, "720P");
-        }
-
+        mScreenStreamer.setTargetResolution(resolution);
         mScreenStreamer.setVideoCodecId(AVConst.CODEC_ID_AVC);
         mScreenStreamer.setEncodeMethod(StreamerConstants.ENCODE_METHOD_SOFTWARE);
         mScreenStreamer.setVideoEncodeScene(VideoEncodeFormat.ENCODE_SCENE_SHOWSELF);
@@ -186,12 +209,25 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         mScreenStreamer.setOnInfoListener(mOnInfoListener);
         mScreenStreamer.setOnErrorListener(mOnErrorListener);
         mScreenStreamer.setOnLogEventListener(mOnLogEventListener);
+    }
 
-        mCredential = GoogleAccountCredential.usingOAuth2(
-                StreamProject.getAppContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff());
 
-        mCredential.setSelectedAccount(mMainPresenter.getAccount().getAccount());
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+//        int videoResolution;
+        switch (checkedId){
+            case R.id.radiobutton_480:
+                Log.d(Constants.TAG, "480P");
+//                int videoResolution = StreamerConstants.VIDEO_RESOLUTION_480P;
+                setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_480P);
+                break;
+            case R.id.radiobutton_720:
+                Log.d(Constants.TAG, "720P");
+//                int videoResolution =  StreamerConstants.VIDEO_RESOLUTION_720P;
+                setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_720P);
+                break;
+        }
+
     }
 
     @Override
@@ -202,6 +238,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     getResultsFromApi();
                     isStreaming = true;
                     isLoading = true;
+                    mButtonCancel.setText("停止直播");
                 } else {
                     Toast.makeText(StreamProject.getAppContext(), "直播進行中", Toast.LENGTH_SHORT).show();
                 }
@@ -209,9 +246,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             case R.id.button_cancel:
                 if (isStreaming) {
                     stopStream();
+                    mButtonCancel.setText("取消");
                     new EndLiveBroadcast().execute();
                 } else {
-                    Toast.makeText(StreamProject.getAppContext(), "無直播進行中", Toast.LENGTH_SHORT).show();
+                    dismiss();
                 }
                 break;
             case R.id.image_dismiss:
@@ -245,8 +283,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             mMainHandler.removeCallbacksAndMessages(null);
             mMainHandler = null;
         }
-        mScreenStreamer.setOnLogEventListener(null);
-        mScreenStreamer.release();
+
+        if (mScreenStreamer != null) {
+            mScreenStreamer.setOnLogEventListener(null);
+            mScreenStreamer.release();
+        }
 
         if (isStreaming) {
             new EndLiveBroadcast().execute();
@@ -483,6 +524,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
 
     private void stopStream() {
         mScreenStreamer.stopStream();
+        isStreaming = false;
     }
 
     private KSYScreenStreamer.OnInfoListener mOnInfoListener =
