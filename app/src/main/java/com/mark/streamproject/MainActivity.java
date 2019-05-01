@@ -44,11 +44,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         Fabric.with(this, new Crashlytics());
 
         init();
-//        GoogleSignInAccount googleSignInAccount = getAccountIntent();
-//        Log.d(Constants.TAG, googleSignInAccount.getPhotoUrl() + "");
-//        Log.d(Constants.TAG, googleSignInAccount.getDisplayName() + "");
-//        Log.d(Constants.TAG, googleSignInAccount.getEmail() + "");
-
     }
 
     @Override
@@ -131,10 +126,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     protected void onStop() {
         super.onStop();
-        if (UserManager.getInstance().getUser().getStatus() != Constants.STREAMING) {
+        if (UserManager.getInstance().getUser() != null && UserManager.getInstance().getUser().getStatus() != Constants.STREAMING) {
             mPresenter.changeStatus(Constants.OFFLINE);
         }
-        mPresenter.updateUserData();
+        if (UserManager.getInstance().getUser() != null) {
+            mPresenter.updateUserData();
+        }
     }
 
     @Override
@@ -143,7 +140,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if (!user.getImage().equals("")) {
             Picasso.get()
                     .load(user.getImage())
-                    .resize(70, 70)
+                    .fit()
                     .centerCrop()
                     .into(mUserImage);
         }

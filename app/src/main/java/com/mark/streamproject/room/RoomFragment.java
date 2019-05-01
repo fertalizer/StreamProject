@@ -212,7 +212,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         if (!mRoom.getStreamerImage().equals("")) {
             Picasso.get()
                     .load(mRoom.getStreamerImage())
-                    .resize(30, 30)
+                    .fit()
                     .centerCrop()
                     .into(mImageStreamer);
         }

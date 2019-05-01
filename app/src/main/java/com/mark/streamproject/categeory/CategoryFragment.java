@@ -73,7 +73,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadCategoryData();
+                if ("".equals(mSearchView.getQuery().toString())) {
+                    mPresenter.loadCategoryData();
+                } else {
+                    mPresenter.searchRoomData(mSearchView.getQuery().toString());
+                }
             }
         });
 

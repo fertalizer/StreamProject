@@ -20,65 +20,46 @@
             android:id="@+id/image_room_user"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/users"
             android:backgroundTint="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_room_tag"
-            app:layout_constraintTop_toBottomOf="@+id/text_room_tag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:shape_mode="circle"
             app:stroke_color="@color/yellow"
-            app:stroke_width="2dp" />
+            app:stroke_width="1dp" />
 
-        <ImageView
-            android:id="@+id/image_room_view"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/view"
-            android:backgroundTint="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="@+id/text_room_audience_number"
-            app:layout_constraintEnd_toStartOf="@+id/text_room_audience_number"
-            app:layout_constraintTop_toTopOf="@+id/text_room_audience_number" />
-
-        <TextView
-            android:id="@+id/text_room_audience_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="0"
-            android:textAlignment="textEnd"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/text_room_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_room_title" />
 
         <TextView
             android:id="@+id/text_room_title"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Faker WHAT WAS THAT  -_-"
             android:textColor="@color/white"
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/image_room_user"
+            app:layout_constraintTop_toBottomOf="@+id/image_room_user" />
 
         <TextView
             android:id="@+id/text_room_tag"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="League of Legends"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/text_room_title"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/image_room_user"
             app:layout_constraintTop_toBottomOf="@+id/text_room_title" />
 
         <ImageView
@@ -112,9 +93,9 @@
             android:text="4"
             android:textAlignment="textEnd"
             android:textColor="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@+id/text_room_tag"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_room_tag" />
+            app:layout_constraintTop_toBottomOf="@+id/image_room_follow" />
 
         <TextView
             android:id="@+id/text_hots_like"
@@ -144,7 +125,7 @@
             android:id="@+id/image_room_follow"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/star"
             android:backgroundTint="@color/yellow"
             app:layout_constraintBottom_toBottomOf="@+id/text_room_name"
@@ -216,6 +197,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_room_view"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="3dp"
+        android:background="@drawable/view"
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/player"
+        app:layout_constraintStart_toStartOf="@+id/player" />
+
+    <TextView
+        android:id="@+id/text_room_audience_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/image_room_view"
+        app:layout_constraintStart_toEndOf="@+id/image_room_view"
+        app:layout_constraintTop_toTopOf="@+id/image_room_view" />
 
     <!-- TODO: Update blank fragment layout -->
 

@@ -190,11 +190,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     }
 
     private void setUpStreamer(int resolution) {
-//        mMainHandler = new Handler();
-//        mScreenStreamer = new KSYScreenStreamer(StreamProject.getAppContext());
-
-        Log.d(Constants.TAG, "" + resolution);
-
         mScreenStreamer.setTargetFps(15);
         int videoBitrate = 800;
         mScreenStreamer.setVideoKBitrate(videoBitrate * 3 / 4, videoBitrate, videoBitrate / 4);
@@ -214,16 +209,13 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-//        int videoResolution;
         switch (checkedId){
             case R.id.radiobutton_480:
                 Log.d(Constants.TAG, "480P");
-//                int videoResolution = StreamerConstants.VIDEO_RESOLUTION_480P;
                 setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_480P);
                 break;
             case R.id.radiobutton_720:
                 Log.d(Constants.TAG, "720P");
-//                int videoResolution =  StreamerConstants.VIDEO_RESOLUTION_720P;
                 setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_720P);
                 break;
         }
@@ -245,7 +237,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 break;
             case R.id.button_cancel:
                 if (isStreaming) {
-                    stopStream();
                     mButtonCancel.setText("取消");
                     new EndLiveBroadcast().execute();
                 } else {
@@ -254,7 +245,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 break;
             case R.id.image_dismiss:
                 if (isStreaming) {
-                    stopStream();
                     new EndLiveBroadcast().execute();
                 }
                 dismiss();
@@ -1144,6 +1134,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.d("Mark", "End broadcast");
+            stopStream();
             mMainPresenter.changeStatus(Constants.ONLINE);
             mMainPresenter.closeRoom();
 
