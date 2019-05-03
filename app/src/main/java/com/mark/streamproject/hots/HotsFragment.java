@@ -1,6 +1,7 @@
 package com.mark.streamproject.hots;
 
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
