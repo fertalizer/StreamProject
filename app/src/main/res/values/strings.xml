@@ -15,4 +15,7 @@
     <string name="title_top">Kubi</string>
     <string name="title_bottom">Live</string>
     <string name="get_start">Get Started !</string>
+    <string name="confirm_message">確定要從名單中除移嗎？</string>
+    <string name="confirm">是</string>
+    <string name="deny">否</string>
 </resources>

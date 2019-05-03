@@ -27,6 +27,8 @@ public interface MainContract {
 
         void openStreamUi();
 
+        void openAlertDialogUi(User user);
+
         void showUserUi(User user);
 
         void openRoomUi(Room room);
@@ -62,6 +64,8 @@ public interface MainContract {
         void closeRoom();
 
         void cleanMessage();
+
+        void removeStreamer(User user);
 
         void changeStatus(int status);
 

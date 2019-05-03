@@ -1,5 +1,6 @@
 package com.mark.streamproject.follow;
 
+import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -74,4 +75,6 @@ public class FollowFragment extends Fragment implements FollowContract.View {
     public void showFollowUi(ArrayList<User> users) {
         mFollowAdapter.updateData(users);
     }
+
+
 }

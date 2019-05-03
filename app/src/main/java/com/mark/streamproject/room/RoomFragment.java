@@ -1,6 +1,7 @@
 package com.mark.streamproject.room;
 
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -123,7 +124,22 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mPresenter.inDislikeList();
         mPresenter.inFollowList();
 
+        if (getResources().getConfiguration().orientation == 2) {
+            mYouTubePlayerView.enterFullScreen();
+        }
+
         Log.d(Constants.TAG, "hasChangedLike: " + hasChangedLike);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) { // Landscape
+            mYouTubePlayerView.enterFullScreen();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) { // Portrait
+            mYouTubePlayerView.exitFullScreen();
+        }
     }
 
     private void init(View view) {

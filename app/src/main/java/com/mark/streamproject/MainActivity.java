@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
+import com.mark.streamproject.dialog.AlertDialog;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
@@ -31,6 +32,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private BottomNavigationView mBottomNavigation;
     private Toolbar mToolbar;
     private StreamDialog mStreamDialog;
+    private AlertDialog mAlertDialog;
     private ImageView mUserImage;
     private TextView mUserName;
 
@@ -194,6 +196,22 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         } else if (!mStreamDialog.isAdded()) {
             mStreamDialog.setCancelable(false);
             mStreamDialog.show(getSupportFragmentManager(), Constants.STREAM);
+        }
+    }
+
+    @Override
+    public void openAlertDialogUi(User user) {
+        if (mAlertDialog == null) {
+
+            mAlertDialog = new AlertDialog();
+            mAlertDialog.setMainPresenter(mPresenter);
+            mAlertDialog.setUser(user);
+
+            mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
+
+        } else if (!mAlertDialog.isAdded()) {
+
+            mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
         }
     }
 

@@ -105,4 +105,9 @@ public class FollowPresenter implements FollowContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void showAlertDialog(User user) {
+
+    }
 }

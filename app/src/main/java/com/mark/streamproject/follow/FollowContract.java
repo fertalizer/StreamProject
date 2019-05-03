@@ -18,6 +18,7 @@ public interface FollowContract {
         boolean isActive();
 
         void showFollowUi(ArrayList<User> users);
+
     }
 
     interface Presenter extends BasePresenter {
@@ -29,5 +30,7 @@ public interface FollowContract {
         void openRoomByUserId(User user);
 
         void removeStreamer(User user);
+
+        void showAlertDialog(User user);
     }
 }

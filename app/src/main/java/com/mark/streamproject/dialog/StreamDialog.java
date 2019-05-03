@@ -156,13 +156,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         Window window = getDialog().getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
-
-        mAlertDialog = new AlertDialog.Builder(getActivity(), R.style.CustomDialog)
-                .setView(R.layout.dialog_loading)
-                .setCancelable(false)
-                .create();
-
         setCancelable(false);
 
         return view;
@@ -830,6 +823,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mAlertDialog = new AlertDialog.Builder(getActivity(), R.style.CustomDialog)
+                    .setView(R.layout.dialog_loading)
+                    .setCancelable(false)
+                    .create();
             mAlertDialog.show();
         }
 
@@ -1137,7 +1134,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             stopStream();
             mMainPresenter.changeStatus(Constants.ONLINE);
             mMainPresenter.closeRoom();
-
         }
     }
 

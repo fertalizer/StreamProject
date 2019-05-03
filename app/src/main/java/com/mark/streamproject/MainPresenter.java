@@ -453,4 +453,9 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                     }
                 });
     }
+
+    @Override
+    public void showAlertDialog(User user) {
+        mMainView.openAlertDialogUi(user);
+    }
 }
