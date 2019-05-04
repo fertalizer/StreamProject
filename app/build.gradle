@@ -69,6 +69,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;
     }
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
 }
 
 apply plugin: 'com.google.gms.google-services'

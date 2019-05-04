@@ -20,6 +20,7 @@ import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.AlertDialog;
+import com.mark.streamproject.dialog.DescriptionDialog;
 import com.mark.streamproject.dialog.StreamDialog;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private Toolbar mToolbar;
     private StreamDialog mStreamDialog;
     private AlertDialog mAlertDialog;
+    private DescriptionDialog mDescriptionDialog;
     private ImageView mUserImage;
     private TextView mUserName;
 
@@ -150,6 +152,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
+    public void moveTaskToBack() {
+        moveTaskToBack(true);
+    }
+
+    @Override
     public void showBottomNavigationUi() {
         mBottomNavigation.setVisibility(View.VISIBLE);
     }
@@ -212,6 +219,22 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         } else if (!mAlertDialog.isAdded()) {
 
             mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
+        }
+    }
+
+    @Override
+    public void openDescriptionUi() {
+        if (mDescriptionDialog == null) {
+
+            mDescriptionDialog = new DescriptionDialog();
+            mDescriptionDialog.setMainPresenter(mPresenter);
+
+
+            mDescriptionDialog.show(getSupportFragmentManager(), Constants.DESCRIPTION);
+
+        } else if (!mDescriptionDialog.isAdded()) {
+
+            mDescriptionDialog.show(getSupportFragmentManager(), Constants.DESCRIPTION);
         }
     }
 

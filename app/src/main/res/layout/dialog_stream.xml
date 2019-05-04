@@ -7,7 +7,7 @@
     android:background="@drawable/stroke_another">
 
     <Button
-        android:id="@+id/button_cancel"
+        android:id="@+id/button_description_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
@@ -31,7 +31,7 @@
         android:text="開始直播"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_cancel"
+        app:layout_constraintEnd_toStartOf="@+id/button_description_cancel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_resolution" />

@@ -218,6 +218,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         mMainView.showProfileUi();
     }
 
+    @Override
+    public void goToDeskTop() {
+        mMainView.moveTaskToBack();
+    }
+
     /**
      * Open Hots
      */
@@ -249,6 +254,10 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
 
+    @Override
+    public void showDescriptionDialog() {
+        mMainView.openDescriptionUi();
+    }
 
     /**
      * Open Category
@@ -327,6 +336,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void removeStreamer(User user) {
         mFollowPresenter.removeStreamer(user);
+    }
+
+    @Override
+    public void showAlertDialog(User user) {
+        mMainView.openAlertDialogUi(user);
     }
 
     @Override
@@ -454,8 +468,5 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                 });
     }
 
-    @Override
-    public void showAlertDialog(User user) {
-        mMainView.openAlertDialogUi(user);
-    }
+
 }

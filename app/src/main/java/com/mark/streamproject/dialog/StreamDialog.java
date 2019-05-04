@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -147,7 +146,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         mRadioGroup = view.findViewById(R.id.resolution_group);
         mEditTextTitle = view.findViewById(R.id.edit_broadcast_title);
         mButtonStart = view.findViewById(R.id.button_start);
-        mButtonCancel = view.findViewById(R.id.button_cancel);
+        mButtonCancel = view.findViewById(R.id.button_description_cancel);
         mButtonDismiss = view.findViewById(R.id.image_dismiss);
         mButtonStart.setOnClickListener(this);
         mButtonCancel.setOnClickListener(this);
@@ -228,7 +227,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     Toast.makeText(StreamProject.getAppContext(), "直播進行中", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.button_cancel:
+            case R.id.button_description_cancel:
                 if (isStreaming) {
                     mButtonCancel.setText("取消");
                     new EndLiveBroadcast().execute();
@@ -502,6 +501,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
 
     private void startStream() {
         mScreenStreamer.startStream();
+//        mMainPresenter.goToDeskTop();
     }
 
 
@@ -839,10 +839,13 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 mScreenStreamer.setUrl(push_addr);
                 startStream();
                 isLoading = false;
+                Toast.makeText(getContext(), "直播開始", Toast.LENGTH_SHORT).show();
                 new GetStreamStatusTask(youTube, returnedBroadcast).execute();
+
             } else {
                 isStreaming = false;
                 isLoading = false;
+                mMainPresenter.showDescriptionDialog();
                 Toast.makeText(getContext(), "請先到 Youtube 帳號開啟直播相關功能", Toast.LENGTH_SHORT).show();
             }
         }

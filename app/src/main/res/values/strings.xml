@@ -18,4 +18,9 @@
     <string name="confirm_message">確定要從名單中除移嗎？</string>
     <string name="confirm">是</string>
     <string name="deny">否</string>
+    <string name="close">關閉</string>
+
+    <string name="description_01">先至 Youtube 首頁點選右上方的錄影機圖示後，再點選進行直播。</string>
+    <string name="description_02">點選中間的開始直播按鈕後，將進行身分驗證，通過後約 24 小時就可開啟直播功能。</string>
+
 </resources>

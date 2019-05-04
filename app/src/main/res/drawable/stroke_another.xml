@@ -20,15 +20,17 @@ android:color="@color/yellow">
     </shape>
 </item>
 
-<item android:id="@android:id/mask">
-    <inset android:insetBottom="1dp"
-        android:insetLeft="1dp"
-        android:insetRight="1dp"
-        android:insetTop="1dp">
-        <shape android:shape="rectangle">
-            <!-- Color doesn't matter -->
-            <solid android:color="@android:color/white"/>
-        </shape>
-    </inset>
-</item>
+
 </ripple>
+
+<!--<item android:id="@android:id/mask">-->
+<!--<inset android:insetBottom="1dp"-->
+    <!--android:insetLeft="1dp"-->
+    <!--android:insetRight="1dp"-->
+    <!--android:insetTop="1dp">-->
+    <!--<shape android:shape="rectangle">-->
+        <!--&lt;!&ndash; Color doesn't matter &ndash;&gt;-->
+        <!--<solid android:color="@android:color/white"/>-->
+    <!--</shape>-->
+<!--</inset>-->
+<!--</item>-->

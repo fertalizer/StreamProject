@@ -29,6 +29,8 @@ public interface MainContract {
 
         void openAlertDialogUi(User user);
 
+        void openDescriptionUi();
+
         void showUserUi(User user);
 
         void openRoomUi(Room room);
@@ -40,6 +42,8 @@ public interface MainContract {
         void showProfileUi();
 
         void hideProfileUi();
+
+        void moveTaskToBack();
 
     }
 
@@ -68,6 +72,10 @@ public interface MainContract {
         void removeStreamer(User user);
 
         void changeStatus(int status);
+
+        void showDescriptionDialog();
+
+        void goToDeskTop();
 
     }
 }

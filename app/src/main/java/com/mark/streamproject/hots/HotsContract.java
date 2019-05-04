@@ -28,6 +28,8 @@ public interface HotsContract {
 
         void showStreamDialog();
 
+
+
         void loadHotsData();
 
         void setHotsData(ArrayList<Room> rooms, ArrayList<Integer> numbers);
