@@ -839,7 +839,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 mScreenStreamer.setUrl(push_addr);
                 startStream();
                 isLoading = false;
-                Toast.makeText(getContext(), "直播開始", Toast.LENGTH_SHORT).show();
                 new GetStreamStatusTask(youTube, returnedBroadcast).execute();
 
             } else {

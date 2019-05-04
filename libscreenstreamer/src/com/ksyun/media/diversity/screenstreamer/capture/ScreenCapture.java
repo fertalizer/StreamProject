@@ -26,6 +26,7 @@ import android.os.Message;
 import androidx.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Surface;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
@@ -507,6 +508,10 @@ public class ScreenCapture implements SurfaceTexture.OnFrameAvailableListener {
             }
             //拿到MediaProjection,该窗口就没有任何意义了了,直接关闭
             finish();
+
+            moveTaskToBack(true);
+            Toast.makeText(getApplicationContext(), "直播開始", Toast.LENGTH_SHORT).show();
+            
             mScreenCapture = null;
             ScreenCapture.mScreenCaptureActivity = null;
         }
