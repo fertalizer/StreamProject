@@ -511,7 +511,7 @@ public class ScreenCapture implements SurfaceTexture.OnFrameAvailableListener {
 
             moveTaskToBack(true);
             Toast.makeText(getApplicationContext(), "直播開始", Toast.LENGTH_SHORT).show();
-            
+
             mScreenCapture = null;
             ScreenCapture.mScreenCaptureActivity = null;
         }

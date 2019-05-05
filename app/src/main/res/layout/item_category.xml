@@ -5,7 +5,7 @@
     android:id="@+id/layout_category"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/stroke_another"
+    android:background="@drawable/stroke_type3"
     android:layout_margin="3dp"
     android:orientation="vertical">
 
