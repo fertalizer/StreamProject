@@ -59,8 +59,6 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
     private ImageView mImageFollow;
 
     private Room mRoom;
-//    private int mLikeNumber;
-//    private int mDislikeNumber;
 
     private boolean isAddedLike;
     private boolean isAddedDisLike;

@@ -21,11 +21,10 @@ public class SizeTransformation implements Transformation {
             return source;
         }
 
-        //如果图片小于设置的宽度，则返回原图
+
         if (source.getWidth() < targetWidth) {
             return source;
         } else {
-            //如果图片大小大于等于设置的宽度，则按照设置的宽度比例来缩放
             double aspectRatio = (double) source.getHeight() / (double) source.getWidth();
             int targetHeight = (int) (targetWidth * aspectRatio);
             if (targetHeight != 0 && targetWidth != 0) {

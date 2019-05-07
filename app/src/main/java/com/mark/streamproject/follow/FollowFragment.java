@@ -47,8 +47,6 @@ public class FollowFragment extends Fragment implements FollowContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_follow, container, false);
-//        TextView textView = root.findViewById(R.id.text_follow);
-//        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
         RecyclerView recyclerView = root.findViewById(R.id.recycler_follow);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mFollowAdapter);

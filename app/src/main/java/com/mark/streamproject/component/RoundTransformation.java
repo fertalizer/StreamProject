@@ -28,8 +28,6 @@ public class RoundTransformation implements Transformation {
         paint.setShader(bitmapShader);
         paint.setAntiAlias(true);
 
-
-
         RectF rectF = new RectF(0, 0, source.getWidth(), source.getHeight());
         canvas.drawRoundRect(rectF, radius, radius, paint);
         source.recycle();
