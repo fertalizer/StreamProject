@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FollowAdapter extends RecyclerView.Adapter{
+public class FollowAdapter extends RecyclerView.Adapter {
 
     private FollowContract.Presenter mPresenter;
 
@@ -125,6 +125,7 @@ public class FollowAdapter extends RecyclerView.Adapter{
                         Log.d(Constants.TAG, "Open Room By Id");
                     }
                     break;
+                default:
             }
         }
     }

@@ -29,7 +29,7 @@ import androidx.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class RoomPresenter implements RoomContract.Presenter{
+public class RoomPresenter implements RoomContract.Presenter {
 
     private final RoomContract.View mRoomView;
 
@@ -155,8 +155,8 @@ public class RoomPresenter implements RoomContract.Presenter{
                         }
                         Log.d(Constants.TAG, "Message size = " + messages.size());
                         setMessageData(messages);
-                     }
-                 });
+                    }
+                });
     }
 
     @Override

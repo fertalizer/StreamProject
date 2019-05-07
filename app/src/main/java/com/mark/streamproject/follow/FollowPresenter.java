@@ -56,7 +56,7 @@ public class FollowPresenter implements FollowContract.Presenter {
                         ArrayList<User> users = new ArrayList<>();
                         Log.d(Constants.TAG, "UserManager = " + UserManager.getInstance().getUser().getFollowList().size());
                         for (DocumentSnapshot doc : value) {
-                            for (int i = 0; i < UserManager.getInstance().getUser().getFollowList().size(); i ++) {
+                            for (int i = 0; i < UserManager.getInstance().getUser().getFollowList().size(); i++) {
                                 if (doc.toObject(User.class).getId().equals(UserManager.getInstance().getUser().getFollowList().get(i))) {
                                     users.add(doc.toObject(User.class));
                                 }

@@ -74,7 +74,7 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
         db.collection("Room")
                 .orderBy("streamerName")
                 .startAt(string)
-                .endAt(string+"\uf8ff")
+                .endAt(string + "\uf8ff")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

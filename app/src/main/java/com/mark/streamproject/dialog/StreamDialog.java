@@ -92,8 +92,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private Button mButtonCancel;
     private ImageView mButtonDismiss;
 
-    private final static int PERMISSION_REQUEST_RECORD_AUDIO = 2;
-    private final static int OVERLAY_PERMISSION_RESULT_CODE = 10;
+    private static final int PERMISSION_REQUEST_RECORD_AUDIO = 2;
+    private static final int OVERLAY_PERMISSION_RESULT_CODE = 10;
 
     private KSYScreenStreamer mScreenStreamer;
     private Handler mMainHandler;
@@ -203,7 +203,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId){
+        switch (checkedId) {
             case R.id.radiobutton_480:
                 Log.d(Constants.TAG, "480P");
                 setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_480P);
@@ -212,6 +212,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 Log.d(Constants.TAG, "720P");
                 setUpStreamer(StreamerConstants.VIDEO_RESOLUTION_720P);
                 break;
+            default:
         }
 
     }
@@ -468,7 +469,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                             Toast.LENGTH_LONG).show();
                 }
                 break;
-
             }
         }
     }
@@ -490,15 +490,15 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != Activity.RESULT_OK) {
                     Log.d("Mark",
-                            "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+                            "This app requires Google Play Services. Please install "
+                                    + "Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
-                if (resultCode == Activity.RESULT_OK && data != null &&
-                        data.getExtras() != null) {
+                if (resultCode == Activity.RESULT_OK && data != null
+                        && data.getExtras() != null) {
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
@@ -517,6 +517,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     getResultsFromApi();
                 }
                 break;
+            default:
         }
     }
 
@@ -619,8 +620,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                             break;
                         case KSYScreenStreamer.KSY_STREAMER_SCREEN_RECORD_UNSUPPORTED:
                             Log.d(TAG, "KSY_STREAMER_SCREEN_RECORD_UNSUPPORTED");
-                            Toast.makeText(StreamProject.getAppContext(), "you android system is below 21, " +
-                                            "can not use screenRecord",
+                            Toast.makeText(StreamProject.getAppContext(), "you android system is below 21,"
+                                            + "can not use screenRecord",
                                     Toast.LENGTH_LONG).show();
                             break;
                         case KSYScreenStreamer.KSY_STREAMER_SCREEN_RECORD_PERMISSION_DENIED:
@@ -979,10 +980,10 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                                 returnedBroadcast.getId(), "id,contentDetails,status");
 
                 returnedBroadcast = broadCastRequest.execute();
-                String youTubeLink = "https://www.youtube.com/watch?v="+returnedBroadcast.getId();
-                Log.d("Mark", "youTubeLink:"+youTubeLink);
-                Log.d("Mark", "Broad EmbedHtml:"+returnedBroadcast.getContentDetails().getMonitorStream().getEmbedHtml());
-                Log.d("Mark", "Broad Cast Status:"+returnedBroadcast.getStatus().getLifeCycleStatus());
+                String youTubeLink = "https://www.youtube.com/watch?v=" + returnedBroadcast.getId();
+                Log.d("Mark", "youTubeLink:" + youTubeLink);
+                Log.d("Mark", "Broad EmbedHtml:" + returnedBroadcast.getContentDetails().getMonitorStream().getEmbedHtml());
+                Log.d("Mark", "Broad Cast Status:" + returnedBroadcast.getStatus().getLifeCycleStatus());
 
 
 

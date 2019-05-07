@@ -198,6 +198,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
                     removeFromFollowList();
                 }
                 break;
+            default:
         }
 
     }
