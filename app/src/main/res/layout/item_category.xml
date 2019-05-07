@@ -104,7 +104,7 @@
         android:text="0"
         android:textAlignment="textEnd"
         android:textColor="@color/yellow"
-        android:textSize="11dp"
+        android:textSize="11sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/image_category_like"
         app:layout_constraintStart_toEndOf="@+id/image_category_like"

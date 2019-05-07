@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/stroke_another"
-    tools:context=".dialog.DescriptionDialog">
+    tools:context=".dialog.TutorialDialog">
 
 
     <androidx.recyclerview.widget.RecyclerView

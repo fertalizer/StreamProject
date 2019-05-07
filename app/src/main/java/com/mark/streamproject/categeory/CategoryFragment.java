@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.mark.streamproject.R;
 import com.mark.streamproject.data.Room;
+import com.mark.streamproject.util.Constants;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -61,8 +63,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
         mSwipeRefreshLayout = root.findViewById(R.id.refresh_category);
 
-
-
         return root;
     }
 
@@ -94,7 +94,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                 } else {
                     mPresenter.loadCategoryData();
                 }
-
                 return false;
             }
         });
@@ -160,7 +159,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             DrawableCompat.setTintList(tintDrawable, ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
             Drawable[] drawables = new Drawable[] {tintDrawable, tintDrawable};
             fCursorDrawable.set(editor, drawables);
-        } catch (Throwable ignored) {
+        } catch (Throwable throwable) {
+            Log.d(Constants.TAG, "" + throwable);
         }
     }
 }

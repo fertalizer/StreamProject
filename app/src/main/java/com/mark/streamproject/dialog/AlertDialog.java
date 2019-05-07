@@ -59,10 +59,10 @@ public class AlertDialog extends AppCompatDialogFragment implements View.OnClick
                 mMainPresenter.removeStreamer(mUser);
                 dismiss();
                 break;
-
             case R.id.button_deny:
                 dismiss();
                 break;
+            default:
         }
     }
 

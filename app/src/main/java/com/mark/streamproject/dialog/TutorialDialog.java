@@ -1,13 +1,10 @@
 package com.mark.streamproject.dialog;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,13 +21,13 @@ import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
 
 
-public class DescriptionDialog extends AppCompatDialogFragment implements View.OnClickListener {
+public class TutorialDialog extends AppCompatDialogFragment implements View.OnClickListener {
 
     MainContract.Presenter mMainPresenter;
 
-    DescriptionAdapter mDescriptionAdapter;
+    TutorialAdapter mDescriptionAdapter;
 
-    public DescriptionDialog() {
+    public TutorialDialog() {
 
     }
 
@@ -41,14 +38,14 @@ public class DescriptionDialog extends AppCompatDialogFragment implements View.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDescriptionAdapter = new DescriptionAdapter();
+        mDescriptionAdapter = new TutorialAdapter();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.dialog_description, container, false);
+        View root = inflater.inflate(R.layout.dialog_tutorial, container, false);
         Window window = getDialog().getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -75,6 +72,7 @@ public class DescriptionDialog extends AppCompatDialogFragment implements View.O
             case R.id.button_description_cancel:
                 dismiss();
                 break;
+            default:
         }
     }
 }

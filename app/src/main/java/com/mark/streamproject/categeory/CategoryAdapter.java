@@ -61,7 +61,6 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                 .fit()
                 .centerCrop()
                 .into(holder.getImageScreen());
-
     }
 
 
