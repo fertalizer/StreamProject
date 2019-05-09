@@ -119,7 +119,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private LiveBroadcast mLiveBroadcast;
 
     private String mTitle;
-    private String mTag;
+    private String mTag = "Entertainment";
     private String mImage;
     private String mWatchId;
     private long mPublishTime;
@@ -225,18 +225,18 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     getResultsFromApi();
                     isStreaming = true;
                     isLoading = true;
-                    mButtonCancel.setText("停止直播");
+                    mButtonCancel.setText(getContext().getString(R.string.stop_stream));
                 } else {
                     Toast.makeText(StreamProject.getAppContext(), "直播進行中", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.button_description_cancel:
                 if (isStreaming && !isCreating) {
-                    mButtonCancel.setText("取消");
+                    mButtonCancel.setText(getContext().getString(R.string.cancel));
                     new EndLiveBroadcast().execute();
                     Log.d(Constants.TAG, "完成直播");
                 } else if (isCreating) {
-                    mButtonCancel.setText("取消");
+                    mButtonCancel.setText(getContext().getString(R.string.cancel));
                     new DeleteLiveBroadcast().execute();
                     Log.d(Constants.TAG, "刪除直播頻道");
                     isCreating = false;
@@ -394,9 +394,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (! isDeviceOnline()) {
-            Log.d("Mark", "No network connection available.");
+            Log.d(Constants.TAG, "No network connection available.");
         } else {
-            Log.d("Mark", "Coming Soon");
+            Log.d(Constants.TAG, "Coming Soon");
             new CreateEventTask(mCredential).execute();
         }
     }
@@ -441,7 +441,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         int audioperm = ActivityCompat.checkSelfPermission(StreamProject.getAppContext(), Manifest.permission.RECORD_AUDIO);
         if (audioperm != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                Log.e("Mark", "No RECORD_AUDIO permission, please check");
+                Log.e(Constants.TAG, "No RECORD_AUDIO permission, please check");
                 Toast.makeText(StreamProject.getAppContext(), "No RECORD_AUDIO permission, please check",
                         Toast.LENGTH_LONG).show();
             } else {
@@ -462,9 +462,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("Mark", "Get RECORD_AUDIO permission");
+                    Log.e(Constants.TAG, "Get RECORD_AUDIO permission");
                 } else {
-                    Log.e("Mark", "No RECORD_AUDIO permission");
+                    Log.e(Constants.TAG, "No RECORD_AUDIO permission");
                     Toast.makeText(StreamProject.getAppContext(), "No RECORD_AUDIO permission",
                             Toast.LENGTH_LONG).show();
                 }
@@ -490,7 +490,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != Activity.RESULT_OK) {
-                    Log.d("Mark",
+                    Log.d(Constants.TAG,
                             "This app requires Google Play Services. Please install "
                                     + "Google Play Services on your device and relaunch this app.");
                 } else {
@@ -692,19 +692,24 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
     private class CreateEventTask extends AsyncTask<Void, Void, Void> {
-        private YouTube youTube = null;
+        private YouTube mYouTube = null;
         private Exception mLastError = null;
-        private String pushAddress;
-        private String shareAddress;
-        private LiveBroadcast returnedBroadcast;
+        private String mPushAddress;
+        private String mShareAddress;
+        private LiveBroadcast mReturnedBroadcast;
+        private String mApplicationName = "StreamProject";
+
+        private String mYoutubeWatchUrl = "https://www.youtube.com/watch?v=";
+        private String mYoutubeImageUrl = "http://img.youtube.com/vi/";
+        private String mHighQuelityType = "/hqdefault.jpg";
 
 
         CreateEventTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            youTube = new YouTube.Builder(
+            mYouTube = new YouTube.Builder(
                     transport, jsonFactory, credential)
-                    .setApplicationName("YouTube Data API Android Quickstart")
+                    .setApplicationName(mApplicationName)
                     .build();
             mTitle = mEditTextTitle.getText().toString().trim();
         }
@@ -716,14 +721,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         protected Void doInBackground(Void... voids) {
             try {
 
-                System.out.println("You chose " + mTitle + " for broadcast title.");
-
                 LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
                 broadcastSnippet.setTitle(mTitle);
                 long time = System.currentTimeMillis();
                 broadcastSnippet.setPublishedAt(new DateTime(time));
                 broadcastSnippet.setScheduledStartTime(new DateTime(time));
-//                broadcastSnippet.setScheduledEndTime(new DateTime(time + 60 * 60 * 1000));
 
                 LiveBroadcastStatus status = new LiveBroadcastStatus();
                 status.setPrivacyStatus("public");
@@ -733,34 +735,13 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 broadcast.setSnippet(broadcastSnippet);
                 broadcast.setStatus(status);
 
-//                LiveBroadcastContentDetails contentDetails = new LiveBroadcastContentDetails();
-//                MonitorStreamInfo monitorStream = new MonitorStreamInfo();
-//                monitorStream.setEnableMonitorStream(false);
-//                contentDetails.setMonitorStream(monitorStream);
-
                 LiveBroadcastContentDetails contentDetails = new LiveBroadcastContentDetails();
                 contentDetails.setProjection("rectangular");
                 broadcast.setContentDetails(contentDetails);
 
                 YouTube.LiveBroadcasts.Insert liveBroadcastInsert =
-                        youTube.liveBroadcasts().insert("snippet,status,contentDetails", broadcast);
-                returnedBroadcast = liveBroadcastInsert.execute();
-
-
-                // Print information from the API response.
-                System.out.println("\n================== Returned Broadcast ==================\n");
-                System.out.println("  - Id: " + returnedBroadcast.getId());
-                System.out.println("  - Title: " + returnedBroadcast.getSnippet().getTitle());
-                System.out.println("  - Description: " + returnedBroadcast.getSnippet().getDescription());
-                System.out.println("  - Published At: " + returnedBroadcast.getSnippet().getPublishedAt());
-                System.out.println(
-                        "  - Scheduled Start Time: " + returnedBroadcast.getSnippet().getScheduledStartTime());
-                System.out.println(
-                        "  - Scheduled End Time: " + returnedBroadcast.getSnippet().getScheduledEndTime());
-
-
-                System.out.println("You chose " + mTitle + " for stream title.");
-
+                        mYouTube.liveBroadcasts().insert("snippet,status,contentDetails", broadcast);
+                mReturnedBroadcast = liveBroadcastInsert.execute();
 
                 LiveStreamSnippet streamSnippet = new LiveStreamSnippet();
                 streamSnippet.setTitle(mTitle);
@@ -770,7 +751,6 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 ingestionInfo.setIngestionAddress("rtmp://a.rtmp.youtube.com/live2");
 
                 CdnSettings cdnSettings = new CdnSettings();
-//                cdnSettings.setFormat("480p");
                 cdnSettings.setResolution("variable");
                 cdnSettings.setFrameRate("variable");
                 cdnSettings.setIngestionType("rtmp");
@@ -780,56 +760,25 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 stream.setSnippet(streamSnippet);
                 stream.setCdn(cdnSettings);
 
-
                 YouTube.LiveStreams.Insert liveStreamInsert =
-                        youTube.liveStreams().insert("snippet,cdn", stream);
+                        mYouTube.liveStreams().insert("snippet,cdn", stream);
                 LiveStream returnedStream = liveStreamInsert.execute();
 
-                // Print information from the API response.
-                System.out.println("\n================== Returned Stream ==================\n");
-                System.out.println("  - Id: " + returnedStream.getId());
-                System.out.println("  - Title: " + returnedStream.getSnippet().getTitle());
-                System.out.println("  - Description: " + returnedStream.getSnippet().getDescription());
-                System.out.println("  - Published At: " + returnedStream.getSnippet().getPublishedAt());
-                System.out.println("  - Ingestion Address: " + returnedStream.getCdn().getIngestionInfo().getIngestionAddress());
-
-
                 YouTube.LiveBroadcasts.Bind liveBroadcastBind =
-                        youTube.liveBroadcasts().bind(returnedBroadcast.getId(), "id,contentDetails");
+                        mYouTube.liveBroadcasts().bind(mReturnedBroadcast.getId(), "id,contentDetails");
                 liveBroadcastBind.setStreamId(returnedStream.getId());
-                Log.d("Mark", "setStreamId = " + returnedStream.getId());
-                returnedBroadcast = liveBroadcastBind.execute();
+                Log.d(Constants.TAG, "setStreamId = " + returnedStream.getId());
+                mReturnedBroadcast = liveBroadcastBind.execute();
 
-
-                // Print information from the API response.
-                System.out.println("\n================== Returned Bound Broadcast ==================\n");
-                System.out.println("  - Broadcast Id: " + returnedBroadcast.getId());
-                System.out.println(
-                        "  - Bound Stream Id: " + returnedBroadcast.getContentDetails().getBoundStreamId());
-
-
-                shareAddress = "https://www.youtube.com/watch?v=" + returnedBroadcast.getId();
-                pushAddress = returnedStream.getCdn().getIngestionInfo().getIngestionAddress() + "/" + returnedStream.getCdn()
+                mShareAddress = mYoutubeWatchUrl + mReturnedBroadcast.getId();
+                mPushAddress = returnedStream.getCdn().getIngestionInfo().getIngestionAddress() + "/" + returnedStream.getCdn()
                         .getIngestionInfo().getStreamName();
 
 
-                Log.d("Mark", "image_url_1 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/0.jpg");
-                Log.d("Mark", "image_url_2 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/1.jpg");
-                Log.d("Mark", "image_url_3 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/2.jpg");
-                Log.d("Mark", "image_url_4 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/3.jpg");
-                Log.d("Mark", "pushAddress = " + pushAddress);
-                Log.d("Mark", "shareAddress = " + shareAddress);
-
-                mTag = "Entertainment";
-                mImage = "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/hqdefault.jpg";
-                mWatchId = returnedBroadcast.getId();
+                mImage = mYoutubeImageUrl + mReturnedBroadcast.getId() + mHighQuelityType;
+                mWatchId = mReturnedBroadcast.getId();
                 mPublishTime = time;
                 mMainPresenter.createRoom(mTitle, mTag, mImage, mWatchId, mPublishTime);
-
-//            } catch (GoogleJsonResponseException e) {
-//                System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-//                        + e.getDetails().getMessage());
-//                e.printStackTrace();
 
             } catch (UserRecoverableAuthIOException e) {
                 startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
@@ -856,23 +805,23 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("Mark", "OK");
+            Log.d(Constants.TAG, "OK");
             mAlertDialog.dismiss();
-            if (pushAddress != null) {
-                mScreenStreamer.setUrl(pushAddress);
+            if (mPushAddress != null) {
+                mScreenStreamer.setUrl(mPushAddress);
                 mMainPresenter.changeStatus(Constants.STREAMING);
                 startStream();
                 isLoading = false;
                 isCreating = true;
-                setYoutube(youTube);
-                setLiveBroadcast(returnedBroadcast);
-                new GetStreamStatusTask(youTube, returnedBroadcast).execute();
+                setYoutube(mYouTube);
+                setLiveBroadcast(mReturnedBroadcast);
+                new GetStreamStatusTask(mYouTube, mReturnedBroadcast).execute();
             } else {
                 isStreaming = false;
                 isLoading = false;
                 isCreating = false;
                 mMainPresenter.showDescriptionDialog();
-                Toast.makeText(getContext(), "請先到 Youtube 帳號開啟直播相關功能", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getContext().getString(R.string.youtube_stream_function), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -888,11 +837,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             REQUEST_AUTHORIZATION);
                 } else {
-                    Log.d("Mark", "The following error occurred:\n"
+                    Log.d(Constants.TAG, "The following error occurred:\n"
                             + mLastError.getMessage());
                 }
             } else {
-                Log.d("Mark", "Request cancelled.");
+                Log.d(Constants.TAG, "Request cancelled.");
             }
         }
     }
@@ -917,7 +866,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("Mark", "Stream status is active");
+            Log.d(Constants.TAG, "Stream status is active");
             // change broadcast status
             if (isCreating) {
                 new ChangeBroadcastTestingStatusTask(youTube, returnedBroadcast).execute();
@@ -935,14 +884,14 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 if (liveStreams != null && liveStreams.size() > 0) {
                     LiveStream liveStream = liveStreams.get(0);
                     if (liveStream != null) {
-                        Log.d("Mark", "StreamStatus = " + liveStream.getStatus().getStreamStatus());
+                        Log.d(Constants.TAG, "StreamStatus = " + liveStream.getStatus().getStreamStatus());
                         while (!liveStream.getStatus().getStreamStatus()
                                 .equals("active")) {
                             Thread.sleep(5000);
                             returnedList = liveStreamRequest.execute();
                             liveStreams = returnedList.getItems();
                             liveStream = liveStreams.get(0);
-                            Log.d("Mark", "StreamStatus = " + liveStream.getStatus().getStreamStatus());
+                            Log.d(Constants.TAG, "StreamStatus = " + liveStream.getStatus().getStreamStatus());
                             if (!isCreating) {
                                 break;
                             }
@@ -982,14 +931,9 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
 
                 returnedBroadcast = broadCastRequest.execute();
                 String youTubeLink = "https://www.youtube.com/watch?v=" + returnedBroadcast.getId();
-                Log.d("Mark", "youTubeLink:" + youTubeLink);
-                Log.d("Mark", "Broad EmbedHtml:" + returnedBroadcast.getContentDetails().getMonitorStream().getEmbedHtml());
-                Log.d("Mark", "Broad Cast Status:" + returnedBroadcast.getStatus().getLifeCycleStatus());
-
-
-
-
-
+                Log.d(Constants.TAG, "youTubeLink:" + youTubeLink);
+                Log.d(Constants.TAG, "Broad EmbedHtml:" + returnedBroadcast.getContentDetails().getMonitorStream().getEmbedHtml());
+                Log.d(Constants.TAG, "Broad Cast Status:" + returnedBroadcast.getStatus().getLifeCycleStatus());
 
             } catch (GoogleJsonResponseException e) {
                 System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
@@ -1009,7 +953,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("Mark", "Change broadcast status to testStarting");
+            Log.d(Constants.TAG, "Change broadcast status to testStarting");
             if (isCreating) {
                 new TestStartingTask(youTube, returnedBroadcast).execute();
             }
@@ -1039,12 +983,12 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     if (liveBroadcastReq != null) {
                         while (!liveBroadcastReq.getStatus().getLifeCycleStatus().equals("testing")) {
                             Thread.sleep(5000);
-                            Log.d("Mark", "publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
+                            Log.d(Constants.TAG, "publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
                             liveBroadcastResponse = liveBroadRequest.execute();
                             returnedList1 = liveBroadcastResponse.getItems();
                             liveBroadcastReq = returnedList1.get(0);
                         }
-                        Log.d("Mark","publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
+                        Log.d(Constants.TAG,"publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
                     }
                 }
 
@@ -1067,7 +1011,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             //Change broadcast status to live
-            Log.d("Mark", "Stream Prepare");
+            Log.d(Constants.TAG, "Stream Prepare");
             if (isCreating) {
                 new ChangeBroadcastLiveStatusTask(youTube, returnedBroadcast).execute();
             }
@@ -1086,7 +1030,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Log.d("Mark", "Hello");
+                Log.d(Constants.TAG, "Hello");
                 YouTube.LiveBroadcasts.Transition transitionRequest = youTube.liveBroadcasts().transition("live",
                         returnedBroadcast.getId(), "status");
                 returnedBroadcast = transitionRequest.execute();
@@ -1101,7 +1045,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                     if (liveBroadcastReq != null) {
                         while (!liveBroadcastReq.getStatus().getLifeCycleStatus().equals("live")) {
                             Thread.sleep(5000);
-                            Log.d("Mark", "publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
+                            Log.d(Constants.TAG, "publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
                             liveBroadcastResponse = liveBroadRequest.execute();
                             returnedList2 = liveBroadcastResponse.getItems();
                             liveBroadcastReq = returnedList2.get(0);
@@ -1109,7 +1053,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                                 break;
                             }
                         }
-                        Log.d("Mark","publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
+                        Log.d(Constants.TAG,"publish broadcast - getLifeCycleStatus: " + liveBroadcastReq.getStatus().getLifeCycleStatus());
                     }
                 }
 
@@ -1130,7 +1074,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("Mark", "Change broadcast status to live");
+            Log.d(Constants.TAG, "Change broadcast status to live");
             isCreating = false;
         }
     }
@@ -1169,7 +1113,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("Mark", "End broadcast");
+            Log.d(Constants.TAG, "End broadcast");
             stopStream();
             mMainPresenter.changeStatus(Constants.ONLINE);
             mMainPresenter.closeRoom();
@@ -1209,7 +1153,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("Mark", "Delete");
+            Log.d(Constants.TAG, "Delete");
             isCreating = false;
             isStreaming = false;
             stopStream();

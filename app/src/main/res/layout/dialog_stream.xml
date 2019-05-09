@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/stroke_another">
+    android:background="@drawable/stroke_type2">
 
     <Button
         android:id="@+id/button_description_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
-        android:background="@drawable/stroke_another"
-        android:text="取消"
+        android:background="@drawable/stroke_type2"
+        android:text="@string/cancel"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -27,8 +27,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="3dp"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/stroke_another"
-        android:text="開始直播"
+        android:background="@drawable/stroke_type2"
+        android:text="@string/start_stream"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_description_cancel"
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/yellow"
-            android:text="480P"
+            android:text="@string/resolution_480p"
             android:textColor="@color/white" />
 
         <RadioButton
@@ -72,8 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/yellow"
-            android:text="720P"
             android:checked="true"
+            android:text="@string/resolution_720p"
             android:textColor="@color/white" />
     </RadioGroup>
 
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/Resolution"
+        android:text="@string/resolution"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="@string/BroadcastTitle"
+        android:text="@string/broadcastTitle"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"

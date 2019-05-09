@@ -33,6 +33,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     private CategoryContract.Presenter mPresenter;
 
+    private static final String SEARCH_SOURCE_TEXT = "android:id/search_src_text";
+
     public CategoryFragment() {}
 
     public static CategoryFragment newInstance() {
@@ -120,7 +122,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     private void initSearchView(View view) {
         mSearchView = view.findViewById(R.id.search_category);
 
-        int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        int id = mSearchView.getContext().getResources().getIdentifier(SEARCH_SOURCE_TEXT, null, null);
 
         EditText textSearch = (EditText) mSearchView.findViewById(id);
         textSearch.setTextColor(getResources().getColor(R.color.white));
@@ -128,16 +130,21 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         textSearch.setHint(getResources().getString(R.string.search_hint));
 
         try {
-            Field cursorDrawableRes = TextView.class.getDeclaredField("cursorDrawableRes");
+            String cursorDrawableResFieldName = "cursorDrawableRes";
+            Field cursorDrawableRes = TextView.class.getDeclaredField(cursorDrawableResFieldName);
             cursorDrawableRes.setAccessible(true);
 
             int cursorDrawableResInt = cursorDrawableRes.getInt(textSearch);
-            Field editor = TextView.class.getDeclaredField("editor");
+
+            String editorFieldName = "editor";
+            Field editor = TextView.class.getDeclaredField(editorFieldName);
             editor.setAccessible(true);
 
             Object object = editor.get(textSearch);
             Class<?> clazz = object.getClass();
-            Field cursorDrawable = clazz.getDeclaredField("cursorDrawable");
+
+            String cursorDrawableFieldName = "cursorDrawable";
+            Field cursorDrawable = clazz.getDeclaredField(cursorDrawableFieldName);
             cursorDrawable.setAccessible(true);
 
             if (cursorDrawableResInt <= 0) {

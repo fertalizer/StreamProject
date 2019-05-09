@@ -46,6 +46,6 @@ public class RoundAndStrokeTransformation implements Transformation {
 
     @Override
     public String key() {
-        return "roundCorner + stroke";
+        return "roundCorner + stroke_type1";
     }
 }

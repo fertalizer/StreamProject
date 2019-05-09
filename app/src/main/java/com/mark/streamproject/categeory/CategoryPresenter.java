@@ -11,6 +11,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mark.streamproject.data.Room;
+import com.mark.streamproject.util.Constants;
+
 import java.util.ArrayList;
 
 public class CategoryPresenter implements  CategoryContract.Presenter {
@@ -18,7 +20,7 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
     private final CategoryContract.View mCategoryView;
 
     public CategoryPresenter(@NonNull CategoryContract.View categoryView) {
-        mCategoryView = checkNotNull(categoryView, "hotsView cannot be null!");
+        mCategoryView = checkNotNull(categoryView, "categoryView cannot be null!");
         mCategoryView.setPresenter(this);
     }
 
@@ -30,8 +32,8 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
     @Override
     public void loadCategoryData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room")
-                .orderBy("like", Query.Direction.DESCENDING)
+        db.collection(Constants.ROOM)
+                .orderBy(Constants.LIKE, Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -39,12 +41,12 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
                         if (task.isSuccessful()) {
                             ArrayList<Room> rooms = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("Firebase", document.getId() + " => " + document.getData());
+                                Log.i(Constants.FIREBASE, document.getId() + " => " + document.getData());
                                 rooms.add(document.toObject(Room.class));
                             }
                             setCategoryData(rooms);
                         } else {
-                            Log.d("Firebase", "Error getting documents: ", task.getException());
+                            Log.d(Constants.FIREBASE, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -68,8 +70,8 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
     @Override
     public void searchRoomData(String string) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room")
-                .orderBy("streamerName")
+        db.collection(Constants.ROOM)
+                .orderBy(Constants.STREAMER_NAME)
                 .startAt(string)
                 .endAt(string + "\uf8ff")
                 .get()
@@ -79,12 +81,12 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
                         if (task.isSuccessful()) {
                             ArrayList<Room> rooms = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("Firebase", document.getId() + " => " + document.getData());
+                                Log.i(Constants.FIREBASE, document.getId() + " => " + document.getData());
                                 rooms.add(document.toObject(Room.class));
                             }
                             setCategoryData(rooms);
                         } else {
-                            Log.d("Firebase", "Error getting documents: ", task.getException());
+                            Log.d(Constants.FIREBASE, "Error getting documents: ", task.getException());
                         }
                     }
                 });

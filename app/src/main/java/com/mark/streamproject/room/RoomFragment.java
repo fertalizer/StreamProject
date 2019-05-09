@@ -89,7 +89,7 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_room, container, false);
         TextView textView = root.findViewById(R.id.text_room_send);
-        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+        textView.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
 
         init(root);
 

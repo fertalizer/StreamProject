@@ -47,7 +47,7 @@ public class TutorialAdapter extends RecyclerView.Adapter {
     }
 
     private void bindFirstViewHolder(FirstStepViewHolder holder) {
-        holder.getTextView().setText(StreamProject.getAppContext().getString(R.string.description_01));
+        holder.getTextView().setText(StreamProject.getAppContext().getString(R.string.tutorial_page1));
 
         Picasso.get()
                 .load(firstStepUrl)
@@ -56,7 +56,7 @@ public class TutorialAdapter extends RecyclerView.Adapter {
     }
 
     private void bindSecondViewHolder(SecondStepViewHolder holder) {
-        holder.getTextView().setText(StreamProject.getAppContext().getString(R.string.description_02));
+        holder.getTextView().setText(StreamProject.getAppContext().getString(R.string.tutorial_page2));
 
         Picasso.get()
                 .load(secondStepUrl)

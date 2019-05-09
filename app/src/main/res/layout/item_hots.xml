@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="1.5dp"
     android:layout_marginBottom="1.5dp"
-    android:background="@drawable/stroke_another">
+    android:background="@drawable/stroke_type2">
 
     <ImageView
         android:id="@+id/image_hots_screen"
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:text="Loading..."
+        android:text="@string/loading"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/text_hots_room_title"
@@ -115,7 +115,7 @@
         android:id="@+id/text_hots_dislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/zero"
         android:textAlignment="textEnd"
         android:textColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="@+id/text_hots_room_title"
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
-        android:text="0"
+        android:text="@string/zero"
         android:textAlignment="textEnd"
         android:textColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"

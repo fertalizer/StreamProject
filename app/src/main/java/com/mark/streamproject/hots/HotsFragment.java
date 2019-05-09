@@ -97,7 +97,7 @@ public class HotsFragment extends Fragment implements HotsContract.View, View.On
                 mPresenter.showStreamDialog();
                 break;
             case R.id.button_record:
-                Toast.makeText(StreamProject.getAppContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StreamProject.getAppContext(), StreamProject.getAppContext().getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
                 break;
             default:
         }

@@ -5,7 +5,7 @@
     android:id="@+id/layout_category"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/stroke_type3"
+    android:background="@drawable/stroke_type4"
     android:layout_margin="3dp"
     android:orientation="vertical">
 
@@ -40,12 +40,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:text="Loading..."
+        android:ellipsize="end"
         android:textColor="@color/white"
         android:textSize="12sp"
-        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_category_screen" />
+        app:layout_constraintTop_toBottomOf="@+id/image_category_screen"
+        tools:text="@string/loading" />
 
     <TextView
         android:id="@+id/text_category_title"
@@ -53,12 +53,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:ellipsize="end"
-        android:text="Title"
         android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/text_category_name"
         app:layout_constraintTop_toBottomOf="@+id/text_category_name"
-        tools:text="Title" />
+        tools:text="@string/mockup_title" />
 
     <ImageView
         android:id="@+id/image_category_dislike"
@@ -88,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="0"
+        android:text="@string/zero"
         android:textAlignment="textEnd"
         android:textColor="@color/yellow"
         android:textSize="11sp"
@@ -101,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="0"
+        android:text="@string/zero"
         android:textAlignment="textEnd"
         android:textColor="@color/yellow"
         android:textSize="11sp"

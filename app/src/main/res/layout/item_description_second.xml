@@ -28,5 +28,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/description_02" />
+        tools:text="@string/tutorial_page2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Name"
         android:textColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/mockup_name" />
 
     <TextView
         android:id="@+id/text_message_text"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text=":"
+        android:text="@string/colon"
         android:textColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="@+id/text_message_name"
         app:layout_constraintStart_toEndOf="@+id/text_message_name"

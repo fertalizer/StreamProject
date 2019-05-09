@@ -72,8 +72,8 @@ public class HotsPresenter implements HotsContract.Presenter {
 
     public void getRoomData(RoomCallback roomCallback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room")
-                .orderBy("publishTime", Query.Direction.DESCENDING)
+        db.collection(Constants.ROOM)
+                .orderBy(Constants.PUBLISH_TIME, Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -82,7 +82,7 @@ public class HotsPresenter implements HotsContract.Presenter {
                             ArrayList<Room> rooms = new ArrayList<>();
                             ArrayList<Integer> numbers = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("Firebase", document.getId() + " => " + document.getData());
+                                Log.i(Constants.FIREBASE, document.getId() + " => " + document.getData());
                                 rooms.add(document.toObject(Room.class));
 
                                 getAudienceData(document.toObject(Room.class), new AudienceCallback() {
@@ -98,12 +98,9 @@ public class HotsPresenter implements HotsContract.Presenter {
                                 });
 
                             }
-
                             roomCallback.onSuccess(rooms, numbers);
-
-
                         } else {
-                            Log.d("Firebase", "Error getting documents: ", task.getException());
+                            Log.d(Constants.FIREBASE, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -111,7 +108,7 @@ public class HotsPresenter implements HotsContract.Presenter {
 
     public void getAudienceData(Room room, AudienceCallback audienceCallback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room").document(room.getStreamerId()).collection("Audience")
+        db.collection(Constants.USER).document(room.getStreamerId()).collection(Constants.AUDIENCE)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -119,14 +116,14 @@ public class HotsPresenter implements HotsContract.Presenter {
                         if (task.isSuccessful()) {
                             ArrayList<User> users = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("Firebase", "For user size" + document.getId() + " => " + document.getData());
+                                Log.i(Constants.FIREBASE, "For user size" + document.getId() + " => " + document.getData());
                                 users.add(document.toObject(User.class));
                             }
                             Log.d(Constants.TAG, "User Size = " + users.size());
                             audienceCallback.onSuccess(users.size());
 
                         } else {
-                            Log.d("Firebase", "Error getting documents: ", task.getException());
+                            Log.d(Constants.FIREBASE, "Error getting documents: ", task.getException());
                         }
                     }
                 });

@@ -33,9 +33,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextView bottomTitle = findViewById(R.id.text_login_title_bottom);
         TextView startButton = findViewById(R.id.button_login);
 
-        topTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
-        bottomTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
-        startButton.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+        topTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
+        bottomTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
+        startButton.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("ACCOUNT",account);
+            intent.putExtra(Constants.ACCOUNT_KEY, account);
             startActivity(intent);
             finish();
         }
@@ -70,8 +70,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-
-
         }
     }
 
@@ -80,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("ACCOUNT",account);
+            intent.putExtra(Constants.ACCOUNT_KEY, account);
             startActivity(intent);
             finish();
 

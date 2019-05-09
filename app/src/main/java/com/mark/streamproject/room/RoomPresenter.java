@@ -67,8 +67,8 @@ public class RoomPresenter implements RoomContract.Presenter {
     public void enterRoom() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("Room").document(mRoom.getStreamerId())
-                .collection("Audience").document(UserManager.getInstance().getUser().getId())
+        db.collection(Constants.USER).document(mRoom.getStreamerId())
+                .collection(Constants.AUDIENCE).document(UserManager.getInstance().getUser().getId())
                 .set(UserManager.getInstance().getUser())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -87,8 +87,8 @@ public class RoomPresenter implements RoomContract.Presenter {
     @Override
     public void exitRoom() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room").document(mRoom.getStreamerId())
-                .collection("Audience").document(UserManager.getInstance().getUser().getId())
+        db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+                .collection(Constants.AUDIENCE).document(UserManager.getInstance().getUser().getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -114,8 +114,8 @@ public class RoomPresenter implements RoomContract.Presenter {
             message.setContent(text);
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Room").document(mRoom.getStreamerId())
-                    .collection("Message").document()
+            db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+                    .collection(Constants.MESSAGE).document()
                     .set(message)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -136,8 +136,8 @@ public class RoomPresenter implements RoomContract.Presenter {
     @Override
     public void loadMessageData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room").document(mRoom.getStreamerId()).collection("Message")
-                .orderBy("publishTime", Query.Direction.ASCENDING)
+        db.collection(Constants.ROOM).document(mRoom.getStreamerId()).collection(Constants.MESSAGE)
+                .orderBy(Constants.PUBLISH_TIME, Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -175,7 +175,7 @@ public class RoomPresenter implements RoomContract.Presenter {
     @Override
     public void getRoomAudienceNumber() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Room").document(mRoom.getStreamerId()).collection("Audience")
+        db.collection(Constants.ROOM).document(mRoom.getStreamerId()).collection(Constants.AUDIENCE)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -274,7 +274,7 @@ public class RoomPresenter implements RoomContract.Presenter {
     public void updateLikeData(boolean hasChanged, boolean isAdded) {
         if (hasChanged) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Room").document(mRoom.getStreamerId())
+            db.collection(Constants.ROOM).document(mRoom.getStreamerId())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -306,8 +306,8 @@ public class RoomPresenter implements RoomContract.Presenter {
     }
 
     private void updateLikeNumber(FirebaseFirestore db, Room room) {
-        db.collection("Room").document(mRoom.getStreamerId())
-                .update("like", room.getLike())
+        db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+                .update(Constants.LIKE, room.getLike())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -326,7 +326,7 @@ public class RoomPresenter implements RoomContract.Presenter {
     public void updateDislikeData(boolean hasChanged, boolean isAdded) {
         if (hasChanged) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Room").document(mRoom.getStreamerId())
+            db.collection(Constants.ROOM).document(mRoom.getStreamerId())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -356,8 +356,8 @@ public class RoomPresenter implements RoomContract.Presenter {
     }
 
     private void updateDislikeNumber(FirebaseFirestore db, Room room) {
-        db.collection("Room").document(mRoom.getStreamerId())
-                .update("dislike", room.getDislike())
+        db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+                .update(Constants.DISLIKE, room.getDislike())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

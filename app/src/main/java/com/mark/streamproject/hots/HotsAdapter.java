@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mark.streamproject.R;
 import com.mark.streamproject.component.RoundAndStrokeTransformation;
-import com.mark.streamproject.component.RoundTransformation;
-import com.mark.streamproject.component.SizeTransformation;
 import com.mark.streamproject.data.Room;
 import com.squareup.picasso.Picasso;
 
@@ -50,7 +48,7 @@ public class HotsAdapter extends RecyclerView.Adapter {
 //        String audience = Integer.toString(audienceNumber);
 //        holder.getTextAudience().setText(audience);
 
-        if (!room.getStreamerImage().equals("")) {
+        if (!"".equals(room.getStreamerImage())) {
             Picasso.get()
                     .load(room.getStreamerImage())
                     .fit()

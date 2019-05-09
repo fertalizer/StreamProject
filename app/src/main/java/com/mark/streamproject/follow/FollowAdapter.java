@@ -44,13 +44,13 @@ public class FollowAdapter extends RecyclerView.Adapter {
     private void bindFollowViewHolder(FollowViewHolder holder, User user) {
         holder.getTextName().setText(user.getName());
         if (user.getStatus() == Constants.STREAMING) {
-            holder.getStatus().setText("實況中");
+            holder.getStatus().setText(StreamProject.getAppContext().getString(R.string.streaming));
             holder.getStatus().setTextColor(StreamProject.getAppContext().getColor(R.color.yellow));
         } else if (user.getStatus() == Constants.ONLINE) {
-            holder.getStatus().setText("線上");
+            holder.getStatus().setText(StreamProject.getAppContext().getString(R.string.online));
             holder.getStatus().setTextColor(StreamProject.getAppContext().getColor(R.color.white));
         } else {
-            holder.getStatus().setText("離線");
+            holder.getStatus().setText(StreamProject.getAppContext().getString(R.string.offline));
             holder.getStatus().setTextColor(StreamProject.getAppContext().getColor(R.color.gray));
         }
 
@@ -87,7 +87,7 @@ public class FollowAdapter extends RecyclerView.Adapter {
             mImage = itemView.findViewById(R.id.image_follow_user);
             mStatus = itemView.findViewById(R.id.text_follow_status);
             mRemove = itemView.findViewById(R.id.text_follow_remove);
-            mRemove.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), "fonts/Minecraftia-Regular.ttf"));
+            mRemove.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
 
             mRemove.setOnClickListener(this);
             itemView.findViewById(R.id.layout_follow).setOnClickListener(this);

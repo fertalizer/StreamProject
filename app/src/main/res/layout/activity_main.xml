@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_profile"
         android:elevation="@dimen/elevation_all"
-        android:background="@drawable/stroke_another"
+        android:background="@drawable/stroke_type2"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:text="Loading..."
+            android:text="@string/loading"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/image_room_user"
@@ -77,7 +77,7 @@
         android:id="@+id/bottom_navigation_main"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_bottom_navigation_main"
-        android:background="@drawable/stroke_another"
+        android:background="@drawable/stroke_type2"
         app:labelVisibilityMode="unlabeled"
         app:itemIconTint="@drawable/color_selector"
         app:layout_constraintBottom_toBottomOf="parent"

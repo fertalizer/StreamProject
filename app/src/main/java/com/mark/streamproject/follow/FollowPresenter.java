@@ -4,18 +4,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
@@ -27,7 +24,7 @@ public class FollowPresenter implements FollowContract.Presenter {
     private final FollowContract.View mFollowView;
 
     public FollowPresenter(@NonNull FollowContract.View followView) {
-        mFollowView = checkNotNull(followView, "hotsView cannot be null!");
+        mFollowView = checkNotNull(followView, "followView cannot be null!");
         mFollowView.setPresenter(this);
     }
 
@@ -39,8 +36,8 @@ public class FollowPresenter implements FollowContract.Presenter {
     @Override
     public void loadFollowData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("User")
-                .orderBy("status", Query.Direction.DESCENDING)
+        db.collection(Constants.USER)
+                .orderBy(Constants.STATUS, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -86,8 +83,8 @@ public class FollowPresenter implements FollowContract.Presenter {
         }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("User").document(UserManager.getInstance().getUser().getId())
-                .update("followList", UserManager.getInstance().getUser().getFollowList())
+        db.collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
+                .update(Constants.FOLLOW_LIST, UserManager.getInstance().getUser().getFollowList())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

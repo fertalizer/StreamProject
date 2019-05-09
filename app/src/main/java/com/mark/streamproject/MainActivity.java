@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public GoogleSignInAccount getAccountIntent() {
-        return this.getIntent().getParcelableExtra("ACCOUNT");
+        return this.getIntent().getParcelableExtra(Constants.ACCOUNT_KEY);
     }
 
     private void init() {
@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mMainMvpController = MainMvpController.create(this);
         mPresenter.openHots();
 
-//        setToolbar();
         setBottomNavigation();
         setUserLayout();
     }
@@ -73,13 +72,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mUserImage = findViewById(R.id.image_room_user);
         mUserName = findViewById(R.id.text_message_name);
         mPresenter.getUserData();
-    }
-
-    private void setToolbar() {
-        // Retrieve the AppCompact Toolbar
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("");
     }
 
     private void setBottomNavigation() {
@@ -138,7 +130,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void showUserUi(User user) {
         mUserName.setText(user.getName());
-        if (!user.getImage().equals("")) {
+        if (!"".equals(user.getImage())) {
             Picasso.get()
                     .load(user.getImage())
                     .fit()
@@ -210,11 +202,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mAlertDialog = new AlertDialog();
             mAlertDialog.setMainPresenter(mPresenter);
             mAlertDialog.setUser(user);
-
             mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
 
         } else if (!mAlertDialog.isAdded()) {
-
             mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
         }
     }
@@ -225,12 +215,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
             mDescriptionDialog = new TutorialDialog();
             mDescriptionDialog.setMainPresenter(mPresenter);
-
-
             mDescriptionDialog.show(getSupportFragmentManager(), Constants.DESCRIPTION);
 
         } else if (!mDescriptionDialog.isAdded()) {
-
             mDescriptionDialog.show(getSupportFragmentManager(), Constants.DESCRIPTION);
         }
     }

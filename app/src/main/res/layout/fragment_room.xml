@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:background="@drawable/stroke_another"
+        android:background="@drawable/stroke_type2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player">
@@ -39,12 +39,12 @@
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Faker WHAT WAS THAT  -_-"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/image_room_user"
-            app:layout_constraintTop_toBottomOf="@+id/image_room_user" />
+            app:layout_constraintTop_toBottomOf="@+id/image_room_user"
+            tools:text="@string/mockup_title" />
 
         <TextView
             android:id="@+id/text_room_tag"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="4"
+            android:text="@string/zero"
             android:textAlignment="textEnd"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
-            android:text="6"
+            android:text="@string/zero"
             android:textAlignment="textEnd"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="@+id/text_hots_dislike"
@@ -114,12 +114,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Ryu"
+            android:text="@string/loading"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/image_room_user"
             app:layout_constraintStart_toEndOf="@+id/image_room_user"
-            app:layout_constraintTop_toTopOf="@+id/image_room_user" />
+            app:layout_constraintTop_toTopOf="@+id/image_room_user"
+            tools:text="@string/mockup_name" />
 
         <ImageView
             android:id="@+id/image_room_follow"
@@ -140,7 +141,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/stroke_type2"
+        android:background="@drawable/stroke_type3"
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +153,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/stroke_another"
+        android:background="@drawable/stroke_type2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
