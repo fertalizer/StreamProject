@@ -1,8 +1,9 @@
 package com.mark.streamproject;
 
-import androidx.annotation.NonNull;
-import android.util.Log;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import android.util.Log;
+import androidx.annotation.NonNull;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -10,23 +11,21 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mark.streamproject.data.Message;
-import com.mark.streamproject.data.Room;
-import com.mark.streamproject.room.RoomContract;
-import com.mark.streamproject.room.RoomPresenter;
 import com.mark.streamproject.categeory.CategoryContract;
 import com.mark.streamproject.categeory.CategoryPresenter;
+import com.mark.streamproject.data.Message;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.follow.FollowContract;
 import com.mark.streamproject.follow.FollowPresenter;
 import com.mark.streamproject.hots.HotsContract;
 import com.mark.streamproject.hots.HotsPresenter;
+import com.mark.streamproject.room.RoomContract;
+import com.mark.streamproject.room.RoomPresenter;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
 
 import java.util.ArrayList;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MainPresenter implements MainContract.Presenter, HotsContract.Presenter,
         CategoryContract.Presenter, FollowContract.Presenter, RoomContract.Presenter {

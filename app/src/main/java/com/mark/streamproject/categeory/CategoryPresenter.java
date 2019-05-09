@@ -1,7 +1,9 @@
 package com.mark.streamproject.categeory;
 
-import android.util.Log;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import android.util.Log;
+import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -9,12 +11,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mark.streamproject.data.Room;
-
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CategoryPresenter implements  CategoryContract.Presenter {
 

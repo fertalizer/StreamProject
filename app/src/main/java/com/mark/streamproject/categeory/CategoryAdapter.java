@@ -6,15 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.mark.streamproject.R;
 import com.mark.streamproject.component.RoundTransformation;
 import com.mark.streamproject.data.Room;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class CategoryAdapter extends RecyclerView.Adapter {
     private CategoryContract.Presenter mPresenter;

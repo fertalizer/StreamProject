@@ -1,7 +1,9 @@
 package com.mark.streamproject.follow;
 
-import android.util.Log;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import android.util.Log;
+import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,15 +19,9 @@ import com.mark.streamproject.data.Message;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
-
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.annotation.Nullable;
-
-import androidx.annotation.NonNull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FollowPresenter implements FollowContract.Presenter {
     private final FollowContract.View mFollowView;

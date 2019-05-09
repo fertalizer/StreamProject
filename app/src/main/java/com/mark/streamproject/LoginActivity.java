@@ -2,15 +2,12 @@ package com.mark.streamproject;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import androidx.appcompat.app.AppCompatActivity;
-import io.fabric.sdk.android.Fabric;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.mark.streamproject.util.Constants;
+import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 9001;

@@ -4,22 +4,20 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import com.mark.streamproject.MainContract;
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
-
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 public class TutorialDialog extends AppCompatDialogFragment implements View.OnClickListener {
 

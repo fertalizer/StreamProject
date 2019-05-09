@@ -3,7 +3,13 @@ package com.mark.streamproject.categeory;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -13,22 +19,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.SearchView;
-import android.widget.TextView;
-
 import com.mark.streamproject.R;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.util.Constants;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
     private CategoryAdapter mCategoryAdapter;
@@ -133,32 +128,32 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         textSearch.setHint(getResources().getString(R.string.search_hint));
 
         try {
-            Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
-            fCursorDrawableRes.setAccessible(true);
+            Field cursorDrawableRes = TextView.class.getDeclaredField("cursorDrawableRes");
+            cursorDrawableRes.setAccessible(true);
 
-            int mCursorDrawableRes = fCursorDrawableRes.getInt(textSearch);
-            Field fEditor = TextView.class.getDeclaredField("mEditor");
-            fEditor.setAccessible(true);
+            int cursorDrawableResInt = cursorDrawableRes.getInt(textSearch);
+            Field editor = TextView.class.getDeclaredField("editor");
+            editor.setAccessible(true);
 
-            Object editor = fEditor.get(textSearch);
-            Class<?> clazz = editor.getClass();
-            Field fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
-            fCursorDrawable.setAccessible(true);
+            Object object = editor.get(textSearch);
+            Class<?> clazz = object.getClass();
+            Field cursorDrawable = clazz.getDeclaredField("cursorDrawable");
+            cursorDrawable.setAccessible(true);
 
-            if (mCursorDrawableRes <= 0) {
+            if (cursorDrawableResInt <= 0) {
                 return;
             }
 
-            Drawable cursorDrawable = ContextCompat.getDrawable(mSearchView.getContext(), mCursorDrawableRes);
-            if (cursorDrawable == null) {
+            Drawable drawable = ContextCompat.getDrawable(mSearchView.getContext(), cursorDrawableResInt);
+            if (drawable == null) {
                 return;
             }
 
-            Drawable tintDrawable = DrawableCompat.wrap(cursorDrawable);
+            Drawable tintDrawable = DrawableCompat.wrap(drawable);
             //custom cursor color
             DrawableCompat.setTintList(tintDrawable, ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
             Drawable[] drawables = new Drawable[] {tintDrawable, tintDrawable};
-            fCursorDrawable.set(editor, drawables);
+            cursorDrawable.set(object, drawables);
         } catch (Throwable throwable) {
             Log.d(Constants.TAG, "" + throwable);
         }

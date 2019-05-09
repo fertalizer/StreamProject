@@ -18,10 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +29,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -98,8 +98,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private KSYScreenStreamer mScreenStreamer;
     private Handler mMainHandler;
 
-    private boolean mHWEncoderUnsupported;
-    private boolean mSWEncoderUnsupported;
+    private boolean mHardWareEncoderUnsupported;
+    private boolean mSoftWareEncoderUnsupported;
 
 
     GoogleAccountCredential mCredential;
@@ -453,16 +453,16 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(
-                requestCode, permissions, grantResults, this);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
         switch (requestCode) {
             case PERMISSION_REQUEST_RECORD_AUDIO: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("Mark", "Get RECORD_AUDIO permission");
                 } else {
                     Log.e("Mark", "No RECORD_AUDIO permission");
                     Toast.makeText(StreamProject.getAppContext(), "No RECORD_AUDIO permission",
@@ -470,6 +470,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 }
                 break;
             }
+            default:
         }
     }
 
@@ -477,7 +478,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
+        switch (requestCode) {
             case OVERLAY_PERMISSION_RESULT_CODE:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (!Settings.canDrawOverlays(StreamProject.getAppContext())) {
@@ -560,8 +561,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private void handleEncodeError() {
         int encodeMethod = mScreenStreamer.getVideoEncodeMethod();
         if (encodeMethod == StreamerConstants.ENCODE_METHOD_HARDWARE) {
-            mHWEncoderUnsupported = true;
-            if (mSWEncoderUnsupported) {
+            mHardWareEncoderUnsupported = true;
+            if (mSoftWareEncoderUnsupported) {
                 mScreenStreamer.setEncodeMethod(
                         StreamerConstants.ENCODE_METHOD_SOFTWARE_COMPAT);
                 Log.e(TAG, "Got HW encoder error, switch to SOFTWARE_COMPAT mode");
@@ -570,8 +571,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 Log.e(TAG, "Got HW encoder error, switch to SOFTWARE mode");
             }
         } else if (encodeMethod == StreamerConstants.ENCODE_METHOD_SOFTWARE) {
-            mSWEncoderUnsupported = true;
-            if (mHWEncoderUnsupported) {
+            mSoftWareEncoderUnsupported = true;
+            if (mHardWareEncoderUnsupported) {
                 Log.e(TAG, "Got SW encoder error, can not streamer");
             } else {
                 mScreenStreamer.setEncodeMethod(StreamerConstants.ENCODE_METHOD_HARDWARE);
@@ -693,8 +694,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
     private class CreateEventTask extends AsyncTask<Void, Void, Void> {
         private YouTube youTube = null;
         private Exception mLastError = null;
-        private String push_addr;
-        private String share_addr;
+        private String pushAddress;
+        private String shareAddress;
         private LiveBroadcast returnedBroadcast;
 
 
@@ -807,8 +808,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                         "  - Bound Stream Id: " + returnedBroadcast.getContentDetails().getBoundStreamId());
 
 
-                share_addr = "https://www.youtube.com/watch?v=" + returnedBroadcast.getId();
-                push_addr = returnedStream.getCdn().getIngestionInfo().getIngestionAddress() + "/" + returnedStream.getCdn()
+                shareAddress = "https://www.youtube.com/watch?v=" + returnedBroadcast.getId();
+                pushAddress = returnedStream.getCdn().getIngestionInfo().getIngestionAddress() + "/" + returnedStream.getCdn()
                         .getIngestionInfo().getStreamName();
 
 
@@ -816,8 +817,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 Log.d("Mark", "image_url_2 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/1.jpg");
                 Log.d("Mark", "image_url_3 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/2.jpg");
                 Log.d("Mark", "image_url_4 = " + "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/3.jpg");
-                Log.d("Mark", "push_addr = " + push_addr);
-                Log.d("Mark", "share_addr = " + share_addr);
+                Log.d("Mark", "pushAddress = " + pushAddress);
+                Log.d("Mark", "shareAddress = " + shareAddress);
 
                 mTag = "Entertainment";
                 mImage = "http://img.youtube.com/vi/" + returnedBroadcast.getId() + "/hqdefault.jpg";
@@ -857,8 +858,8 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             super.onPostExecute(aVoid);
             Log.d("Mark", "OK");
             mAlertDialog.dismiss();
-            if (push_addr != null) {
-                mScreenStreamer.setUrl(push_addr);
+            if (pushAddress != null) {
+                mScreenStreamer.setUrl(pushAddress);
                 mMainPresenter.changeStatus(Constants.STREAMING);
                 startStream();
                 isLoading = false;
@@ -919,7 +920,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             Log.d("Mark", "Stream status is active");
             // change broadcast status
             if (isCreating) {
-                new changeBroadcastTestingStatusTask(youTube, returnedBroadcast).execute();
+                new ChangeBroadcastTestingStatusTask(youTube, returnedBroadcast).execute();
             }
         }
 
@@ -962,11 +963,11 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
         }
     }
 
-    public class changeBroadcastTestingStatusTask extends AsyncTask<Void, Void, Void> {
+    public class ChangeBroadcastTestingStatusTask extends AsyncTask<Void, Void, Void> {
         YouTube youTube;
         LiveBroadcast returnedBroadcast;
 
-        public changeBroadcastTestingStatusTask(YouTube youTube, LiveBroadcast liveBroadcast) {
+        public ChangeBroadcastTestingStatusTask(YouTube youTube, LiveBroadcast liveBroadcast) {
             this.youTube = youTube;
             returnedBroadcast = liveBroadcast;
         }
@@ -1010,17 +1011,17 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             super.onPostExecute(aVoid);
             Log.d("Mark", "Change broadcast status to testStarting");
             if (isCreating) {
-                new testStartingTask(youTube, returnedBroadcast).execute();
+                new TestStartingTask(youTube, returnedBroadcast).execute();
             }
         }
     }
 
-    public class testStartingTask extends AsyncTask<Void, Void, Void> {
+    public class TestStartingTask extends AsyncTask<Void, Void, Void> {
         YouTube youTube;
         LiveBroadcast returnedBroadcast;
 
 
-        public testStartingTask(YouTube youTube, LiveBroadcast liveBroadcast) {
+        public TestStartingTask(YouTube youTube, LiveBroadcast liveBroadcast) {
             this.youTube = youTube;
             returnedBroadcast = liveBroadcast;
         }
@@ -1068,16 +1069,16 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
             //Change broadcast status to live
             Log.d("Mark", "Stream Prepare");
             if (isCreating) {
-                new changeBroadcastLiveStatusTask(youTube, returnedBroadcast).execute();
+                new ChangeBroadcastLiveStatusTask(youTube, returnedBroadcast).execute();
             }
         }
     }
 
-    public class changeBroadcastLiveStatusTask extends AsyncTask<Void, Void, Void> {
+    public class ChangeBroadcastLiveStatusTask extends AsyncTask<Void, Void, Void> {
         YouTube youTube;
         LiveBroadcast returnedBroadcast;
 
-        public changeBroadcastLiveStatusTask(YouTube youTube, LiveBroadcast liveBroadcast) {
+        public ChangeBroadcastLiveStatusTask(YouTube youTube, LiveBroadcast liveBroadcast) {
             this.youTube = youTube;
             returnedBroadcast = liveBroadcast;
         }

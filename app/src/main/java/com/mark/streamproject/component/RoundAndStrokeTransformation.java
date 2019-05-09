@@ -21,13 +21,11 @@ public class RoundAndStrokeTransformation implements Transformation {
 
     @Override
     public Bitmap transform(Bitmap source) {
-        Bitmap bitmap = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig());
-        Canvas canvas = new Canvas(bitmap);
+
         Paint paint = new Paint();
         BitmapShader bitmapShader = new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         paint.setShader(bitmapShader);
         paint.setAntiAlias(true);
-
 
         Paint borderPaint = new Paint();
         borderPaint.setStyle(Paint.Style.STROKE);
@@ -37,6 +35,9 @@ public class RoundAndStrokeTransformation implements Transformation {
         borderPaint.setAntiAlias(true);
 
         RectF rectF = new RectF(0, 0, source.getWidth(), source.getHeight());
+
+        Bitmap bitmap = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig());
+        Canvas canvas = new Canvas(bitmap);
         canvas.drawRoundRect(rectF, radius, radius, paint);
         canvas.drawRoundRect(2f, 2f, source.getWidth() - 2f, source.getHeight() - 2f, radius, radius, borderPaint);
         source.recycle();

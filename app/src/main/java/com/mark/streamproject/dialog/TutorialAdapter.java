@@ -5,14 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.mark.streamproject.R;
 import com.mark.streamproject.StreamProject;
 import com.squareup.picasso.Picasso;
-
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class TutorialAdapter extends RecyclerView.Adapter {
 

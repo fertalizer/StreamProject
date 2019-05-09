@@ -1,31 +1,29 @@
 package com.mark.streamproject;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import android.os.Bundle;
-
-import com.crashlytics.android.Crashlytics;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.appcompat.widget.Toolbar;
-import io.fabric.sdk.android.Fabric;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.appcompat.widget.Toolbar;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.mark.streamproject.base.BaseActivity;
 import com.mark.streamproject.data.Room;
 import com.mark.streamproject.data.User;
 import com.mark.streamproject.dialog.AlertDialog;
-import com.mark.streamproject.dialog.TutorialDialog;
 import com.mark.streamproject.dialog.StreamDialog;
+import com.mark.streamproject.dialog.TutorialDialog;
 import com.mark.streamproject.util.Constants;
 import com.mark.streamproject.util.UserManager;
 import com.squareup.picasso.Picasso;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 

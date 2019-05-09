@@ -1,7 +1,9 @@
 package com.mark.streamproject.hots;
 
-import androidx.annotation.NonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import android.util.Log;
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,8 +18,6 @@ import com.mark.streamproject.util.Constants;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class HotsPresenter implements HotsContract.Presenter {
 

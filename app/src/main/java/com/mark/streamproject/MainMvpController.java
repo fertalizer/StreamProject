@@ -1,25 +1,24 @@
 package com.mark.streamproject;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-
-import com.mark.streamproject.data.Room;
-import com.mark.streamproject.room.RoomFragment;
-import com.mark.streamproject.room.RoomPresenter;
 import com.mark.streamproject.categeory.CategoryFragment;
 import com.mark.streamproject.categeory.CategoryPresenter;
+import com.mark.streamproject.data.Room;
 import com.mark.streamproject.follow.FollowFragment;
 import com.mark.streamproject.follow.FollowPresenter;
 import com.mark.streamproject.hots.HotsFragment;
 import com.mark.streamproject.hots.HotsPresenter;
+import com.mark.streamproject.room.RoomFragment;
+import com.mark.streamproject.room.RoomPresenter;
 import com.mark.streamproject.util.ActivityUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Mark Ho on April 2019.

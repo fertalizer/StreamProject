@@ -1,7 +1,10 @@
 package com.mark.streamproject.room;
 
-import android.util.Log;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,11 +26,6 @@ import com.mark.streamproject.util.UserManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class RoomPresenter implements RoomContract.Presenter {
 
