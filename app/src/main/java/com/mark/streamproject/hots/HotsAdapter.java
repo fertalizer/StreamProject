@@ -45,8 +45,6 @@ public class HotsAdapter extends RecyclerView.Adapter {
         holder.getTextLike().setText(like);
         String dislike = Integer.toString(room.getDislike());
         holder.getTextDislike().setText(dislike);
-//        String audience = Integer.toString(audienceNumber);
-//        holder.getTextAudience().setText(audience);
 
         if (!"".equals(room.getStreamerImage())) {
             Picasso.get()

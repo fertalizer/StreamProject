@@ -65,9 +65,7 @@ public class RoomPresenter implements RoomContract.Presenter {
 
     @Override
     public void enterRoom() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection(Constants.USER).document(mRoom.getStreamerId())
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(mRoom.getStreamerId())
                 .collection(Constants.AUDIENCE).document(UserManager.getInstance().getUser().getId())
                 .set(UserManager.getInstance().getUser())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -86,8 +84,7 @@ public class RoomPresenter implements RoomContract.Presenter {
 
     @Override
     public void exitRoom() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                 .collection(Constants.AUDIENCE).document(UserManager.getInstance().getUser().getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -113,8 +110,7 @@ public class RoomPresenter implements RoomContract.Presenter {
             message.setPublishTime(time);
             message.setContent(text);
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+            FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                     .collection(Constants.MESSAGE).document()
                     .set(message)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -135,8 +131,7 @@ public class RoomPresenter implements RoomContract.Presenter {
 
     @Override
     public void loadMessageData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM).document(mRoom.getStreamerId()).collection(Constants.MESSAGE)
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId()).collection(Constants.MESSAGE)
                 .orderBy(Constants.PUBLISH_TIME, Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -174,8 +169,7 @@ public class RoomPresenter implements RoomContract.Presenter {
 
     @Override
     public void getRoomAudienceNumber() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM).document(mRoom.getStreamerId()).collection(Constants.AUDIENCE)
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId()).collection(Constants.AUDIENCE)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -273,8 +267,7 @@ public class RoomPresenter implements RoomContract.Presenter {
     @Override
     public void updateLikeData(boolean hasChanged, boolean isAdded) {
         if (hasChanged) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+            FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -292,7 +285,7 @@ public class RoomPresenter implements RoomContract.Presenter {
                                         likeNumber = room.getLike() - 1;
                                     }
                                     room.setLike(likeNumber);
-                                    updateLikeNumber(db, room);
+                                    updateLikeNumber(room);
                                 } else {
                                     Log.d(Constants.TAG, "No such document");
                                 }
@@ -305,8 +298,8 @@ public class RoomPresenter implements RoomContract.Presenter {
 
     }
 
-    private void updateLikeNumber(FirebaseFirestore db, Room room) {
-        db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+    private void updateLikeNumber(Room room) {
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                 .update(Constants.LIKE, room.getLike())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -325,8 +318,7 @@ public class RoomPresenter implements RoomContract.Presenter {
     @Override
     public void updateDislikeData(boolean hasChanged, boolean isAdded) {
         if (hasChanged) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+            FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -343,7 +335,7 @@ public class RoomPresenter implements RoomContract.Presenter {
                                         dislikeNumber = room.getDislike() - 1;
                                     }
                                     room.setDislike(dislikeNumber);
-                                    updateDislikeNumber(db, room);
+                                    updateDislikeNumber(room);
                                 } else {
                                     Log.d(Constants.TAG, "No such document");
                                 }
@@ -355,8 +347,8 @@ public class RoomPresenter implements RoomContract.Presenter {
         }
     }
 
-    private void updateDislikeNumber(FirebaseFirestore db, Room room) {
-        db.collection(Constants.ROOM).document(mRoom.getStreamerId())
+    private void updateDislikeNumber(Room room) {
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                 .update(Constants.DISLIKE, room.getDislike())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

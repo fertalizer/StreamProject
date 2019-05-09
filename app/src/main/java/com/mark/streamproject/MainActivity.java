@@ -205,6 +205,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
 
         } else if (!mAlertDialog.isAdded()) {
+            mAlertDialog.setUser(user);
             mAlertDialog.show(getSupportFragmentManager(), Constants.ALERT);
         }
     }

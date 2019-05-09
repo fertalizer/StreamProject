@@ -64,8 +64,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     @Override
     public void getUserData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER).document(mMainView.getAccountIntent().getId())
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(mMainView.getAccountIntent().getId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -99,8 +98,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         user.setStatus(Constants.ONLINE);
         UserManager.getInstance().setUser(user);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
+        createUserData();
+    }
+
+    private void createUserData() {
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
                 .set(UserManager.getInstance().getUser())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -114,16 +116,13 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
                         Log.d(Constants.TAG, "Error writing document", e);
                     }
                 });
-
-
     }
 
 
 
     @Override
     public void updateUserData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
                 .set(UserManager.getInstance().getUser())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -140,7 +139,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     }
 
     @Override
-    public void createRoom(String title, String tag, String image, String watchId, long publishTime) {
+    public void setRoomData(String title, String tag, String image, String watchId, long publishTime) {
         Room room = new Room();
         room.setTitle(title);
         room.setTag(tag);
@@ -151,8 +150,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
         room.setStreamerName(UserManager.getInstance().getUser().getName());
         room.setStreamerImage(UserManager.getInstance().getUser().getImage());
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM).document(room.getStreamerId())
+        createRoom(room);
+    }
+
+    private void createRoom(Room room) {
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(room.getStreamerId())
                 .set(room)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -170,9 +172,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     @Override
     public void closeRoom() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection(Constants.ROOM).document(UserManager.getInstance().getUser().getId())
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(UserManager.getInstance().getUser().getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -309,8 +309,7 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
 
     @Override
     public void openRoomByUserId(User user) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM).document(user.getId())
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(user.getId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -449,8 +448,11 @@ public class MainPresenter implements MainContract.Presenter, HotsContract.Prese
     @Override
     public void changeStatus(int status) {
         UserManager.getInstance().getUser().setStatus(status);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
+        uploadStatus();
+    }
+
+    private void uploadStatus() {
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
                 .update(Constants.STATUS, UserManager.getInstance().getUser().getStatus())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

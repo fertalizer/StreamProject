@@ -113,8 +113,8 @@ public class FollowAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.text_follow_remove:
-//                    mPresenter.removeStreamer(mUserList.get(getAdapterPosition()));
                     mPresenter.showAlertDialog(mUserList.get(getAdapterPosition()));
+                    Log.d(Constants.TAG, "User Id in Adapter = " + mUserList.get(getAdapterPosition()).getId());
                     break;
                 case R.id.layout_follow:
                     if (mUserList.get(getAdapterPosition()).getStatus() == Constants.STREAMING) {

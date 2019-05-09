@@ -124,43 +124,38 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
         int id = mSearchView.getContext().getResources().getIdentifier(SEARCH_SOURCE_TEXT, null, null);
 
-        EditText textSearch = (EditText) mSearchView.findViewById(id);
+        EditText textSearch = mSearchView.findViewById(id);
         textSearch.setTextColor(getResources().getColor(R.color.white));
         textSearch.setHintTextColor(getResources().getColor(R.color.gray));
         textSearch.setHint(getResources().getString(R.string.search_hint));
 
         try {
-            String cursorDrawableResFieldName = "cursorDrawableRes";
-            Field cursorDrawableRes = TextView.class.getDeclaredField(cursorDrawableResFieldName);
-            cursorDrawableRes.setAccessible(true);
+            Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            fCursorDrawableRes.setAccessible(true);
 
-            int cursorDrawableResInt = cursorDrawableRes.getInt(textSearch);
+            int mCursorDrawableRes = fCursorDrawableRes.getInt(textSearch);
+            Field fEditor = TextView.class.getDeclaredField("mEditor");
+            fEditor.setAccessible(true);
 
-            String editorFieldName = "editor";
-            Field editor = TextView.class.getDeclaredField(editorFieldName);
-            editor.setAccessible(true);
+            Object editor = fEditor.get(textSearch);
+            Class<?> clazz = editor.getClass();
+            Field fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
+            fCursorDrawable.setAccessible(true);
 
-            Object object = editor.get(textSearch);
-            Class<?> clazz = object.getClass();
-
-            String cursorDrawableFieldName = "cursorDrawable";
-            Field cursorDrawable = clazz.getDeclaredField(cursorDrawableFieldName);
-            cursorDrawable.setAccessible(true);
-
-            if (cursorDrawableResInt <= 0) {
+            if (mCursorDrawableRes <= 0) {
                 return;
             }
 
-            Drawable drawable = ContextCompat.getDrawable(mSearchView.getContext(), cursorDrawableResInt);
-            if (drawable == null) {
+            Drawable cursorDrawable = ContextCompat.getDrawable(mSearchView.getContext(), mCursorDrawableRes);
+            if (cursorDrawable == null) {
                 return;
             }
 
-            Drawable tintDrawable = DrawableCompat.wrap(drawable);
+            Drawable tintDrawable = DrawableCompat.wrap(cursorDrawable);
             //custom cursor color
             DrawableCompat.setTintList(tintDrawable, ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
             Drawable[] drawables = new Drawable[] {tintDrawable, tintDrawable};
-            cursorDrawable.set(object, drawables);
+            fCursorDrawable.set(editor, drawables);
         } catch (Throwable throwable) {
             Log.d(Constants.TAG, "" + throwable);
         }

@@ -70,9 +70,8 @@ public class HotsPresenter implements HotsContract.Presenter {
     }
 
 
-    public void getRoomData(RoomCallback roomCallback) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM)
+    private void getRoomData(RoomCallback roomCallback) {
+        FirebaseFirestore.getInstance().collection(Constants.ROOM)
                 .orderBy(Constants.PUBLISH_TIME, Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -106,9 +105,8 @@ public class HotsPresenter implements HotsContract.Presenter {
                 });
     }
 
-    public void getAudienceData(Room room, AudienceCallback audienceCallback) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER).document(room.getStreamerId()).collection(Constants.AUDIENCE)
+    private void getAudienceData(Room room, AudienceCallback audienceCallback) {
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(room.getStreamerId()).collection(Constants.AUDIENCE)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

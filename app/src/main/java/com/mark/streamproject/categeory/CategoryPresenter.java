@@ -31,8 +31,7 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
 
     @Override
     public void loadCategoryData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM)
+        FirebaseFirestore.getInstance().collection(Constants.ROOM)
                 .orderBy(Constants.LIKE, Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -69,8 +68,7 @@ public class CategoryPresenter implements  CategoryContract.Presenter {
 
     @Override
     public void searchRoomData(String string) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.ROOM)
+        FirebaseFirestore.getInstance().collection(Constants.ROOM)
                 .orderBy(Constants.STREAMER_NAME)
                 .startAt(string)
                 .endAt(string + "\uf8ff")

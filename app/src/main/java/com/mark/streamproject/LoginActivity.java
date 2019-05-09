@@ -29,13 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_login);
 
-        TextView topTitle = findViewById(R.id.text_login_title_top);
-        TextView bottomTitle = findViewById(R.id.text_login_title_bottom);
-        TextView startButton = findViewById(R.id.button_login);
-
-        topTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
-        bottomTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
-        startButton.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
+        init();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -44,8 +38,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        startButton.setOnClickListener(this);
-
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             Intent intent = new Intent(this, MainActivity.class);
@@ -53,6 +45,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
+    }
+
+    public void init() {
+        TextView topTitle = findViewById(R.id.text_login_title_top);
+        TextView bottomTitle = findViewById(R.id.text_login_title_bottom);
+        TextView startButton = findViewById(R.id.button_login);
+
+        topTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
+        bottomTitle.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
+        startButton.setTypeface(Typeface.createFromAsset(StreamProject.getAppContext().getAssets(), Constants.FONTS_PATH));
+        startButton.setOnClickListener(this);
     }
 
     @Override

@@ -63,7 +63,7 @@ public interface MainContract {
 
         void updateUserData();
 
-        void createRoom(String title, String tag, String image, String watchId, long publishTime);
+        void setRoomData(String title, String tag, String image, String watchId, long publishTime);
 
         void closeRoom();
 

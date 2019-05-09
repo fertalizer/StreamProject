@@ -778,7 +778,7 @@ public class StreamDialog extends AppCompatDialogFragment implements View.OnClic
                 mImage = mYoutubeImageUrl + mReturnedBroadcast.getId() + mHighQuelityType;
                 mWatchId = mReturnedBroadcast.getId();
                 mPublishTime = time;
-                mMainPresenter.createRoom(mTitle, mTag, mImage, mWatchId, mPublishTime);
+                mMainPresenter.setRoomData(mTitle, mTag, mImage, mWatchId, mPublishTime);
 
             } catch (UserRecoverableAuthIOException e) {
                 startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);

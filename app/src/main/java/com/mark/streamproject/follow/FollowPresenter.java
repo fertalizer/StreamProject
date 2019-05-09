@@ -35,8 +35,7 @@ public class FollowPresenter implements FollowContract.Presenter {
 
     @Override
     public void loadFollowData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER)
+        FirebaseFirestore.getInstance().collection(Constants.USER)
                 .orderBy(Constants.STATUS, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -47,10 +46,12 @@ public class FollowPresenter implements FollowContract.Presenter {
                             return;
                         }
                         ArrayList<User> users = new ArrayList<>();
-                        Log.d(Constants.TAG, "UserManager = " + UserManager.getInstance().getUser().getFollowList().size());
+                        Log.d(Constants.TAG, "UserManager = "
+                                + UserManager.getInstance().getUser().getFollowList().size());
                         for (DocumentSnapshot doc : value) {
                             for (int i = 0; i < UserManager.getInstance().getUser().getFollowList().size(); i++) {
-                                if (doc.toObject(User.class).getId().equals(UserManager.getInstance().getUser().getFollowList().get(i))) {
+                                if (doc.toObject(User.class).getId()
+                                        .equals(UserManager.getInstance().getUser().getFollowList().get(i))) {
                                     users.add(doc.toObject(User.class));
                                 }
                             }
@@ -74,16 +75,19 @@ public class FollowPresenter implements FollowContract.Presenter {
 
     @Override
     public void removeStreamer(User user) {
+        Log.d(Constants.TAG, "User Id = " + user.getId());
         Iterator<String> iterator = UserManager.getInstance().getUser().getFollowList().iterator();
         while (iterator.hasNext()) {
-            String streamerId = (String) iterator.next();
+            String streamerId = iterator.next();
             if (streamerId.equals(user.getId())) {
                 iterator.remove();
             }
         }
+        uploadFollowList();
+    }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
+    private void uploadFollowList() {
+        FirebaseFirestore.getInstance().collection(Constants.USER).document(UserManager.getInstance().getUser().getId())
                 .update(Constants.FOLLOW_LIST, UserManager.getInstance().getUser().getFollowList())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
