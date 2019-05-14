@@ -17,8 +17,8 @@ android {
         applicationId "com.mark.streamproject"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.1.5"
+        versionCode 9
+        versionName "1.1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -70,6 +70,7 @@ dependencies {
         transitive = true;
     }
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
+    testImplementation "org.mockito:mockito-core:2.+"
 }
 
 apply plugin: 'com.google.gms.google-services'

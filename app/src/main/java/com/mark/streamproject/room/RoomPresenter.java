@@ -65,7 +65,7 @@ public class RoomPresenter implements RoomContract.Presenter {
 
     @Override
     public void enterRoom() {
-        FirebaseFirestore.getInstance().collection(Constants.USER).document(mRoom.getStreamerId())
+        FirebaseFirestore.getInstance().collection(Constants.ROOM).document(mRoom.getStreamerId())
                 .collection(Constants.AUDIENCE).document(UserManager.getInstance().getUser().getId())
                 .set(UserManager.getInstance().getUser())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

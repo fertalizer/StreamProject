@@ -14,7 +14,6 @@
     <dimen name="elevation_all">4dp</dimen>
     <dimen name="height_all_bottom_layout">80dp</dimen>
 
-
     <dimen name="top_stroke_width">10dp</dimen>
     <dimen name="bottom_stroke_width">20dp</dimen>
 </resources>

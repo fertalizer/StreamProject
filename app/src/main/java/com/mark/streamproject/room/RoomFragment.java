@@ -97,7 +97,6 @@ public class RoomFragment extends Fragment implements RoomContract.View, View.On
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mRoomAdapter);
 
-
         return root;
     }
 
