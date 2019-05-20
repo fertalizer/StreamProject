@@ -4,4 +4,5 @@ Kubi Live is an App for game streaming. Users can create live streaming or watch
 
 # Download
 
-[Kubi Live](https://play.google.com/store/apps/details?id=com.mark.streamproject)  
+![image](https://github.com/fertalizer/StreamProject/blob/master/images/google-play-badge.png) [Kubi Live](https://play.google.com/store/apps/details?id=com.mark.streamproject)  
+
