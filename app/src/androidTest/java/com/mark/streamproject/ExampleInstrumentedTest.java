@@ -1,9 +1,12 @@
 package com.mark.streamproject;
 
+import android.app.Activity;
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +25,9 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.mark.streamproject", appContext.getPackageName());
+
     }
+
+
+
 }

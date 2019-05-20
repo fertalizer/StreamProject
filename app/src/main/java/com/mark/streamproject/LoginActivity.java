@@ -31,19 +31,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         init();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(Constants.ACCOUNT_KEY, account);
             startActivity(intent);
             finish();
+        } else {
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .requestProfile()
+                    .build();
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         }
     }
 

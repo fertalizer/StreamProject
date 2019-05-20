@@ -35,5 +35,8 @@
     <string name="zero">0</string>
     <string name="remove">Remove</string>
     <string name="colon">:</string>
+    <string name="home">首頁</string>
+    <string name="search">探索</string>
+    <string name="follow">追隨</string>
 
 </resources>

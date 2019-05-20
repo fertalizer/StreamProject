@@ -71,6 +71,10 @@ dependencies {
     }
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
     testImplementation "org.mockito:mockito-core:2.+"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    androidTestImplementation ('com.android.support.test.espresso:espresso-contrib:2.2')
 }
 
 apply plugin: 'com.google.gms.google-services'
