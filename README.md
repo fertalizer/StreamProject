@@ -45,7 +45,7 @@ Kubi Live 是一款讓您隨時隨地開啟遊戲並且直播，並且收看他�
 # Screenshot
 <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_signin_page.png" width="210"> <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_home_page.png" width="210"> <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_category_page.png" width="210">
 <br />
-<img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_follow_page.png" width="210"> <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_stream_dialog.png" width="210"> <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_play_page.pngg" width="210">
+<img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_follow_page.png" width="210"> <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_stream_dialog.png" width="210"> <img src="https://github.com/fertalizer/StreamProject/blob/master/images/Screenshot_play_page.png" width="210">
 # Implemented
 - Design Patterns
   - Objecr Oreinted Programming
