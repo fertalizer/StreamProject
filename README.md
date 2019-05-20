@@ -2,14 +2,12 @@
 
 Kubi Live 是一款讓您隨時隨地開啟遊戲並且直播，並且收看他人直播的 App。同時，在收看他人直播時可以對影片留言和評價，也可以將喜歡的直播主加入收藏追蹤。 歡迎遊戲愛好者一起加入，stream everywhere。
 
-# Download
-
 [<img src="https://github.com/fertalizer/StreamProject/blob/master/images/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.mark.streamproject)
 
 # Get Started
 請先至 YouTube 開通直播功能才能直播
 
-# Feature
+# Features
 - [登入畫面]
   - 使用 Google 帳號登入
 
