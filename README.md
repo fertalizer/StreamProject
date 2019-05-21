@@ -4,7 +4,7 @@ Kubi Live 是一款讓您隨時隨地開啟遊戲並且直播，並且收看他�
 
 [<img src="https://github.com/fertalizer/StreamProject/blob/master/images/google-play-badge.png" width="200">](https://play.google.com/store/apps/details?id=com.mark.streamproject)
 
-# Get Started
+# Geting Start
 請先至 YouTube 開通直播功能才能直播
 
 # Features
